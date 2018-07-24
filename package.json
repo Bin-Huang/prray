@@ -1,0 +1,24 @@
+{
+  "name": "prray",
+  "version": "0.1.0",
+  "description": "promise-version array",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "promise",
+    "array",
+    "p",
+    "concurrency"
+  ],
+  "author": "Ben Huang",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "p-map": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/p-map": "^1.1.0"
+  }
+}
