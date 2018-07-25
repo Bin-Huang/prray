@@ -3,7 +3,7 @@ import pMap from 'p-map'
 import pFilter from 'p-filter'
 import pReduce from 'p-reduce'
 
-export interface PrrayPromise<T> extends PPromise<T> {
+export interface PrrayPromise<T> extends PPromise<T[]> {
   mapAsync<U> (mapper: IMapper<T, U>): PrrayPromise<U>
   filterAsync(filterer: IFilterer<T>): PrrayPromise<T>
   reduceAsync<S>(reducer: IReducer<T, S>, initialValue: S): PPromise<S>
@@ -11,16 +11,16 @@ export interface PrrayPromise<T> extends PPromise<T> {
 
 const methods = { mapAsync, filterAsync, reduceAsync }
 
-export function prraypromise<T>(promise: Promise<T>): PrrayPromise<T> {
+export function prraypromise<T>(promise: Promise<T[]>): PrrayPromise<T> {
   for (const method in methods) {
     (promise as any)[method] = (methods as any)[method]
   }
-  return promise as PrrayPromise<T>
+  return promise as any
 }
 
 export type IMapper<T, U> = (item: T, index: number) => U | Promise<U>
-export type IFilterer<T> = (item: T, index: number) => boolean
-export type IReducer<T,U> = (pre: U, current: T, index: number) => U
+export type IFilterer<T> = (item: T, index: number) => boolean | Promise<boolean>
+export type IReducer<T,U> = (pre: U, current: T, index: number) => U | Promise<U>
 export type ITester<T> = (item: T) => boolean
 
 export function mapAsync<T, U>(this: PrrayPromise<T>, mapper: IMapper<T, U>): PrrayPromise<U> {

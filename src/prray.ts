@@ -1,3 +1,4 @@
+import { PPromise } from './ppromise'
 import { prraypromise, PrrayPromise, IMapper, IFilterer, IReducer } from './prraypromise'
 
 export class Prray<T> extends Array<T> {
