@@ -19,3 +19,16 @@ ava_1.default('prray mapAsync', async (t) => {
     t.deepEqual(await p.mapAsync(addAsync), [2, 3, 4, 5]);
     t.deepEqual(await p.mapAsync(addAsync).mapAsync(addAsync), [3, 4, 5, 6]);
 });
+const gt2Async = (i) => delay_1.default(200).then(() => i > 2);
+ava_1.default('prraypromise filterAsync', async (t) => {
+    const pp = prraypromise_1.prraypromise(Promise.resolve([1, 2, 3, 4]));
+    t.deepEqual(await pp, [1, 2, 3, 4]);
+    t.deepEqual(await pp.filterAsync(gt2Async), [3, 4]);
+    t.deepEqual(await pp.mapAsync(addAsync).filterAsync(gt2Async), [3, 4, 5]);
+});
+ava_1.default('prray filterAsync', async (t) => {
+    const p = new prray_1.Prray(1, 2, 3, 4);
+    t.deepEqual(await p.filterAsync(gt2Async), [3, 4]);
+    t.deepEqual(await p.mapAsync(addAsync).filterAsync(gt2Async), [3, 4, 5]);
+    t.deepEqual(await p.filterAsync(gt2Async).mapAsync(addAsync), [4, 5]);
+});

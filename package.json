@@ -17,6 +17,7 @@
   "dependencies": {
     "delay": "^3.0.0",
     "lodash": "^4.17.10",
+    "p-filter": "^1.0.0",
     "p-map": "^1.2.0"
   },
   "devDependencies": {

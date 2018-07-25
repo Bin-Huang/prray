@@ -8,5 +8,8 @@ class Prray extends Array {
     mapAsync(mapper) {
         return prraypromise_1.prraypromise(Promise.resolve(this)).mapAsync(mapper);
     }
+    filterAsync(filterer) {
+        return prraypromise_1.prraypromise(Promise.resolve(this)).filterAsync(filterer);
+    }
 }
 exports.Prray = Prray;
