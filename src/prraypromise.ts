@@ -1,14 +1,16 @@
-import { PPromise } from './ppromise'
+import { PPromise, ppromise } from './ppromise'
 import { Prray } from './prray'
 import pMap from 'p-map'
 import pFilter from 'p-filter'
+import pReduce from 'p-reduce'
 
 export interface PrrayPromise<T> extends PPromise<T> {
   mapAsync<U> (mapper: IMapper<T, U>): PrrayPromise<U>
   filterAsync(filterer: IFilterer<T>): PrrayPromise<T>
+  reduceAsync<S>(reducer: IReducer<T, S>, initialValue: S): PPromise<S>
 }
 
-const methods = { mapAsync, filterAsync }
+const methods = { mapAsync, filterAsync, reduceAsync }
 
 export function prraypromise<T>(promise: Promise<T>): PrrayPromise<T> {
   for (const method in methods) {
@@ -27,7 +29,16 @@ export function mapAsync<T, U>(this: PrrayPromise<T>, mapper: IMapper<T, U>): Pr
   return prraypromise(prom)
 }
 
-export function filterAsync<T>(this: PrrayPromise<T>, filterer: IFilterer<T>): Promise<Prray<T>> {
+export function filterAsync<T>(this: PrrayPromise<T>, filterer: IFilterer<T>): PrrayPromise<T> {
   const prom = this.then((r) => pFilter(r, filterer))
   return prraypromise(prom)
+}
+
+export function reduceAsync<T, S>(
+  this: PrrayPromise<T>,
+  reducer: IReducer<T, S>,
+  initialValue: S,  // TODO: 当不赋予 init 的值，将计算出错（p-reduce的问题）
+): PPromise<S> {
+  const prom = this.then((r) => pReduce(r, reducer, initialValue))
+  return ppromise(prom)
 }

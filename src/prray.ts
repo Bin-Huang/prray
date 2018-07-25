@@ -1,4 +1,4 @@
-import { prraypromise, PrrayPromise, IMapper, IFilterer } from './prraypromise'
+import { prraypromise, PrrayPromise, IMapper, IFilterer, IReducer } from './prraypromise'
 
 export class Prray<T> extends Array<T> {
   constructor(...arg: T[]) {
@@ -9,5 +9,8 @@ export class Prray<T> extends Array<T> {
   }
   filterAsync<U>(filterer: IFilterer<T>): PrrayPromise<T> {
     return prraypromise(Promise.resolve(this)).filterAsync(filterer)
+  }
+  reduceAsync<U>(reducer: IReducer<T, U>, initialValue: U): PPromise<U> {
+    return prraypromise(Promise.resolve(this)).reduceAsync(reducer, initialValue)
   }
 }

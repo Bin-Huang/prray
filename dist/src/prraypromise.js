@@ -3,9 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const ppromise_1 = require("./ppromise");
 const p_map_1 = __importDefault(require("p-map"));
 const p_filter_1 = __importDefault(require("p-filter"));
-const methods = { mapAsync, filterAsync };
+const p_reduce_1 = __importDefault(require("p-reduce"));
+const methods = { mapAsync, filterAsync, reduceAsync };
 function prraypromise(promise) {
     for (const method in methods) {
         promise[method] = methods[method];
@@ -23,3 +25,8 @@ function filterAsync(filterer) {
     return prraypromise(prom);
 }
 exports.filterAsync = filterAsync;
+function reduceAsync(reducer, initialValue) {
+    const prom = this.then((r) => p_reduce_1.default(r, reducer, initialValue));
+    return ppromise_1.ppromise(prom);
+}
+exports.reduceAsync = reduceAsync;
