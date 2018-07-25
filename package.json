@@ -2,7 +2,7 @@
   "name": "prray",
   "version": "0.1.0",
   "description": "promise-version array",
-  "main": "./dist/index.js",
+  "main": "./dist/src/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
