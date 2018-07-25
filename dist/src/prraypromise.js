@@ -27,6 +27,6 @@ function filterAsync(filterer) {
 exports.filterAsync = filterAsync;
 function reduceAsync(reducer, initialValue) {
     const prom = this.then((r) => p_reduce_1.default(r, reducer, initialValue));
-    return ppromise_1.ppromise(prom);
+    return ppromise_1.ppromise(prom); // TODO: 如果是 array，考虑返回 prraypromise
 }
 exports.reduceAsync = reduceAsync;

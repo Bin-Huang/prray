@@ -35,6 +35,12 @@ test('prray mapAsync', async (t) => {
   const p = new Prray(1,2,3,4)
   t.deepEqual(await p.mapAsync(addAsync), [2,3,4,5])
   t.deepEqual(await p.mapAsync(addAsync).mapAsync(addAsync), [3,4,5,6])
+  t.deepEqual(await p.mapAsync(addAsync)
+    .mapAsync(addAsync)
+    .mapAsync(addAsync)
+    .mapAsync(addAsync)
+    .mapAsync(addAsync),
+    [6,7,8,9])
 })
 
 const gt2Async = (i: number) => delay(200).then(() => i > 2)
@@ -66,4 +72,17 @@ test('prray reduceAsync', async (t) => {
   const p = new Prray(1,2,3,4)
   t.deepEqual(await p.reduceAsync(sumAsync, 0), 10)
   t.deepEqual(await p.filterAsync(gt2Async).reduceAsync(sumAsync, 0), 7)
+})
+
+const errorAsync = () => delay(100).then(() => {
+  throw new Error('error')
+})
+
+test('prraypromise catch', async (t) => {
+  const pp = prraypromise(Promise.resolve([1,2,3,4]))
+  t.deepEqual(await pp.mapAsync(errorAsync).catch(() => 110), 110)
+  t.deepEqual(
+    await pp.mapAsync((i) => errorAsync().catch(() => 0)).mapAsync(addAsync),
+    [1,1,1,1]
+  )
 })

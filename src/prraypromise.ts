@@ -1,5 +1,4 @@
 import { PPromise, ppromise } from './ppromise'
-import { Prray } from './prray'
 import pMap from 'p-map'
 import pFilter from 'p-filter'
 import pReduce from 'p-reduce'
@@ -40,5 +39,5 @@ export function reduceAsync<T, S>(
   initialValue: S,  // TODO: 当不赋予 init 的值，将计算出错（p-reduce的问题）
 ): PPromise<S> {
   const prom = this.then((r) => pReduce(r, reducer, initialValue))
-  return ppromise(prom)
+  return ppromise(prom)// TODO: 如果是 array，考虑返回 prraypromise
 }

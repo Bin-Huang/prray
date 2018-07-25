@@ -1,5 +1,3 @@
-import * as pMap from 'p-map'
-
 export interface PPromise<T> extends Promise<T> {
 
 }
