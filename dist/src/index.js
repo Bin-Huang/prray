@@ -1,12 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -16,26 +8,52 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const pMap = __importStar(require("p-map"));
-// import * as _ from 'lodash'
+const pReduce = __importStar(require("p-reduce"));
+const pFilter = __importStar(require("p-filter"));
+const pLocate = __importStar(require("p-locate"));
+const pEvery = __importStar(require("p-every"));
 class Prray extends Array {
-    constructor(...arr) {
+    constructor(arr) {
         super(...arr);
-    }
-    map(mapper) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield P(yield pMap(this, mapper));
-        });
-    }
-    pass() {
-        return true;
     }
     toArray() {
         return [...this];
     }
+    async mapAsync(mapper) {
+        const result = await pMap(this, mapper);
+        return P(result);
+    }
+    async filterAsync(filterer) {
+        const result = await pFilter(this, filterer);
+        return P(result);
+    }
+    async reduceAsync(reducer, initialValue) {
+        return pReduce(this, reducer, initialValue);
+    }
+    async reduceRightAsync(reducer, initialValue) {
+        return pReduce(P(this.toArray().reverse()), reducer, initialValue); // TODO: test
+    }
+    async findAsync(tester) {
+        return pLocate(this, tester); // preserveOrder 设置默认为 false，无视顺序
+    }
+    async findIndexAsync(tester) {
+        // TODO: 
+    }
+    async sortByAsync() {
+        // TODO: 
+    }
+    // TODO: ITester
+    async everyAsync(tester) {
+        return pEvery(this, tester);
+    }
+    // TODO: ITester
+    async someAsync(tester) {
+        const tester2 = (v) => !tester(v);
+        return !this.everyAsync(tester2); // TODO: test
+    }
 }
-function P(datas) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Prray(datas);
-    });
+exports.Prray = Prray;
+async function P(datas) {
+    return new Prray(datas);
 }
 exports.default = P;

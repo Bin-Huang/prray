@@ -15,10 +15,12 @@
   "author": "Ben Huang",
   "license": "ISC",
   "dependencies": {
+    "delay": "^3.0.0",
     "lodash": "^4.17.10",
     "p-map": "^1.2.0"
   },
   "devDependencies": {
-    "@types/p-map": "^1.1.0"
+    "@types/lodash": "4.14.113",
+    "ava": "^0.25.0"
   }
 }
