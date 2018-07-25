@@ -7,7 +7,7 @@ const ppromise_1 = require("./ppromise");
 const p_map_1 = __importDefault(require("p-map"));
 const p_filter_1 = __importDefault(require("p-filter"));
 const p_reduce_1 = __importDefault(require("p-reduce"));
-const methods = { mapAsync, filterAsync, reduceAsync };
+const methods = { mapAsync, filterAsync, reduceAsync, toArray };
 function prraypromise(promise) {
     for (const method in methods) {
         promise[method] = methods[method];
@@ -25,6 +25,10 @@ function filterAsync(filterer) {
     return prraypromise(prom);
 }
 exports.filterAsync = filterAsync;
+function toArray() {
+    return this.then((r) => [...r]);
+}
+exports.toArray = toArray;
 function reduceAsync(reducer, initialValue) {
     const prom = this.then((r) => p_reduce_1.default(r, reducer, initialValue));
     return ppromise_1.ppromise(prom); // TODO: 如果是 array，考虑返回 prraypromise

@@ -65,6 +65,16 @@ ava_1.default('prray reduceAsync', async (t) => {
     t.deepEqual(await p.reduceAsync(sumAsync, 0), 10);
     t.deepEqual(await p.filterAsync(gt2Async).reduceAsync(sumAsync, 0), 7);
 });
+ava_1.default('prraypromise toArray', async (t) => {
+    const pp = prraypromise_1.prraypromise(Promise.resolve([1, 2, 3, 4]));
+    t.deepEqual(await pp.toArray(), [1, 2, 3, 4]);
+    t.deepEqual(await pp.mapAsync(addAsync).toArray(), [2, 3, 4, 5]);
+});
+ava_1.default('prray toArray', async (t) => {
+    const p = new prray_1.Prray(1, 2, 3, 4);
+    t.deepEqual(await p.toArray(), [1, 2, 3, 4]);
+    t.deepEqual(await p.filterAsync(gt2Async).toArray(), [3, 4]);
+});
 const errorAsync = () => delay_1.default(100).then(() => {
     throw new Error('error');
 });

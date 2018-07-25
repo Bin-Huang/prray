@@ -7,9 +7,10 @@ export interface PrrayPromise<T> extends PPromise<T[]> {
   mapAsync<U> (mapper: IMapper<T, U>): PrrayPromise<U>
   filterAsync(filterer: IFilterer<T>): PrrayPromise<T>
   reduceAsync<S>(reducer: IReducer<T, S>, initialValue: S): PPromise<S>
+  toArray(): Promise<T[]>
 }
 
-const methods = { mapAsync, filterAsync, reduceAsync }
+const methods = { mapAsync, filterAsync, reduceAsync, toArray }
 
 export function prraypromise<T>(promise: Promise<T[]>): PrrayPromise<T> {
   for (const method in methods) {
@@ -31,6 +32,10 @@ export function mapAsync<T, U>(this: PrrayPromise<T>, mapper: IMapper<T, U>): Pr
 export function filterAsync<T>(this: PrrayPromise<T>, filterer: IFilterer<T>): PrrayPromise<T> {
   const prom = this.then((r) => pFilter(r, filterer))
   return prraypromise(prom)
+}
+
+export function toArray<T>(this: PrrayPromise<T>): Promise<T[]> {
+  return this.then((r) => [...r])
 }
 
 export function reduceAsync<T, S>(

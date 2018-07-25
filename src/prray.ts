@@ -14,4 +14,7 @@ export class Prray<T> extends Array<T> {
   reduceAsync<U>(reducer: IReducer<T, U>, initialValue: U): PPromise<U> {
     return prraypromise(Promise.resolve(this)).reduceAsync(reducer, initialValue)
   }
+  toArray() {
+    return [...this]
+  }
 }
