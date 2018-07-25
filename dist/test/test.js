@@ -11,9 +11,11 @@ ava_1.default('array compatibility', (t) => {
     const p = new prray_1.Prray(1, 2, 3, 4);
     t.is(Array.isArray(p), true);
     t.is(p instanceof prray_1.Prray, true);
+    t.is(p instanceof Array, true);
     t.is(p.length, 4);
     t.deepEqual(p.map((i) => i + 1), new prray_1.Prray(2, 3, 4, 5));
     t.deepEqual([...p], [1, 2, 3, 4]);
+    t.deepEqual(JSON.stringify(p), JSON.stringify([1, 2, 3, 4]));
     let ix = 1;
     for (const item of p) {
         t.is(item, ix++);
