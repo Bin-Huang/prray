@@ -2,36 +2,25 @@ async/promise 版的 Array，提供可接受 async function 参数的 mapAsync�
 
 ```javascript
 const p = require('prray')
-const ids = [ /*some ids*/ ]
-
-const prr = p(ids)
-const vipUsers = await p.mapAsync(getUserFromDb)
-  .filterAsync(isVipAsync)
-```
-
-```javascript
-const p = require('prray')
 
 (async () => {
+
   const urls = [ /* some urls */ ]
-  await p(urls).mapAsync(fetch)
-    .filterAsync(notExistInLocal)
-    .mapAsync(download)
-})
+  const results = await p(urls).mapAsync(fetch)
+    .filterAsync(existAsync)
+    .mapAsync(requestAsync)
 
+})
 ```
 
+## 方法链状调用
 ```javascript
-const p = require('prray')
-const request = require('request-promise')
-const existInDB = require('./existInDB')
-
-(async () => {
-  const urls = [ /* some urls*/ ]
-  const htmls = await p(urls).mapAsync(request)
-    .filterAsync((html) => existInDB(html))
-  console.log(htmls)
-})()
+await p(arr).filterAsync(existAsync).mapAsync(postAsync)
+```
+等价于：
+```javascript
+let existed = await p(arr).filterAsync(existAsync)
+await existed.mapAsync(postAsync)
 ```
 
 ## 兼容原生 Array
@@ -63,4 +52,4 @@ concurrency 并发限速
 rejected 重试
 timeout 限时
 everyAsync
-...
+...（我还需要一个晚上的时间）
