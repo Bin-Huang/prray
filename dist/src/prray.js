@@ -5,14 +5,14 @@ class Prray extends Array {
     constructor(...arg) {
         super(...arg);
     }
-    mapAsync(mapper) {
-        return prraypromise_1.prraypromise(Promise.resolve(this)).mapAsync(mapper);
+    mapAsync(mapper, concurrency) {
+        return prraypromise_1.prraypromise(Promise.resolve(this)).mapAsync(mapper, concurrency);
     }
-    filterAsync(filterer) {
-        return prraypromise_1.prraypromise(Promise.resolve(this)).filterAsync(filterer);
+    filterAsync(filterer, concurrency) {
+        return prraypromise_1.prraypromise(Promise.resolve(this)).filterAsync(filterer, concurrency);
     }
-    reduceAsync(reducer, initialValue) {
-        return prraypromise_1.prraypromise(Promise.resolve(this)).reduceAsync(reducer, initialValue);
+    reduceAsync(reducer, initialValue, concurrency) {
+        return prraypromise_1.prraypromise(Promise.resolve(this)).reduceAsync(reducer, initialValue, concurrency);
     }
     toArray() {
         return [...this];

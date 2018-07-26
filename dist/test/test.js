@@ -30,11 +30,11 @@ ava_1.default('prraypromise mapAsync', async (t) => {
     const pp = prraypromise_1.prraypromise(Promise.resolve([1, 2, 3, 4]));
     t.deepEqual(await pp, [1, 2, 3, 4]);
     t.deepEqual(await pp.mapAsync(addAsync), [2, 3, 4, 5]);
-    t.deepEqual(await pp.mapAsync(addAsync).mapAsync(addAsync), [3, 4, 5, 6]);
+    t.deepEqual(await pp.mapAsync(addAsync).mapAsync(addAsync, 2), [3, 4, 5, 6]);
 });
 ava_1.default('prray mapAsync', async (t) => {
     const p = new prray_1.Prray(1, 2, 3, 4);
-    t.deepEqual(await p.mapAsync(addAsync), [2, 3, 4, 5]);
+    t.deepEqual(await p.mapAsync(addAsync, 2), [2, 3, 4, 5]);
     t.deepEqual(await p.mapAsync(addAsync).mapAsync(addAsync), [3, 4, 5, 6]);
     t.deepEqual(await p.mapAsync(addAsync)
         .mapAsync(addAsync)
@@ -47,11 +47,11 @@ ava_1.default('prraypromise filterAsync', async (t) => {
     const pp = prraypromise_1.prraypromise(Promise.resolve([1, 2, 3, 4]));
     t.deepEqual(await pp, [1, 2, 3, 4]);
     t.deepEqual(await pp.filterAsync(gt2Async), [3, 4]);
-    t.deepEqual(await pp.mapAsync(addAsync).filterAsync(gt2Async), [3, 4, 5]);
+    t.deepEqual(await pp.mapAsync(addAsync).filterAsync(gt2Async, 2), [3, 4, 5]);
 });
 ava_1.default('prray filterAsync', async (t) => {
     const p = new prray_1.Prray(1, 2, 3, 4);
-    t.deepEqual(await p.filterAsync(gt2Async), [3, 4]);
+    t.deepEqual(await p.filterAsync(gt2Async, 2), [3, 4]);
     t.deepEqual(await p.mapAsync(addAsync).filterAsync(gt2Async), [3, 4, 5]);
     t.deepEqual(await p.filterAsync(gt2Async).mapAsync(addAsync), [4, 5]);
 });
@@ -60,11 +60,11 @@ ava_1.default('prraypromise reduceAsync', async (t) => {
     const pp = prraypromise_1.prraypromise(Promise.resolve([1, 2, 3, 4]));
     t.deepEqual(await pp, [1, 2, 3, 4]);
     t.deepEqual(await pp.reduceAsync(sumAsync, 0), 10);
-    t.deepEqual(await pp.mapAsync(addAsync).reduceAsync(sumAsync, 0), 14);
+    t.deepEqual(await pp.mapAsync(addAsync).reduceAsync(sumAsync, 0, 2), 14);
 });
 ava_1.default('prray reduceAsync', async (t) => {
     const p = new prray_1.Prray(1, 2, 3, 4);
-    t.deepEqual(await p.reduceAsync(sumAsync, 0), 10);
+    t.deepEqual(await p.reduceAsync(sumAsync, 0, 2), 10);
     t.deepEqual(await p.filterAsync(gt2Async).reduceAsync(sumAsync, 0), 7);
 });
 ava_1.default('prraypromise toArray', async (t) => {

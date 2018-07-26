@@ -7,16 +7,16 @@ const ppromise_1 = require("./ppromise");
 const p_map_1 = __importDefault(require("p-map"));
 const p_filter_1 = __importDefault(require("p-filter"));
 const p_reduce_1 = __importDefault(require("p-reduce"));
-const mapAsync = function (mapper) {
-    const prom = this.then((r) => p_map_1.default(r, mapper));
+const mapAsync = function (mapper, concurrency) {
+    const prom = this.then((r) => concurrency ? p_map_1.default(r, mapper, { concurrency }) : p_map_1.default(r, mapper));
     return prraypromise(prom);
 };
-const filterAsync = function (filterer) {
-    const prom = this.then((r) => p_filter_1.default(r, filterer));
+const filterAsync = function (filterer, concurrency) {
+    const prom = this.then((r) => concurrency ? p_filter_1.default(r, filterer, { concurrency }) : p_filter_1.default(r, filterer));
     return prraypromise(prom);
 };
-const reduceAsync = function (reducer, initialValue) {
-    const prom = this.then((r) => p_reduce_1.default(r, reducer, initialValue));
+const reduceAsync = function (reducer, initialValue, concurrency) {
+    const prom = this.then((r) => concurrency ? p_reduce_1.default(r, reducer, initialValue, { concurrency }) : p_reduce_1.default(r, reducer, initialValue));
     return ppromise_1.ppromise(prom); // TODO: 如果是 array，考虑返回 prraypromise
 };
 const toArray = function () {
