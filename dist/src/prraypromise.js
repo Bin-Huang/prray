@@ -7,6 +7,21 @@ const ppromise_1 = require("./ppromise");
 const p_map_1 = __importDefault(require("p-map"));
 const p_filter_1 = __importDefault(require("p-filter"));
 const p_reduce_1 = __importDefault(require("p-reduce"));
+const mapAsync = function (mapper) {
+    const prom = this.then((r) => p_map_1.default(r, mapper));
+    return prraypromise(prom);
+};
+const filterAsync = function (filterer) {
+    const prom = this.then((r) => p_filter_1.default(r, filterer));
+    return prraypromise(prom);
+};
+const reduceAsync = function (reducer, initialValue) {
+    const prom = this.then((r) => p_reduce_1.default(r, reducer, initialValue));
+    return ppromise_1.ppromise(prom); // TODO: 如果是 array，考虑返回 prraypromise
+};
+const toArray = function () {
+    return this.then((r) => [...r]);
+};
 const methods = { mapAsync, filterAsync, reduceAsync, toArray };
 function prraypromise(promise) {
     for (const method in methods) {
@@ -15,22 +30,3 @@ function prraypromise(promise) {
     return promise;
 }
 exports.prraypromise = prraypromise;
-function mapAsync(mapper) {
-    const prom = this.then((r) => p_map_1.default(r, mapper));
-    return prraypromise(prom);
-}
-exports.mapAsync = mapAsync;
-function filterAsync(filterer) {
-    const prom = this.then((r) => p_filter_1.default(r, filterer));
-    return prraypromise(prom);
-}
-exports.filterAsync = filterAsync;
-function toArray() {
-    return this.then((r) => [...r]);
-}
-exports.toArray = toArray;
-function reduceAsync(reducer, initialValue) {
-    const prom = this.then((r) => p_reduce_1.default(r, reducer, initialValue));
-    return ppromise_1.ppromise(prom); // TODO: 如果是 array，考虑返回 prraypromise
-}
-exports.reduceAsync = reduceAsync;
