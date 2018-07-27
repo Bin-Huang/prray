@@ -1,27 +1,47 @@
-async/promise 版的 Array，提供可接受 async function 参数的 mapAsync、filterAsync、reduceAsync 等方法，并且可以 **链状调用**。
+An async version of `Array`, support async methods such as `mapAsync`, `filterAsync`, `reduceAsync`, `everyAsync`, `someAsync` ...
+
+You also can **chain method calls** even if them returns promise!
 
 ```javascript
 const p = require('prray')
 
 (async () => {
   const urls = [ /* some urls */ ]
-  await p(urls).mapAsync(fetch).mapAsync(saveAsync)
-})
+
+  await p(urls).mapAsync(fetch)
+    .filterAsync(isExisted)
+    .mapAsync(saveAsync)
+
+  const responses = await p(urls).mapAsync(fetch)
+  console.log(response[0].body)
+})()
 ```
 
-## 链状调用
+## Prray
+
+Use function `p` to convert an array to prray.
+
+```javascript
+const p = require('prray')
+const arr = [1,2,3]
+
+const prray = p(arr)
+prray.mapAsync(funcAsync).then(console.log)
+```
+
+## Method Chaining
 
 ```javascript
 await p(arr).filterAsync(existAsync).mapAsync(postAsync)
 
-// 等价于：
+// equal to:
 
 let existed = await p(arr).filterAsync(existAsync)
-
 await existed.mapAsync(postAsync)
 ```
 
 ## Methods
+
 ### mapAsync(mapper, concurrency?)
 
 an async version of Array#map
@@ -76,6 +96,10 @@ const hasVipUser = await p(users).someAsync(async (user, ix) => {
 console.log(areVip) // true
 ```
 
+### and all of common methods of Array
+
+Such as `map`, `filter`, `indexOf`, `lastIndexOf` ...
+
 ## concurrency
 
 你可以传入 `concurrency` 参数来限制异步并发数量，尤其是当你批处理一个很大的数组时，或者执行消耗资源的 async function，比如请求数据库。
@@ -84,24 +108,23 @@ console.log(areVip) // true
 await p(arr).mapAsync(mapper, 10) // 最多挂起10个promise
 ```
 
-## 兼容原生 Array
+## Compatible with Array
 
-Prray 尽可能地兼容原生 Array 数据结构，这意味着在绝大多数情况下你可以直接使用 prray 代替 Array。
+Prray 尽可能地兼容原生的 Array 数据结构，你可以在需要时放心地将 Array 转化成 Prray，甚至完全代替。
 
 ```javascript
 const prr = p([1,2,3,4])
-console.log(prr.mapAsync) // [Function]
 
-console.log(Array.isArray(prr)) // true
-console.log(prr instanceof Array) // true
-console.log(JSON.stringify(prr) === JSON.stringify([1,2,3,4]))  // true
+Array.isArray(prr) // true
+prr instanceof Array // true
+JSON.stringify(prr) === JSON.stringify([1,2,3,4])  // true
 console.log(prr.map) // [Function]
 console.log(prr.length) // 4
+
+console.log(prr.mapAsync) // [Function]
 ```
 
-当然，你也完全可以只在需要的时候将 Array 转化成 Prray。
-
-在极少数情况下，你可能需要原生的 Array 类型，这是你可以使用 toArray 方法转化
+在少数情况下，你可能需要原生的 Array 类型，这时你可以使用 toArray 方法转化
 
 ```javascript
 const p = p([1,2,3])
@@ -110,5 +133,8 @@ console.log(p.toArray())  // [1,2,3]
 
 ## TODO
 [x] concurrency 并发限速
+- 更多的 async methods
 - rejected 重试
 - timeout 限时
+- 逐步完善文档、翻译
+- 浏览器兼容情况
