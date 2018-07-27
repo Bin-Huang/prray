@@ -10,6 +10,7 @@ export interface PrrayPromise<T> extends PPromise<T[]> {
   reduceAsync: IReduceAsync
   toArray: IToArray
   everyAsync: IEveryAsync
+  someAsync: ISomeAsync
 }
 
 export type IMapper<T, U> = (item: T, index: number) => U | Promise<U>
@@ -48,11 +49,19 @@ const everyAsync: IEveryAsync = function (tester, concurrency) {
   return this.then((r) => concurrency ? pEvery(r, tester, {concurrency}) : pEvery(r, tester))
 }
 
+export interface ISomeAsync {
+  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): Promise<boolean> 
+}
+const someAsync: ISomeAsync = function (tester, concurrency) {
+  const negate = async (item, ix) => !(await tester(item, ix))
+  return this.then((r) => concurrency ? pEvery(r, negate, {concurrency}) : pEvery(r, negate)).then(r => !r)
+}
+
 export type IToArray = <T>(this: PrrayPromise<T>) => Promise<T[]>
 const toArray: IToArray = function() {
   return this.then((r) => [...r])
 }
-const methods = { mapAsync, filterAsync, reduceAsync, toArray, everyAsync }
+const methods = { mapAsync, filterAsync, reduceAsync, toArray, everyAsync, someAsync }
 
 export function prraypromise<T>(promise: Promise<T[]>): PrrayPromise<T> {
   for (const method in methods) {

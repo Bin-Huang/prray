@@ -23,10 +23,14 @@ const reduceAsync = function (reducer, initialValue, concurrency) {
 const everyAsync = function (tester, concurrency) {
     return this.then((r) => concurrency ? p_every_1.default(r, tester, { concurrency }) : p_every_1.default(r, tester));
 };
+const someAsync = function (tester, concurrency) {
+    const negate = async (item, ix) => !(await tester(item, ix));
+    return this.then((r) => concurrency ? p_every_1.default(r, negate, { concurrency }) : p_every_1.default(r, negate)).then(r => !r);
+};
 const toArray = function () {
     return this.then((r) => [...r]);
 };
-const methods = { mapAsync, filterAsync, reduceAsync, toArray, everyAsync };
+const methods = { mapAsync, filterAsync, reduceAsync, toArray, everyAsync, someAsync };
 function prraypromise(promise) {
     for (const method in methods) {
         promise[method] = methods[method];

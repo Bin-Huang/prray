@@ -23,6 +23,9 @@ export class Prray<T> extends Array<T> {
   everyAsync(tester: ITester<T>, concurrency?: number): Promise<boolean> {
     return prraypromise(Promise.resolve(this)).everyAsync(tester, concurrency)
   }
+  someAsync(tester: ITester<T>, concurrency?: number): Promise<boolean> {
+    return prraypromise(Promise.resolve(this)).someAsync(tester, concurrency)
+  }
   toArray() {
     return [...this]
   }
