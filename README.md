@@ -21,18 +21,59 @@ let existed = await p(arr).filterAsync(existAsync)
 await existed.mapAsync(postAsync)
 ```
 
-# 方法
-- mapAsync(mapper, concurrency?)
+## Methods
+### mapAsync(mapper, concurrency?)
+
+an async version of Array#map
+
 ```javascript
-await p(urls).mapAsync(fetch)
+await p(urls).mapAsync(async (url, ix) => {
+  const res = await fetch(url)
+  return res.json()
+})
 ```
-- filterAsync(filterer, concurrency?)
+
+### filterAsync(filterer, concurrency?)
+
+an async version of Array#filter
+
 ```javascript
-await p(filenames).filterAsync(exists)
+await p(filenames).filterAsync(async (filename, ix) => {
+  return existsAsync(filename)
+})
 ```
-- reduceAsync(reducer, initialValue, concurrency?)
+
+### reduceAsync(reducer, initialValue, concurrency?)
+
+an async version of Array#reduce
+
 ```javascript
-await p(rules).reduceAsync(getRuleAsync, {})
+await p(userIds).reduceAsync(async (sum, uid, ix) => {
+  const score = await getScoreFromDB(uid)
+  return sum + score
+}, 0)
+```
+
+### everyAsync(tester, concurrency?)
+
+an async version of Array#every
+
+```javascript
+const areVip = await p(users).everyAsync(async (user, ix) => {
+  return await userModel.isVip(user)
+})
+console.log(areVip) // true
+```
+
+### someAsync(tester, concurrency?)
+
+an async version of Array#some
+
+```javascript
+const hasVipUser = await p(users).someAsync(async (user, ix) => {
+  return await userModel.isVip(user)
+})
+console.log(areVip) // true
 ```
 
 ## concurrency
@@ -71,5 +112,3 @@ console.log(p.toArray())  // [1,2,3]
 [x] concurrency 并发限速
 - rejected 重试
 - timeout 限时
-- everyAsync
-...（我还需要一个晚上的时间）
