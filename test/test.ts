@@ -2,6 +2,7 @@ import test from 'ava'
 import { prraypromise } from '../src/prraypromise'
 import { Prray } from '../src/prray'
 import delay from 'delay'
+import p from '../src';
 
 test('array compatibility', (t) => {
   const p = new Prray(1,2,3,4)
@@ -86,6 +87,22 @@ test('prray toArray', async (t) => {
   const p = new Prray(1,2,3,4)
   t.deepEqual(await p.toArray(), [1,2,3,4])
   t.deepEqual(await p.filterAsync(gt2Async).toArray(), [3,4])
+})
+
+const testAsync = (result: boolean) => delay(100).then(() => result)
+
+test('prraypromise everyAsync', async (t) => {
+  t.deepEqual(await prraypromise(Promise.resolve([true, true])).everyAsync(testAsync), true)
+  t.deepEqual(await prraypromise(Promise.resolve([true, false])).everyAsync(testAsync), false)
+  t.deepEqual(await prraypromise(Promise.resolve([false, false])).everyAsync(testAsync, 5), false)
+  t.deepEqual(await prraypromise(Promise.resolve([true, true, false])).everyAsync(testAsync, 1), false)
+})
+
+test('prray everyAsync', async (t) => {
+  t.deepEqual(await p([true, true]).everyAsync(testAsync), true)
+  t.deepEqual(await p([false, true]).everyAsync(testAsync), false)
+  t.deepEqual(await p([false, false]).everyAsync(testAsync, 5), false)
+  t.deepEqual(await p([true, false, true]).everyAsync(testAsync, 2), false)
 })
 
 const errorAsync = () => delay(100).then(() => {

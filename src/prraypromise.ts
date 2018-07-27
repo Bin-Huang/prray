@@ -2,15 +2,15 @@ import { PPromise, ppromise } from './ppromise'
 import pMap from 'p-map'
 import pFilter from 'p-filter'
 import pReduce from 'p-reduce'
+import pEvery from 'p-every'
 
 export interface PrrayPromise<T> extends PPromise<T[]> {
   mapAsync: IMapAsync
   filterAsync: IFilterAsync
   reduceAsync: IReduceAsync
   toArray: IToArray
+  everyAsync: IEveryAsync
 }
-
-export type ITester<T> = (item: T) => boolean
 
 export type IMapper<T, U> = (item: T, index: number) => U | Promise<U>
 export interface IMapAsync {
@@ -21,9 +21,9 @@ const mapAsync: IMapAsync = function (mapper, concurrency) {
   return prraypromise(prom)
 }
 
-export type IFilterer<T> = (item: T, index: number) => boolean | Promise<boolean>
+export type ITester<T> = (item: T, index: number) => boolean | Promise<boolean>
 export interface IFilterAsync {
-  <T>(this: PrrayPromise<T>, filterer: IFilterer<T>, concurrency?: number): PrrayPromise<T> 
+  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): PrrayPromise<T> 
 }
 const filterAsync: IFilterAsync = function (filterer, concurrency) {
   const prom = this.then((r) => concurrency ? pFilter(r, filterer, {concurrency}) : pFilter(r, filterer))
@@ -41,11 +41,18 @@ const reduceAsync: IReduceAsync = function (reducer, initialValue, concurrency) 
   return ppromise(prom)// TODO: 如果是 array，考虑返回 prraypromise
 }
 
+export interface IEveryAsync {
+  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): Promise<boolean> 
+}
+const everyAsync: IEveryAsync = function (tester, concurrency) {
+  return this.then((r) => concurrency ? pEvery(r, tester, {concurrency}) : pEvery(r, tester))
+}
+
 export type IToArray = <T>(this: PrrayPromise<T>) => Promise<T[]>
 const toArray: IToArray = function() {
   return this.then((r) => [...r])
 }
-const methods = { mapAsync, filterAsync, reduceAsync, toArray }
+const methods = { mapAsync, filterAsync, reduceAsync, toArray, everyAsync }
 
 export function prraypromise<T>(promise: Promise<T[]>): PrrayPromise<T> {
   for (const method in methods) {

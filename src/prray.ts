@@ -1,5 +1,11 @@
 import { PPromise } from './ppromise'
-import { prraypromise, PrrayPromise, IMapper, IFilterer, IReducer } from './prraypromise'
+import {
+  prraypromise,
+  PrrayPromise,
+  IMapper,
+  ITester,
+  IReducer,
+} from './prraypromise'
 
 export class Prray<T> extends Array<T> {
   constructor(...arg: T[]) {
@@ -8,11 +14,14 @@ export class Prray<T> extends Array<T> {
   mapAsync<U>(mapper: IMapper<T, U>, concurrency?: number): PrrayPromise<U> {
     return prraypromise(Promise.resolve(this)).mapAsync(mapper, concurrency)
   }
-  filterAsync<U>(filterer: IFilterer<T>, concurrency?: number): PrrayPromise<T> {
+  filterAsync<U>(filterer: ITester<T>, concurrency?: number): PrrayPromise<T> {
     return prraypromise(Promise.resolve(this)).filterAsync(filterer, concurrency)
   }
   reduceAsync<U>(reducer: IReducer<T, U>, initialValue: U, concurrency?: number): PPromise<U> {
     return prraypromise(Promise.resolve(this)).reduceAsync(reducer, initialValue, concurrency)
+  }
+  everyAsync(tester: ITester<T>, concurrency?: number): Promise<boolean> {
+    return prraypromise(Promise.resolve(this)).everyAsync(tester, concurrency)
   }
   toArray() {
     return [...this]

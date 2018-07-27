@@ -7,6 +7,7 @@ const ava_1 = __importDefault(require("ava"));
 const prraypromise_1 = require("../src/prraypromise");
 const prray_1 = require("../src/prray");
 const delay_1 = __importDefault(require("delay"));
+const src_1 = __importDefault(require("../src"));
 ava_1.default('array compatibility', (t) => {
     const p = new prray_1.Prray(1, 2, 3, 4);
     t.is(Array.isArray(p), true);
@@ -76,6 +77,19 @@ ava_1.default('prray toArray', async (t) => {
     const p = new prray_1.Prray(1, 2, 3, 4);
     t.deepEqual(await p.toArray(), [1, 2, 3, 4]);
     t.deepEqual(await p.filterAsync(gt2Async).toArray(), [3, 4]);
+});
+const testAsync = (result) => delay_1.default(100).then(() => result);
+ava_1.default('prraypromise everyAsync', async (t) => {
+    t.deepEqual(await prraypromise_1.prraypromise(Promise.resolve([true, true])).everyAsync(testAsync), true);
+    t.deepEqual(await prraypromise_1.prraypromise(Promise.resolve([true, false])).everyAsync(testAsync), false);
+    t.deepEqual(await prraypromise_1.prraypromise(Promise.resolve([false, false])).everyAsync(testAsync, 5), false);
+    t.deepEqual(await prraypromise_1.prraypromise(Promise.resolve([true, true, false])).everyAsync(testAsync, 1), false);
+});
+ava_1.default('prray everyAsync', async (t) => {
+    t.deepEqual(await src_1.default([true, true]).everyAsync(testAsync), true);
+    t.deepEqual(await src_1.default([false, true]).everyAsync(testAsync), false);
+    t.deepEqual(await src_1.default([false, false]).everyAsync(testAsync, 5), false);
+    t.deepEqual(await src_1.default([true, false, true]).everyAsync(testAsync, 2), false);
 });
 const errorAsync = () => delay_1.default(100).then(() => {
     throw new Error('error');
