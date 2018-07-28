@@ -26,6 +26,9 @@ export class Prray<T> extends Array<T> {
   someAsync(tester: ITester<T>, concurrency?: number): Promise<boolean> {
     return prraypromise(Promise.resolve(this)).someAsync(tester, concurrency)
   }
+  findAsync(tester: ITester<T>, concurrency?: number): Promise<T> {
+    return prraypromise(Promise.resolve(this)).findAsync(tester, concurrency)
+  }
   toArray() {
     return [...this]
   }

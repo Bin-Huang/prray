@@ -11,6 +11,7 @@ export interface PrrayPromise<T> extends PPromise<T[]> {
   toArray: IToArray
   everyAsync: IEveryAsync
   someAsync: ISomeAsync
+  findAsync: IFindAsync
 }
 
 export type IMapper<T, U> = (item: T, index: number) => U | Promise<U>
@@ -57,11 +58,42 @@ const someAsync: ISomeAsync = function (tester, concurrency) {
   return this.then((r) => concurrency ? pEvery(r, negate, {concurrency}) : pEvery(r, negate)).then(r => !r)
 }
 
+class EndError<T> extends Error {
+  public ele: T
+  public ix: number
+	constructor(ele: T, ix: number) {
+		super();
+    this.ele = ele;
+    this.ix = ix
+	}
+}
+
+export interface IFindAsync {
+  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): Promise<T> 
+}
+function find<T>(datas: T[], tester: (ele: T, ix: number) => boolean | Promise<boolean>, opts?: any): Promise<T> {
+  const finder = (ele: T, ix: number) => Promise.resolve(tester(ele, ix)).then((r) => {
+    if (r) {
+      throw new EndError(ele, ix)
+    }
+  })
+  return pMap(datas, finder, opts).then(() => null).catch((r) => {
+    if (r instanceof EndError) {
+      return r.ele
+    }
+  })
+}
+
+const findAsync: IFindAsync = function (tester, concurrency) {
+  return this.then((r) => concurrency ? find(r, tester, {concurrency}) : find(r, tester))
+}
+
 export type IToArray = <T>(this: PrrayPromise<T>) => Promise<T[]>
 const toArray: IToArray = function() {
   return this.then((r) => [...r])
 }
-const methods = { mapAsync, filterAsync, reduceAsync, toArray, everyAsync, someAsync }
+
+const methods = { mapAsync, filterAsync, reduceAsync, toArray, everyAsync, someAsync, findAsync }
 
 export function prraypromise<T>(promise: Promise<T[]>): PrrayPromise<T> {
   for (const method in methods) {

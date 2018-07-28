@@ -20,6 +20,9 @@ class Prray extends Array {
     someAsync(tester, concurrency) {
         return prraypromise_1.prraypromise(Promise.resolve(this)).someAsync(tester, concurrency);
     }
+    findAsync(tester, concurrency) {
+        return prraypromise_1.prraypromise(Promise.resolve(this)).findAsync(tester, concurrency);
+    }
     toArray() {
         return [...this];
     }

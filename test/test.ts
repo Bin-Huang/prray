@@ -120,6 +120,19 @@ test('prray someAsync', async (t) => {
   t.deepEqual(await p([true, false, true]).someAsync(testAsync, 2), true)
 })
 
+test('prraypromise findAsync', async (t) => {
+  t.deepEqual(await prraypromise(Promise.resolve([1, 2, 3])).findAsync(gt2Async), 3)
+  t.deepEqual(await prraypromise(Promise.resolve([0, 0])).findAsync(gt2Async), null)
+  t.deepEqual(await prraypromise(Promise.resolve([0, 2, 3])).findAsync(gt2Async, 1), 3)
+  t.deepEqual(await prraypromise(Promise.resolve([3])).findAsync(gt2Async, 5), 3)
+})
+
+test('prray findAsync', async (t) => {
+  t.deepEqual(await p([0, 1]).findAsync(gt2Async), null)
+  t.deepEqual(await p([3]).findAsync(gt2Async, 4), 3)
+  t.deepEqual(await p([2, 3, 0, 1]).findAsync(gt2Async, 5), 3)
+})
+
 const errorAsync = () => delay(100).then(() => {
   throw new Error('error')
 })

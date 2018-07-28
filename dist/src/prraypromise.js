@@ -27,10 +27,32 @@ const someAsync = function (tester, concurrency) {
     const negate = async (item, ix) => !(await tester(item, ix));
     return this.then((r) => concurrency ? p_every_1.default(r, negate, { concurrency }) : p_every_1.default(r, negate)).then(r => !r);
 };
+class EndError extends Error {
+    constructor(ele, ix) {
+        super();
+        this.ele = ele;
+        this.ix = ix;
+    }
+}
+function find(datas, tester, opts) {
+    const finder = (ele, ix) => Promise.resolve(tester(ele, ix)).then((r) => {
+        if (r) {
+            throw new EndError(ele, ix);
+        }
+    });
+    return p_map_1.default(datas, finder, opts).then(() => null).catch((r) => {
+        if (r instanceof EndError) {
+            return r.ele;
+        }
+    });
+}
+const findAsync = function (tester, concurrency) {
+    return this.then((r) => concurrency ? find(r, tester, { concurrency }) : find(r, tester));
+};
 const toArray = function () {
     return this.then((r) => [...r]);
 };
-const methods = { mapAsync, filterAsync, reduceAsync, toArray, everyAsync, someAsync };
+const methods = { mapAsync, filterAsync, reduceAsync, toArray, everyAsync, someAsync, findAsync };
 function prraypromise(promise) {
     for (const method in methods) {
         promise[method] = methods[method];
