@@ -1,11 +1,6 @@
 import { PPromise } from './ppromise'
-import {
-  prraypromise,
-  PrrayPromise,
-  IMapper,
-  ITester,
-  IReducer,
-} from './prraypromise'
+import { prraypromise, PrrayPromise } from './prraypromise'
+import { IMapper, ITester, IReducer } from './methods'
 
 export class Prray<T> extends Array<T> {
   constructor(...arg: T[]) {
