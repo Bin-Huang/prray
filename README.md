@@ -1,4 +1,4 @@
-An async version of `Array`, support async methods such as `mapAsync`, `filterAsync`, `reduceAsync`, `everyAsync`, `someAsync` ...
+An async version of `Array`, support async methods such as `mapAsync`, `filterAsync`, `reduceAsync`, `everyAsync`, `someAsync`, `findAsync`, `findIndexAsync` ...
 
 You also can **chain method calls** even if them returns promise!
 
@@ -8,12 +8,11 @@ const p = require('prray')
 (async () => {
   const urls = [ /* some urls */ ]
 
+  await p(urls).mapAsync(saveToDB)
+
   await p(urls).mapAsync(fetch)
     .filterAsync(isExisted)
     .mapAsync(saveAsync)
-
-  const responses = await p(urls).mapAsync(fetch)
-  console.log(response[0].body)
 })()
 ```
 
@@ -28,6 +27,15 @@ const arr = [1,2,3]
 const prray = p(arr)
 prray.mapAsync(funcAsync).then(console.log)
 ```
+
+- Prray#mapAsync -> Array#map
+- Prray#filterAsync -> Array#filter
+- Prray#reduceAsync -> Array#reduce
+- Prray#everyAsync -> Array#every
+- Prray#someAsync -> Array#some
+- Prray#findAsync -> Array#find
+- Prray#findIndexAsync -> Array#findIndex
+- Prray#toArray
 
 ## Method Chaining
 
@@ -94,6 +102,23 @@ const hasVipUser = await p(users).someAsync(async (user, ix) => {
   return await userModel.isVip(user)
 })
 console.log(areVip) // true
+```
+
+### findAsync(tester, concurrency?)
+
+an async version of Array#find
+
+```javascript
+const vipUser = await p(users).findAsync(isVipAsync)
+```
+
+### findIndexAsync(tester, concurrency?)
+
+an async version of Array#findIndex
+
+```javascript
+const ix = await p(users).findIndexAsync(isVipAsync)
+const vipUser = users[ix]
 ```
 
 ### and all of common methods of Array

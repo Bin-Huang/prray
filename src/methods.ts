@@ -48,7 +48,7 @@ function find<T>(datas: T[], tester: (ele: T, ix: number) => boolean | Promise<b
 }
 export const findAsync: IFindAsync = function (tester, concurrency) {
     return this.then((r) => concurrency ? find(r, tester, {concurrency}) : find(r, tester))
-        .then((r) => r === null ? r : r.ele)
+        .then((r) => r === null ? null : r.ele)
 }
 
 export interface IFindIndexAsync {

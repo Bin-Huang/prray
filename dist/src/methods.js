@@ -38,7 +38,7 @@ function find(datas, tester, opts) {
 }
 exports.findAsync = function (tester, concurrency) {
     return this.then((r) => concurrency ? find(r, tester, { concurrency }) : find(r, tester))
-        .then((r) => r === null ? r : r.ele);
+        .then((r) => r === null ? null : r.ele);
 };
 exports.findIndexAsync = function (tester, concurrency) {
     return this.then((r) => concurrency ? find(r, tester, { concurrency }) : find(r, tester))
