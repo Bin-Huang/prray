@@ -31,12 +31,18 @@ function find(datas, tester, opts) {
     });
     return p_map_1.default(datas, finder, opts).then(() => null).catch((r) => {
         if (r instanceof EndError) {
-            return r.ele;
+            return r;
         }
+        return null;
     });
 }
 exports.findAsync = function (tester, concurrency) {
-    return this.then((r) => concurrency ? find(r, tester, { concurrency }) : find(r, tester));
+    return this.then((r) => concurrency ? find(r, tester, { concurrency }) : find(r, tester))
+        .then((r) => r === null ? r : r.ele);
+};
+exports.findIndexAsync = function (tester, concurrency) {
+    return this.then((r) => concurrency ? find(r, tester, { concurrency }) : find(r, tester))
+        .then((r) => r === null ? -1 : r.ix);
 };
 exports.toArray = function () {
     return this.then((r) => [...r]);

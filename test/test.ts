@@ -133,6 +133,19 @@ test('prray findAsync', async (t) => {
   t.deepEqual(await p([2, 3, 0, 1]).findAsync(gt2Async, 5), 3)
 })
 
+test('prraypromise findIndexAsync', async (t) => {
+  t.deepEqual(await prraypromise(Promise.resolve([1, 2, 3])).findIndexAsync(gt2Async), 2)
+  t.deepEqual(await prraypromise(Promise.resolve([0, 0])).findIndexAsync(gt2Async), -1)
+  t.deepEqual(await prraypromise(Promise.resolve([0, 2, 3])).findIndexAsync(gt2Async, 1), 2)
+  t.deepEqual(await prraypromise(Promise.resolve([3])).findIndexAsync(gt2Async, 5), 0)
+})
+
+test('prray findIndexAsync', async (t) => {
+  t.deepEqual(await p([0, 1]).findIndexAsync(gt2Async), -1)
+  t.deepEqual(await p([3]).findIndexAsync(gt2Async, 4), 0)
+  t.deepEqual(await p([2, 3, 0, 1]).findIndexAsync(gt2Async, 5), 1)
+})
+
 const errorAsync = () => delay(100).then(() => {
   throw new Error('error')
 })

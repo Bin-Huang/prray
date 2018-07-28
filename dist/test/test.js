@@ -115,6 +115,17 @@ ava_1.default('prray findAsync', async (t) => {
     t.deepEqual(await src_1.default([3]).findAsync(gt2Async, 4), 3);
     t.deepEqual(await src_1.default([2, 3, 0, 1]).findAsync(gt2Async, 5), 3);
 });
+ava_1.default('prraypromise findIndexAsync', async (t) => {
+    t.deepEqual(await prraypromise_1.prraypromise(Promise.resolve([1, 2, 3])).findIndexAsync(gt2Async), 2);
+    t.deepEqual(await prraypromise_1.prraypromise(Promise.resolve([0, 0])).findIndexAsync(gt2Async), -1);
+    t.deepEqual(await prraypromise_1.prraypromise(Promise.resolve([0, 2, 3])).findIndexAsync(gt2Async, 1), 2);
+    t.deepEqual(await prraypromise_1.prraypromise(Promise.resolve([3])).findIndexAsync(gt2Async, 5), 0);
+});
+ava_1.default('prray findIndexAsync', async (t) => {
+    t.deepEqual(await src_1.default([0, 1]).findIndexAsync(gt2Async), -1);
+    t.deepEqual(await src_1.default([3]).findIndexAsync(gt2Async, 4), 0);
+    t.deepEqual(await src_1.default([2, 3, 0, 1]).findIndexAsync(gt2Async, 5), 1);
+});
 const errorAsync = () => delay_1.default(100).then(() => {
     throw new Error('error');
 });

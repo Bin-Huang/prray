@@ -31,9 +31,9 @@ class EndError<T> extends Error {
 }
 
 export interface IFindAsync {
-  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): Promise<T> 
+  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): Promise<T | null> 
 }
-function find<T>(datas: T[], tester: (ele: T, ix: number) => boolean | Promise<boolean>, opts?: any): Promise<T> {
+function find<T>(datas: T[], tester: (ele: T, ix: number) => boolean | Promise<boolean>, opts?: any): Promise<{ ele: T, ix: number } | null> {
   const finder = (ele: T, ix: number) => Promise.resolve(tester(ele, ix)).then((r) => {
     if (r) {
       throw new EndError(ele, ix)
@@ -41,12 +41,22 @@ function find<T>(datas: T[], tester: (ele: T, ix: number) => boolean | Promise<b
   })
   return pMap(datas, finder, opts).then(() => null).catch((r) => {
     if (r instanceof EndError) {
-      return r.ele
+      return r
     }
+    return null
   })
 }
 export const findAsync: IFindAsync = function (tester, concurrency) {
-  return this.then((r) => concurrency ? find(r, tester, {concurrency}) : find(r, tester))
+    return this.then((r) => concurrency ? find(r, tester, {concurrency}) : find(r, tester))
+        .then((r) => r === null ? r : r.ele)
+}
+
+export interface IFindIndexAsync {
+  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): Promise<number | -1> 
+}
+export const findIndexAsync: IFindIndexAsync = function (tester, concurrency) {
+    return this.then((r) => concurrency ? find(r, tester, {concurrency}) : find(r, tester))
+        .then((r) => r === null ? -1 : r.ix)
 }
 
 export type IToArray = <T>(this: PrrayPromise<T>) => Promise<T[]>

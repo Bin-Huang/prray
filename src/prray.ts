@@ -9,10 +9,7 @@ export class Prray<T> extends Array<T> {
   mapAsync<U>(mapper: IMapper<T, U>, concurrency?: number): PrrayPromise<U> {
     return prraypromise(Promise.resolve(this)).mapAsync(mapper, concurrency)
   }
-  filterAsync<U>(filterer: ITester<T>, concurrency?: number): PrrayPromise<T> {
-    return prraypromise(Promise.resolve(this)).filterAsync(filterer, concurrency)
-  }
-  reduceAsync<U>(reducer: IReducer<T, U>, initialValue: U, concurrency?: number): PPromise<U> {
+  filterAsync<U>(filterer: ITester<T>, concurrency?: number): PrrayPromise<T> { return prraypromise(Promise.resolve(this)).filterAsync(filterer, concurrency) } reduceAsync<U>(reducer: IReducer<T, U>, initialValue: U, concurrency?: number): PPromise<U> {
     return prraypromise(Promise.resolve(this)).reduceAsync(reducer, initialValue, concurrency)
   }
   everyAsync(tester: ITester<T>, concurrency?: number): Promise<boolean> {
@@ -21,8 +18,11 @@ export class Prray<T> extends Array<T> {
   someAsync(tester: ITester<T>, concurrency?: number): Promise<boolean> {
     return prraypromise(Promise.resolve(this)).someAsync(tester, concurrency)
   }
-  findAsync(tester: ITester<T>, concurrency?: number): Promise<T> {
+  findAsync(tester: ITester<T>, concurrency?: number): Promise<T | null> {
     return prraypromise(Promise.resolve(this)).findAsync(tester, concurrency)
+  }
+  findIndexAsync(tester: ITester<T>, concurrency?: number): Promise<number> {
+    return prraypromise(Promise.resolve(this)).findIndexAsync(tester, concurrency)
   }
   toArray() {
     return [...this]
