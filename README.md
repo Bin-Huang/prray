@@ -20,7 +20,7 @@ const p = require('prray')
 
 **First**, prray does not provide another implementation of promise, which is essentially different from Bluebird.
 
-**Secondly**, prray aims to provide a better way to handle asynchronous batch operations on data. In this aspect, maybe you work well with Bluebird's methods such as `all` and `map`, but prray gives you another option more appropriate in some cases.
+**Secondly**, prray aims to provide a better way to handle asynchronous batch operations on data(array). In this aspect, maybe you work well with Bluebird's methods such as `all` and `map`, but prray gives you another option more appropriate in some cases.
 
 ```javascript
 const urls = [ /* some urls */ ]
@@ -41,7 +41,7 @@ await Bluebird.map(responses, saveAsync)
 
 If you want a good promise implementation, this is bluebird.
 
-If you want to handle asynchronous batch operations on data, prray is a option for you.
+If you want to handle asynchronous batch operations on data(array), prray is an option for you.
 
 ## Installation
 
