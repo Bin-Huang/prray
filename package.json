@@ -18,12 +18,10 @@
     "delay": "^3.0.0",
     "p-every": "^1.0.2",
     "p-filter": "^1.0.0",
-    "p-map": "^1.2.0",
-    "p-reduce": "^1.0.0"
+    "p-map": "^1.2.0"
   },
   "devDependencies": {
     "@types/delay": "^2.0.1",
-    "@types/lodash": "4.14.113",
     "@types/p-map": "^1.1.0",
     "ava": "^0.25.0"
   }

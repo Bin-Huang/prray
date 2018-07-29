@@ -1,6 +1,6 @@
-An async version of `Array`, support async methods such as `mapAsync`, `filterAsync`, `reduceAsync`, `everyAsync`, `someAsync`, `findAsync`, `findIndexAsync` ...
+🚀🚀🛸 An async version of `Array`, support async methods such as `mapAsync`, `filterAsync`, `reduceAsync`, `everyAsync`, `someAsync`, `findAsync`, `findIndexAsync` ...
 
-You also can **chain method calls** even if them returns promise!
+You also can **chain method calls** even if them returns promise 😻!
 
 ```javascript
 const p = require('prray')
@@ -18,7 +18,7 @@ const p = require('prray')
 
 ## Prray
 
-Use function `p` to convert an array to prray.
+Get a prray from existing array using function `p`
 
 ```javascript
 const p = require('prray')
@@ -127,15 +127,13 @@ Such as `map`, `filter`, `indexOf`, `lastIndexOf` ...
 
 ## concurrency
 
-你可以传入 `concurrency` 参数来限制异步并发数量，尤其是当你批处理一个很大的数组时，或者执行消耗资源的 async function，比如请求数据库。
-
+You may optionally specify a concurrency limit when calling async method. It is useful when perform some resource-consuming operations in large batches, such as querying the database.
+ 
 ```javascript
-await p(arr).mapAsync(mapper, 10) // 最多挂起10个promise
+await p(urls).mapAsync(fetch, 10) // concurrency limit 10
 ```
 
 ## Compatible with Array
-
-Prray 尽可能地兼容原生的 Array 数据结构，你可以在需要时放心地将 Array 转化成 Prray，甚至完全代替。
 
 ```javascript
 const prr = p([1,2,3,4])
@@ -149,7 +147,7 @@ console.log(prr.length) // 4
 console.log(prr.mapAsync) // [Function]
 ```
 
-在少数情况下，你可能需要原生的 Array 类型，这时你可以使用 toArray 方法转化
+In some cases you may need a 'pure' array, just call method `toArray`.
 
 ```javascript
 const p = p([1,2,3])
@@ -157,9 +155,15 @@ console.log(p.toArray())  // [1,2,3]
 ```
 
 ## TODO
-[x] concurrency 并发限速
-- 更多的 async methods
-- rejected 重试
-- timeout 限时
-- 逐步完善文档、翻译
-- 浏览器兼容情况
+
+Prray has not yet reached version 1.0.0, which means there is still much work to be done, including but not limited to:
+
+[x] Concurrency
+- [ ] An appropriate logo
+- [ ] Sub-task promise supports `timeout`, such like `await prr.mapAsync(fetch, {timeout: 3000})`
+- [ ] Sub-task promise supports `retry` when rejected, such like `await prr.mapAsync(fetch, {retries: 2})`
+- [ ] Browser compatibility survey
+- [ ] Prettier document
+- ...
+
+So, welcome  `fork`, `Pull Request` and `Issues` if have any suggestions and bugs 

@@ -84,10 +84,25 @@ export const filterAsync: IFilterAsync = function (filterer, concurrency) {
 
 export type IReducer<T,U> = (pre: U, current: T, index: number) => U | Promise<U>
 export interface IReduceAsync {
-  // TODO: 当不赋予 init 的值，将计算出错（p-reduce的问题）
-  <T, S>(this: PrrayPromise<T>, reducer: IReducer<T, S>, initialValue: S, concurrency?: number): PPromise<S> 
+  <T, S>(this: PrrayPromise<T>, reducer: IReducer<T, S>, initialValue?: S): PPromise<S> 
 }
-export const reduceAsync: IReduceAsync = function (reducer, initialValue, concurrency) {
-  const prom = this.then((r) => concurrency ? pReduce(r, reducer, initialValue, {concurrency}) : pReduce(r, reducer, initialValue))
-  return ppromise(prom)// TODO: 如果是 array，考虑返回 prraypromise
+async function reduce(datas: any[], reducer, init?) {
+  // TODO: Better implementation
+  let result
+  let slices
+  if (init === undefined) {
+    result = datas[0]
+    slices = datas.slice(1)
+  } else {
+    result = init
+    slices = datas
+  }
+  for (let ix = 0; ix < slices.length; ix ++) {
+    result = await reducer(result, slices[ix], ix)
+  }
+  return result
+}
+export const reduceAsync: IReduceAsync = function (reducer, initialValue?) {
+  const prom = this.then((r) => reduce(r, reducer, initialValue))
+  return ppromise(prom)// TODO: if return promise<array>, returns prraypromise<array>???
 }

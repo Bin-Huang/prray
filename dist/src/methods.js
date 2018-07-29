@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ppromise_1 = require("./ppromise");
 const p_map_1 = __importDefault(require("p-map"));
 const p_filter_1 = __importDefault(require("p-filter"));
-const p_reduce_1 = __importDefault(require("p-reduce"));
 const p_every_1 = __importDefault(require("p-every"));
 const prraypromise_1 = require("./prraypromise");
 exports.everyAsync = function (tester, concurrency) {
@@ -55,7 +54,24 @@ exports.filterAsync = function (filterer, concurrency) {
     const prom = this.then((r) => concurrency ? p_filter_1.default(r, filterer, { concurrency }) : p_filter_1.default(r, filterer));
     return prraypromise_1.prraypromise(prom);
 };
-exports.reduceAsync = function (reducer, initialValue, concurrency) {
-    const prom = this.then((r) => concurrency ? p_reduce_1.default(r, reducer, initialValue, { concurrency }) : p_reduce_1.default(r, reducer, initialValue));
-    return ppromise_1.ppromise(prom); // TODO: 如果是 array，考虑返回 prraypromise
+async function reduce(datas, reducer, init) {
+    // TODO: Better implementation
+    let result;
+    let slices;
+    if (init === undefined) {
+        result = datas[0];
+        slices = datas.slice(1);
+    }
+    else {
+        result = init;
+        slices = datas;
+    }
+    for (let ix = 0; ix < slices.length; ix++) {
+        result = await reducer(result, slices[ix], ix);
+    }
+    return result;
+}
+exports.reduceAsync = function (reducer, initialValue) {
+    const prom = this.then((r) => reduce(r, reducer, initialValue));
+    return ppromise_1.ppromise(prom); // TODO: if return promise<array>, returns prraypromise<array>???
 };

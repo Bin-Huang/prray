@@ -9,8 +9,11 @@ export class Prray<T> extends Array<T> {
   mapAsync<U>(mapper: IMapper<T, U>, concurrency?: number): PrrayPromise<U> {
     return prraypromise(Promise.resolve(this)).mapAsync(mapper, concurrency)
   }
-  filterAsync<U>(filterer: ITester<T>, concurrency?: number): PrrayPromise<T> { return prraypromise(Promise.resolve(this)).filterAsync(filterer, concurrency) } reduceAsync<U>(reducer: IReducer<T, U>, initialValue: U, concurrency?: number): PPromise<U> {
-    return prraypromise(Promise.resolve(this)).reduceAsync(reducer, initialValue, concurrency)
+  filterAsync<U>(filterer: ITester<T>, concurrency?: number): PrrayPromise<T> {
+    return prraypromise(Promise.resolve(this)).filterAsync(filterer, concurrency)
+  }
+  reduceAsync<U>(reducer: IReducer<T, U>, initialValue: U): PPromise<U> {
+    return prraypromise(Promise.resolve(this)).reduceAsync(reducer, initialValue)
   }
   everyAsync(tester: ITester<T>, concurrency?: number): Promise<boolean> {
     return prraypromise(Promise.resolve(this)).everyAsync(tester, concurrency)
