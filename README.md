@@ -16,6 +16,33 @@ const p = require('prray')
 })()
 ```
 
+## Different from [Bluebird](https://github.com/petkaantonov/bluebird)
+
+**First**, prray does not provide another implementation of promise, which is essentially different from Bluebird.
+
+**Secondly**, prray aims to provide a better way to handle asynchronous batch operations on data. In this aspect, maybe you work well with Bluebird's methods such as `all` and `map`, but prray gives you another option more appropriate in some cases.
+
+```javascript
+const urls = [ /* some urls */ ]
+
+// use prray
+await p(urls).mapAsync(fetch)
+  .filterAsync(isExisted)
+  .mapAsync(saveAsync)
+
+// use bluebird
+await Bluebird.mapAsync(await Bluebird.filter(await Bluebird.map(urls, fetch), isExisted), saveAsync)
+
+// use bluebird and prettier
+let responses = await Bluebird.map(urls, fetch)
+responses = await Bluebird.filter(responses, isExisted)
+await Bluebird.map(responses, saveAsync)
+```
+
+If you want a good promise implementation, this is bluebird.
+
+If you want to handle asynchronous batch operations on data, prray is a option for you.
+
 ## Installation
 
 npm:
