@@ -112,7 +112,7 @@ await p(filenames).filterAsync(async (filename, ix) => {
 })
 ```
 
-### reduceAsync(reducer, initialValue, concurrency?)
+### reduceAsync(reducer, initialValue)
 
 an async version of Array#reduce
 
@@ -174,6 +174,8 @@ You may optionally specify a concurrency limit when calling async method. It is 
 await p(urls).mapAsync(fetch, 10) // concurrency limit 10
 ```
 
+> NOTE: method `reduceAsync` does NOT support concurrency limit, its concurrency is alway 1.
+
 ## Compatible with Array
 
 ```javascript
@@ -199,8 +201,8 @@ console.log(p.toArray())  // [1,2,3]
 
 Prray has not yet reached version 1.0.0, which means there is still much work to be done, including but not limited to:
 
-[x] Concurrency
-- [ ] An appropriate logo
+- [x] Concurrency
+- [ ] An logo with well-designed
 - [ ] Sub-task promise supports `timeout`, such like `await prr.mapAsync(fetch, {timeout: 3000})`
 - [ ] Sub-task promise supports `retry` when rejected, such like `await prr.mapAsync(fetch, {retries: 2})`
 - [ ] Browser compatibility survey
