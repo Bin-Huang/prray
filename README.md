@@ -16,9 +16,23 @@ const p = require('prray')
 })()
 ```
 
+## Installation
+
+npm:
+
+```
+npm install prray --save
+```
+
+yarn:
+
+```
+yarn add prray
+```
+
 ## Prray
 
-Get a prray from existing array using function `p`
+Get a prray from existing array using function `p`.
 
 ```javascript
 const p = require('prray')
@@ -42,7 +56,7 @@ prray.mapAsync(funcAsync).then(console.log)
 ```javascript
 await p(arr).filterAsync(existAsync).mapAsync(postAsync)
 
-// equal to:
+// equals to:
 
 let existed = await p(arr).filterAsync(existAsync)
 await existed.mapAsync(postAsync)
