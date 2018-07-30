@@ -199,14 +199,11 @@ console.log(p.toArray())  // [1,2,3]
 
 ## TODO
 
-Prray has not yet reached version 1.0.0, which means there is still much work to be done, including but not limited to:
-
 - [x] Concurrency
-- [ ] An logo with well-designed
+- [ ] A well-designed logo
 - [ ] Sub-task promise supports `timeout`, such like `await prr.mapAsync(fetch, {timeout: 3000})`
 - [ ] Sub-task promise supports `retry` when rejected, such like `await prr.mapAsync(fetch, {retries: 2})`
 - [ ] Browser compatibility survey
 - [ ] Prettier document
+- [ ] Revise documentation, including syntax errors
 - ...
-
-So, welcome  `fork`, `Pull Request` and `Issues` if have any suggestions and bugs 
