@@ -6,6 +6,8 @@
   "scripts": {
     "test": "ava dist/test/test.js"
   },
+	"repository": "Bin-Huang/prray",
+	"homepage": "https://github.com/Bin-Huang/prray",
   "keywords": [
     "promise",
     "array",
