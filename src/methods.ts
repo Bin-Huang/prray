@@ -1,7 +1,7 @@
 import { PPromise, ppromise } from './ppromise'
 import pMap from 'p-map'
 import pFilter from 'p-filter'
-import pReduce from 'p-reduce'
+// import pReduce from 'p-reduce'
 import pEvery from 'p-every'
 import { PrrayPromise, prraypromise } from './prraypromise'
 

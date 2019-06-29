@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ppromise_1 = require("./ppromise");
 const p_map_1 = __importDefault(require("p-map"));
 const p_filter_1 = __importDefault(require("p-filter"));
+// import pReduce from 'p-reduce'
 const p_every_1 = __importDefault(require("p-every"));
 const prraypromise_1 = require("./prraypromise");
 exports.everyAsync = function (tester, concurrency) {
