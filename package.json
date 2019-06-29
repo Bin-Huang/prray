@@ -1,6 +1,6 @@
 {
   "name": "prray",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "promise-version array, support `mapAsync`, `filterAsync` and `reduceAsync`",
   "main": "./dist/src/index",
   "scripts": {
