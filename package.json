@@ -1,13 +1,13 @@
 {
   "name": "prray",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "promise-version array, support `mapAsync`, `filterAsync` and `reduceAsync`",
   "main": "./dist/src/index",
   "scripts": {
     "test": "ava dist/test/test.js"
   },
-	"repository": "Bin-Huang/prray",
-	"homepage": "https://github.com/Bin-Huang/prray",
+  "repository": "Bin-Huang/prray",
+  "homepage": "https://github.com/Bin-Huang/prray",
   "keywords": [
     "promise",
     "array",
