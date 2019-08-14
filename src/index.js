@@ -6,9 +6,9 @@
 
 import { Prray } from './prray'
 
-function p<T>(arr: T[]): Prray<T> {
+function p(arr) {
   if (arr.length === 1) {
-    const prr = new Prray(1) as Prray<any>
+    const prr = new Prray(1)
     prr[0] = arr[0]
     return prr
   }

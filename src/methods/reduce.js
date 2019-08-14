@@ -1,12 +1,4 @@
-import { PrrayPromise } from '../prraypromise'
-
-export type IReduce = <T, S>(
-  this: PrrayPromise<T>,
-  reducer: (pre: S, current: T, index: number) => S | Promise<S>,
-  initialValue?: S
-) => Promise<S> 
-
-async function _reduce(datas: any[], reducer, init?) {
+async function _reduce(datas, reducer, init) {
   // TODO: Better implementation
   let result
   let slices
@@ -23,7 +15,9 @@ async function _reduce(datas: any[], reducer, init?) {
   return result
 }
 
-export const reduce: IReduce = function (reducer, initialValue?) {
+const reduce = function (reducer, initialValue) {
   const prom = this.then((r) => _reduce(r, reducer, initialValue))
   return prom // TODO: if return promise<array>, returns prraypromise<array>???
 }
+
+module.exports = reduce
