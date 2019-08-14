@@ -1,17 +1,12 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const methods = __importStar(require("./methods"));
+const index_1 = require("./methods/index");
 function prraypromise(promise) {
-    for (const method in methods) {
-        promise[method] = methods[method];
+    const p = promise;
+    // monkey patch
+    for (const name in index_1.methods) {
+        p[name] = index_1.methods[name];
     }
-    return promise;
+    return p;
 }
 exports.prraypromise = prraypromise;
