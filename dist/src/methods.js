@@ -3,10 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ppromise_1 = require("./ppromise");
 const p_map_1 = __importDefault(require("p-map"));
 const p_filter_1 = __importDefault(require("p-filter"));
-// import pReduce from 'p-reduce'
 const p_every_1 = __importDefault(require("p-every"));
 const prraypromise_1 = require("./prraypromise");
 exports.everyAsync = function (tester, concurrency) {
@@ -74,5 +72,5 @@ async function reduce(datas, reducer, init) {
 }
 exports.reduceAsync = function (reducer, initialValue) {
     const prom = this.then((r) => reduce(r, reducer, initialValue));
-    return ppromise_1.ppromise(prom); // TODO: if return promise<array>, returns prraypromise<array>???
+    return prom; // TODO: if return promise<array>, returns prraypromise<array>???
 };

@@ -1,7 +1,5 @@
-import { PPromise, ppromise } from './ppromise'
 import pMap from 'p-map'
 import pFilter from 'p-filter'
-// import pReduce from 'p-reduce'
 import pEvery from 'p-every'
 import { PrrayPromise, prraypromise } from './prraypromise'
 
@@ -84,7 +82,7 @@ export const filterAsync: IFilterAsync = function (filterer, concurrency) {
 
 export type IReducer<T,U> = (pre: U, current: T, index: number) => U | Promise<U>
 export interface IReduceAsync {
-  <T, S>(this: PrrayPromise<T>, reducer: IReducer<T, S>, initialValue?: S): PPromise<S> 
+  <T, S>(this: PrrayPromise<T>, reducer: IReducer<T, S>, initialValue?: S): Promise<S> 
 }
 async function reduce(datas: any[], reducer, init?) {
   // TODO: Better implementation
@@ -104,5 +102,5 @@ async function reduce(datas: any[], reducer, init?) {
 }
 export const reduceAsync: IReduceAsync = function (reducer, initialValue?) {
   const prom = this.then((r) => reduce(r, reducer, initialValue))
-  return ppromise(prom)// TODO: if return promise<array>, returns prraypromise<array>???
+  return prom // TODO: if return promise<array>, returns prraypromise<array>???
 }

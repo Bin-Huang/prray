@@ -1,4 +1,3 @@
-import { PPromise, ppromise } from './ppromise'
 import {
   IMapAsync,
   IFilterAsync,
@@ -11,7 +10,7 @@ import {
 } from './methods'
 import * as methods from './methods'
 
-export interface PrrayPromise<T> extends PPromise<T[]> {
+export interface PrrayPromise<T> extends Promise<T[]> {
   mapAsync: IMapAsync
   filterAsync: IFilterAsync
   reduceAsync: IReduceAsync

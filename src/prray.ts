@@ -1,4 +1,3 @@
-import { PPromise } from './ppromise'
 import { prraypromise, PrrayPromise } from './prraypromise'
 import { IMapper, ITester, IReducer } from './methods'
 
@@ -9,10 +8,10 @@ export class Prray<T> extends Array<T> {
   mapAsync<U>(mapper: IMapper<T, U>, concurrency?: number): PrrayPromise<U> {
     return prraypromise(Promise.resolve(this)).mapAsync(mapper, concurrency)
   }
-  filterAsync<U>(filterer: ITester<T>, concurrency?: number): PrrayPromise<T> {
+  filterAsync(filterer: ITester<T>, concurrency?: number): PrrayPromise<T> {
     return prraypromise(Promise.resolve(this)).filterAsync(filterer, concurrency)
   }
-  reduceAsync<U>(reducer: IReducer<T, U>, initialValue: U): PPromise<U> {
+  reduceAsync<U>(reducer: IReducer<T, U>, initialValue: U): Promise<U> {
     return prraypromise(Promise.resolve(this)).reduceAsync(reducer, initialValue)
   }
   everyAsync(tester: ITester<T>, concurrency?: number): Promise<boolean> {
