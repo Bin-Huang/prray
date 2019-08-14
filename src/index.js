@@ -4,7 +4,7 @@
  * 2018-7-25
  */
 
-import { Prray } from './prray'
+const Prray = require('./prray')
 
 function p(arr) {
   if (arr.length === 1) {
@@ -16,4 +16,3 @@ function p(arr) {
 }
 
 module.exports = p
-export default p

@@ -1,6 +1,6 @@
 const prraypromise = require('./prraypromise')
 
-export class Prray extends Array {
+module.exports = class Prray extends Array {
   constructor(...arg) {
     super(...arg)
   }

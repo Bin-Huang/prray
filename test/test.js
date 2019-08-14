@@ -1,6 +1,6 @@
 import test from 'ava'
-import { prraypromise } from '../src/prraypromise'
-import { Prray } from '../src/prray'
+const prraypromise = require('../src/prraypromise')
+const Prray = require('../src/prray')
 import delay from 'delay'
 import p from '../src';
 
