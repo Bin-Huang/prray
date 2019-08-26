@@ -1,7 +1,17 @@
-const pMap = require('p-map')
 const prraypromise = require('../prraypromise')
+const { wait } = require('../utils')
 
-module.exports = function (mapper, concurrency) {
-  const prom = this.then((r) => concurrency ? pMap(r, mapper, {concurrency}) : pMap(r, mapper))
-  return prraypromise(prom)
+function map (mapper) {
+  if (this instanceof Promise) {
+    const promise = this.then((r) => _map(r, mapper))
+    return prraypromise(promise)
+  }
+  return prraypromise(_map(this, mapper))
 }
+
+function _map(arr, mapper) {
+  const result = arr.map(mapper)
+  return wait(result)
+}
+
+module.exports = map

@@ -1,8 +1,10 @@
 const methods = require('./methods/index')
 
-module.exports = function (promise) {
+function prraypromise (promise) {
   for (const name in methods) {
     promise[name] = methods[name]
   }
   return promise
 }
+
+module.exports = prraypromise
