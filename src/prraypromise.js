@@ -1,9 +1,9 @@
 const methods = require('./methods/index')
-const Prray = require('./prray')
 
 class PrrayPromise extends Promise {
-  constructor(props) {
+  constructor(props, Prray) {
     super(props)
+    this.Prray = Prray
   }
   map(mapper) {
     return this.then((arr) => {
@@ -15,17 +15,17 @@ class PrrayPromise extends Promise {
       if (result.some((v) => v instanceof Promise)) {
         return prraypromise(Promise.all(result))
       }
-      return new Prray(...result)
+      return new this.Prray(...result)
     })
   }
 }
 
-function prraypromise(promise) {
+function prraypromise(promise, Prray) {
   if (promise instanceof Promise) {
     return new PrrayPromise((resolve, reject) => {
       promise.then(resolve)
       promise.catch(reject)
-    })
+    }, Prray)
   }
   throw new Error('expected promise')
 }

@@ -14,7 +14,7 @@ module.exports = class Prray extends Array {
     }
 
     if (result.some((v) => v instanceof Promise)) {
-      return prraypromise(Promise.all(result))
+      return prraypromise(Promise.all(result), Prray)
     }
     return new Prray(...result)
   }
