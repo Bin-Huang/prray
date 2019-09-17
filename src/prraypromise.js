@@ -4,16 +4,19 @@ class PrrayPromise extends Promise {
   constructor(props) {
     super(props)
   }
+  map(mapper) {
+    return methods.map(mapper).bind(this)
+  }
 }
 
 function prraypromise(promise) {
-  promise['map'] = function (mapper) {
-    const promise = this.then(() => {
-      const result = methods.map.bind(this)(mapper)
-      return prraypromise(result)
+  if (promise instanceof Promise) {
+    return new PrrayPromise((resolve, reject) => {
+      promise.then(resolve)
+      promise.catch(reject)
     })
-    return prraypromise(promise)
   }
-  return promise
+  throw new Error('expected promise')
 }
-module.exports = prraypromise
+
+module.exports = { PrrayPromise, prraypromise }
