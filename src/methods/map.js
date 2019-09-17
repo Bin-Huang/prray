@@ -1,16 +1,18 @@
-const prraypromise = require('../prraypromise')
 const { wait } = require('../utils')
 
 function map (mapper) {
   if (this instanceof Promise) {
     const promise = this.then((r) => _map(r, mapper))
-    return prraypromise(promise)
+    return promise
   }
-  return prraypromise(_map(this, mapper))
+  return _map(this, mapper)
 }
 
 function _map(arr, mapper) {
-  const result = arr.map(mapper)
+  const result = []
+  for (const item of arr) {
+    result.push(mapper(item))
+  }
   return wait(result)
 }
 

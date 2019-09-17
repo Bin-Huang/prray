@@ -5,6 +5,6 @@ module.exports = class Prray extends Array {
     super(...arg)
   }
   map(mapper) {
-    methods.map(mapper).bind(this)
+    return methods.map(mapper).bind(this)
   }
 }

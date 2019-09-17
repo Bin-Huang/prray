@@ -1,8 +1,19 @@
 const methods = require('./methods/index')
 
-module.exports = function (promise) {
-  for (const name in methods) {
-    promise[name] = methods[name]
+class PrrayPromise extends Promise {
+  constructor(props) {
+    super(props)
+  }
+}
+
+function prraypromise(promise) {
+  promise['map'] = function (mapper) {
+    const promise = this.then(() => {
+      const result = methods.map.bind(this)(mapper)
+      return prraypromise(result)
+    })
+    return prraypromise(promise)
   }
   return promise
 }
+module.exports = prraypromise
