@@ -5,6 +5,11 @@ function wait(result) {
   return result
 }
 
+function delay(ms) {
+  return new Promise((resolve, reject) => setTimeout(resolve, ms))
+}
+
 module.exports = {
-  wait
+  wait,
+  delay
 }

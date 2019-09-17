@@ -1,7 +1,8 @@
 import test from 'ava'
-const prraypromise = require('../src/prraypromise')
+const { prraypromise } = require('../src/prraypromise')
 const Prray = require('../src/prray')
-const delay = require('delay')
+const { delay } = require('../src/utils')
+
 
 test('array compatibility', (t) => {
   const p = new Prray(1,2,3,4)
