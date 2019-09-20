@@ -1,33 +1,38 @@
-const methods = require('./methods/index')
+const { map, filter } = require('./methods')
+
+let Prray
+function setPrray(theClass) {
+  Prray = theClass
+}
 
 class PrrayPromise extends Promise {
-  constructor(props, Prray) {
+  constructor(props) {
     super(props)
-    this.Prray = Prray
   }
   map(mapper) {
-    return this.then((arr) => {
-      const result = []
-      for (const v of arr) {
-        result.push(mapper(v))
-      }
-
-      if (result.some((v) => v instanceof Promise)) {
-        return prraypromise(Promise.all(result))
-      }
-      return new this.Prray(...result)
-    })
+    const promise = this.then(v => map(v, mapper))
+    return prraypromise(promise)
+  }
+  filter(func) {
+    const promise = this.then(v => filter(v, func))
+    return prraypromise(promise)
   }
 }
 
-function prraypromise(promise, Prray) {
+function prraypromise(promise) {
   if (promise instanceof Promise) {
     return new PrrayPromise((resolve, reject) => {
-      promise.then(resolve)
+      promise.then((v) => {
+        if (v instanceof Array) {
+          resolve(new Prray(...v))
+        } else {
+          resolve(v)
+        }
+      })
       promise.catch(reject)
-    }, Prray)
+    })
   }
   throw new Error('expected promise')
 }
 
-module.exports = { PrrayPromise, prraypromise }
+module.exports = { PrrayPromise, prraypromise, setPrray }

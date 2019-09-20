@@ -1,21 +1,20 @@
-const methods = require('./methods/index')
-const { prraypromise } = require('./prraypromise')
+const { prraypromise, setPrray } = require('./prraypromise')
+const { map, filter } = require('./methods')
 
-module.exports = class Prray extends Array {
+class Prray extends Array {
   constructor(...arg) {
     super(...arg)
   }
   map(mapper) {
-    console.log(this)
-
-    const result = []
-    for (const v of this) {
-      result.push(mapper(v))
-    }
-
-    if (result.some((v) => v instanceof Promise)) {
-      return prraypromise(Promise.all(result), Prray)
-    }
-    return new Prray(...result)
+    const promise = map(this, mapper)
+    return prraypromise(promise)
+  }
+  filter(func) {
+    const promise = filter(this, func)
+    return prraypromise(promise)
   }
 }
+
+setPrray(Prray)
+
+module.exports = Prray
