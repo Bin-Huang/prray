@@ -1,23 +1,29 @@
 const { prraypromise, setPrray } = require('./prraypromise')
-const { map, filter, find, findIndex } = require('./methods')
+const methods = require('./methods')
 
 class Prray extends Array {
   constructor(...arg) {
     super(...arg)
   }
   map(mapper) {
-    const promise = map(this, mapper)
+    const promise = methods.map(this, mapper)
     return prraypromise(promise)
   }
   filter(func) {
-    const promise = filter(this, func)
+    const promise = methods.filter(this, func)
     return prraypromise(promise)
   }
   find(func) {
-    return find(this, func)
+    return methods.find(this, func)
   }
   findIndex(func) {
-    return findIndex(this, func)
+    return methods.findIndex(this, func)
+  }
+  every(func) {
+    return methods.every(this, func)
+  }
+  some(func) {
+    return methods.some(this, func)
   }
 }
 

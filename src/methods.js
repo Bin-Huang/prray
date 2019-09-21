@@ -49,10 +49,32 @@ async function find(arr, func) {
   return undefined
 }
 
+async function every(arr, func) {
+  const conds = await map(arr, func)  // 可以优化
+  for (const cond of conds) {
+    if (!cond) {
+      return false
+    }
+  }
+  return true
+}
+
+async function some(arr, func) {
+  const conds = await map(arr, func)  // 可以优化
+  for (const cond of conds) {
+    if (cond) {
+      return true
+    }
+  }
+  return false
+}
+
 module.exports = {
   map,
   filter,
   reduce,
   find,
   findIndex,
+  every,
+  some,
 }
