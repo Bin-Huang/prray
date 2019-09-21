@@ -13,6 +13,10 @@ class Prray extends Array {
     const promise = methods.filter(this, func)
     return prraypromise(promise)
   }
+  sort(func) {
+    const promise = methods.sort(this, func)
+    return prraypromise(promise)
+  }
   find(func) {
     return methods.find(this, func)
   }

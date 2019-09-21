@@ -69,6 +69,28 @@ async function some(arr, func) {
   return false
 }
 
+async function sort(arr, func) {
+  if (!func) {
+    return [...arr].sort()
+  }
+  if (arr.length < 2) {
+    return arr
+  }
+  // 插入排序
+  for(let i = 1;i < arr.length; i++){
+    for(let j = 0;j<i;j++){
+      const a = arr[i]
+      const b = arr[j]
+      if(await func(a, b) < 0){
+        arr.splice(i,1)
+        arr.splice(j,0,a)
+        break
+      }
+    }
+  }
+  return arr
+}
+
 async function forEach(arr, func) {
   await map(arr, func)
 }
@@ -82,4 +104,5 @@ module.exports = {
   every,
   some,
   forEach,
+  sort,
 }

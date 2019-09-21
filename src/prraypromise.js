@@ -17,6 +17,10 @@ class PrrayPromise extends Promise {
     const promise = this.then(v => methods.filter(v, func))
     return prraypromise(promise)
   }
+  sort(func) {
+    const promise = this.then(v => methods.sort(v, func))
+    return prraypromise(promise)
+  }
   find(func) {
     return this.then(v => methods.find(v, func))
   }
