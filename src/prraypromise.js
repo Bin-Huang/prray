@@ -29,6 +29,9 @@ class PrrayPromise extends Promise {
   some(func) {
     return this.then(v => methods.some(v, func))
   }
+  forEach(func) {
+    return this.then(v => methods.forEach(v, func))
+  }
 }
 
 function prraypromise(promise) {

@@ -2,7 +2,7 @@ async function map(arr, func) {
   const result = []
   for (let ix = 0; ix < arr.length; ix++) {
     const v = arr[ix]
-    result.push(func(v, ix))
+    result.push(func(v, ix, arr))
   }
   return Promise.all(result)
 }
@@ -69,6 +69,10 @@ async function some(arr, func) {
   return false
 }
 
+async function forEach(arr, func) {
+  await map(arr, func)
+}
+
 module.exports = {
   map,
   filter,
@@ -77,4 +81,5 @@ module.exports = {
   findIndex,
   every,
   some,
+  forEach,
 }

@@ -25,6 +25,9 @@ class Prray extends Array {
   some(func) {
     return methods.some(this, func)
   }
+  forEach(func) {
+    return methods.forEach(this, func)
+  }
 }
 
 setPrray(Prray)
