@@ -29,8 +29,30 @@ function reduce(arr, func, initialValue) {
   return result
 }
 
+async function findIndex(arr, func) {
+  const conds = await map(arr, func)  // 可以优化
+  for (let ix = 0; ix < conds.length; ix++) {
+    if (conds[ix]) {
+      return ix
+    }
+  }
+  return -1
+}
+
+async function find(arr, func) {
+  const conds = await map(arr, func)  // 可以优化
+  for (let ix = 0; ix < conds.length; ix++) {
+    if (conds[ix]) {
+      return arr[ix]
+    }
+  }
+  return undefined
+}
+
 module.exports = {
   map,
   filter,
   reduce,
+  find,
+  findIndex,
 }

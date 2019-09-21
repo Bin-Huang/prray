@@ -4,7 +4,7 @@
   "description": "promise-version array, support `mapAsync`, `filterAsync` and `reduceAsync`",
   "main": "./src/index",
   "scripts": {
-    "test": "ava test/test.js"
+    "test": "ava test/*.test.js"
   },
   "repository": "Bin-Huang/prray",
   "homepage": "https://github.com/Bin-Huang/prray",

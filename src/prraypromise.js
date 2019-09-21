@@ -1,4 +1,4 @@
-const { map, filter } = require('./methods')
+const { map, filter, find, findIndex } = require('./methods')
 
 let Prray
 function setPrray(theClass) {
@@ -16,6 +16,12 @@ class PrrayPromise extends Promise {
   filter(func) {
     const promise = this.then(v => filter(v, func))
     return prraypromise(promise)
+  }
+  find(func) {
+    return this.then(v => find(v, func))
+  }
+  findIndex(func) {
+    return this.then(v => findIndex(v, func))
   }
 }
 
