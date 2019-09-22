@@ -79,12 +79,10 @@ async function sort(arr, func) {
   // 插入排序
   for(let i = 1;i < arr.length; i++){
     for(let j = 0;j<i;j++){
-      const a = arr[i]
-      const b = arr[j]
-      if(await func(a, b) < 0){
-        arr.splice(i,1)
-        arr.splice(j,0,a)
-        break
+      if ((await func(arr[i], arr[j])) < 0) {
+        arr.splice(j,0,arr[i]);
+        arr.splice(i+1,1);
+        break;
       }
     }
   }

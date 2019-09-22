@@ -41,11 +41,11 @@ class PrrayPromise extends Promise {
 function prraypromise(promise) {
   if (promise instanceof Promise) {
     return new PrrayPromise((resolve, reject) => {
-      promise.then((v) => {
-        if (v instanceof Array) {
-          resolve(new Prray(...v))
+      promise.then((arr) => {
+        if (arr instanceof Array) {
+          resolve(new Prray(arr))
         } else {
-          resolve(v)
+          resolve(arr)
         }
       })
       promise.catch(reject)

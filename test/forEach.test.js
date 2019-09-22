@@ -5,26 +5,38 @@ const Prray = require('../src/prray')
 const { delay } = require('./test-utils')
 
 test('prray forEach', async (t) => {
-  const result = []
-  await new Prray(1,2,3).forEach(async (v) => {
+  const result1 = []
+  await new Prray([1,2,3]).forEach(async (v) => {
     await delay(100)
-    result.push(v + 1)
+    result1.push(v + 1)
   })
-  t.deepEqual(result, [2,3,4])
+  t.deepEqual(result1, [2,3,4])
+
+  const result2 = []
+  await new Prray([1,2,3]).forEach((v) => {
+    result2.push(v + 1)
+  })
+  t.deepEqual(result2, [2,3,4])
 })
 
 test('prraypromise forEach', async (t) => {
-  const result = []
+  const result1 = []
   await prraypromise(Promise.resolve([1,2,3])).forEach(async (v) => {
     await delay(100)
-    result.push(v + 1)
+    result1.push(v + 1)
   })
-  t.deepEqual(result, [2,3,4])
+  t.deepEqual(result1, [2,3,4])
+
+  const result2 = []
+  await prraypromise(Promise.resolve([1,2,3])).forEach((v) => {
+    result2.push(v + 1)
+  })
+  t.deepEqual(result2, [2,3,4])
 })
 
 test('prray forEach compatibility', async (t) => {
   const func = sinon.fake()
-  const prray = new Prray('a', 'b', 'c')
+  const prray = new Prray(['a', 'b', 'c'])
   await prray.forEach(func)
 
   t.is(func.called, true)
@@ -53,13 +65,13 @@ test('prraypromise forEach compatibility', async (t) => {
 
   t.is(func.args[0][0], 'a')
   t.is(func.args[0][1], 0)
-  t.deepEqual(func.args[0][2], new Prray('a', 'b', 'c'))
+  t.deepEqual(func.args[0][2], new Prray(['a', 'b', 'c']))
 
   t.is(func.args[1][0], 'b')
   t.is(func.args[1][1], 1)
-  t.deepEqual(func.args[1][2], new Prray('a', 'b', 'c'))
+  t.deepEqual(func.args[1][2], new Prray(['a', 'b', 'c']))
 
   t.is(func.args[2][0], 'c')
   t.is(func.args[2][1], 2)
-  t.deepEqual(func.args[2][2], new Prray('a', 'b', 'c'))
+  t.deepEqual(func.args[2][2], new Prray(['a', 'b', 'c']))
 })

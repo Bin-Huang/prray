@@ -2,8 +2,15 @@ const { prraypromise, setPrray } = require('./prraypromise')
 const methods = require('./methods')
 
 class Prray extends Array {
-  constructor(...arg) {
-    super(...arg)
+  constructor(arr) {
+    if (typeof arr === 'number') {
+      super(arr)
+    } else if (arr.length === 1) {
+        super()
+        this[0] = arr[0]
+    } else {
+      super(...arr)
+    }
   }
   map(mapper) {
     const promise = methods.map(this, mapper)
