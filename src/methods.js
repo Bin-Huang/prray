@@ -19,14 +19,18 @@ async function filter(arr, func) {
   return result
 }
 
-// TODO: 
-function reduce(arr, func, initialValue) {
-  let result = initialValue
-  for (let ix = 0; ix < arr.length; ix++) {
-    const v = arr[ix]
-    result = func(result, v, ix)
+async function reduce(arr, func, initialValue) {
+  let pre = initialValue
+  let ix = 0
+  if (initialValue === undefined) {
+    pre = arr[0]
+    ix = 1
   }
-  return result
+  for (ix; ix < arr.length; ix++) {
+    const current = arr[ix]
+    pre = await func(pre, current, ix, arr)
+  }
+  return pre
 }
 
 async function findIndex(arr, func) {
