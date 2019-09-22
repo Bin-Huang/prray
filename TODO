@@ -1,1 +1,14 @@
-- prraypromise support common sync method, such as `map`, `indexOf`
+// ;[].push();
+// [].join();
+// [].concat();
+// [].copyWithin();
+// [].entries();
+// [].fill();
+// [].includes();
+// [].join();
+// [].keys();
+// [].pop();
+// [].shift();
+// [].unshift();
+// [].splice();
+// [].lastIndexOf();

@@ -2,15 +2,8 @@ const { prraypromise, setPrray } = require('./prraypromise')
 const methods = require('./methods')
 
 class Prray extends Array {
-  constructor(arr) {
-    if (typeof arr === 'number') {
-      super(arr)
-    } else if (arr.length === 1) {
-        super()
-        this[0] = arr[0]
-    } else {
-      super(...arr)
-    }
+  constructor(...args) {
+    super(...args)
   }
   map(mapper) {
     const promise = methods.map(this, mapper)
@@ -50,10 +43,20 @@ class Prray extends Array {
   slice(start, end) {
     // 虽然原生 slice 也可以返回 Prray，但为了兼容其他环境(比如其他浏览器实现)，因此覆盖
     const result = methods.slice(this, start, end)
-    return new Prray(result)
+    return prray(result)
   }
 }
 
-setPrray(Prray)
+function prray(arr) {
+  if (arr.length === 1) {
+    const prr = new Prray()
+    prr[0] = arr[0]
+    return prr
+  } else {
+    return new Prray(...arr)
+  }
+}
 
-module.exports = Prray
+setPrray(prray)
+
+module.exports = { Prray, prray }

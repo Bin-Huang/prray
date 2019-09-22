@@ -1,8 +1,8 @@
 const methods = require('./methods')
 
-let Prray
-function setPrray(theClass) {
-  Prray = theClass
+let prrayConvertor
+function setPrray(thePrrayConvertor) {
+  prrayConvertor = thePrrayConvertor
 }
 
 class PrrayPromise extends Promise {
@@ -55,7 +55,7 @@ function prraypromise(promise) {
     return new PrrayPromise((resolve, reject) => {
       promise.then((arr) => {
         if (arr instanceof Array) {
-          resolve(new Prray(arr))
+          resolve(prrayConvertor(arr))
         } else {
           resolve(arr)
         }

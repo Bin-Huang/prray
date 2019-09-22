@@ -1,14 +1,14 @@
 import test from 'ava'
-const Prray = require('../src/prray')
+const { prray, Prray } = require('../src/prray')
 
 test('array compatibility', async (t) => {
-  const p = new Prray([1,2,3,4])
+  const p = prray([1,2,3,4])
   t.is(Array.isArray(p), true)
   t.is(p instanceof Prray, true)
   t.is(p instanceof Array, true)
   t.is(p.length, 4)
   t.is(p[0], 1)
-  t.deepEqual(await p.map((i) => i + 1), new Prray([2,3,4,5]))
+  t.deepEqual(await p.map((i) => i + 1), prray([2,3,4,5]))
   t.deepEqual([...p], [1,2,3,4])
   t.deepEqual(JSON.stringify(p), JSON.stringify([1,2,3,4]))
 

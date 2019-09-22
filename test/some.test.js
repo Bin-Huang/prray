@@ -1,10 +1,10 @@
 import test from 'ava'
 const { prraypromise } = require('../src/prraypromise')
-const Prray = require('../src/prray')
+const { prray } = require('../src/prray')
 const { isGte3Async, isGte3 } = require('./test-utils')
 
-const p1 = new Prray([1,3])
-const p2 = new Prray([1,2])
+const p1 = prray([1,3])
+const p2 = prray([1,2])
 
 const pp1 = prraypromise(Promise.resolve([1,3]))
 const pp2 = prraypromise(Promise.resolve([1,2]))
