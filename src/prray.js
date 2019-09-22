@@ -1,4 +1,4 @@
-const { prraypromise, setPrray } = require('./prraypromise')
+const { prraypromise, setPrrayConvertor } = require('./prraypromise')
 const methods = require('./methods')
 
 class Prray extends Array {
@@ -57,6 +57,6 @@ function prray(arr) {
   }
 }
 
-setPrray(prray)
+setPrrayConvertor(prray)
 
 module.exports = { Prray, prray }

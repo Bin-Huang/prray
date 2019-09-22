@@ -1,7 +1,7 @@
 const methods = require('./methods')
 
 let prrayConvertor
-function setPrray(thePrrayConvertor) {
+function setPrrayConvertor(thePrrayConvertor) {
   prrayConvertor = thePrrayConvertor
 }
 
@@ -66,4 +66,4 @@ function prraypromise(promise) {
   throw new Error('expected promise')
 }
 
-module.exports = { PrrayPromise, prraypromise, setPrray }
+module.exports = { PrrayPromise, prraypromise, setPrrayConvertor }
