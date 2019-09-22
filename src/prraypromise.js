@@ -44,6 +44,10 @@ class PrrayPromise extends Promise {
   forEach(func) {
     return this.then(v => methods.forEach(v, func))
   }
+  slice(start, end) {
+    const promise = this.then(v => methods.slice(v, start, end))
+    return prraypromise(promise)
+  }
 }
 
 function prraypromise(promise) {

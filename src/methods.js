@@ -111,6 +111,35 @@ async function forEach(arr, func) {
   await map(arr, func)
 }
 
+function slice(arr, start = 0, end = Infinity) {
+  if (start === 0 && end === Infinity) {
+    return arr
+  }
+  if (start > arr.length) {
+    start = arr.length
+  }
+  if (start < - arr.length) {
+    start = - arr.length
+  }
+  if (end > arr.length) {
+    end = arr.length
+  }
+  if (end < - arr.length) {
+    end = - arr.length
+  }
+  if (start < 0) {
+    start = arr.length + start
+  }
+  if (end < 0) {
+    end = arr.length + end
+  }
+  const result = []
+  for (let ix = start; ix < end; ix ++) {
+    result.push(arr[ix])
+  }
+  return result
+}
+
 module.exports = {
   map,
   filter,
@@ -122,4 +151,5 @@ module.exports = {
   some,
   forEach,
   sort,
+  slice,
 }
