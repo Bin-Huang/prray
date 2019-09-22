@@ -33,6 +33,20 @@ async function reduce(arr, func, initialValue) {
   return pre
 }
 
+async function reduceRight(arr, func, initialValue) {
+  let pre = initialValue
+  let ix = arr.length - 1
+  if (initialValue === undefined) {
+    pre = arr[arr.length - 1]
+    ix = arr.length - 2
+  }
+  for (ix; ix >= 0; ix--) {
+    const current = arr[ix]
+    pre = await func(pre, current, ix, arr)
+  }
+  return pre
+}
+
 async function findIndex(arr, func) {
   const conds = await map(arr, func)  // 可以优化
   for (let ix = 0; ix < conds.length; ix++) {
@@ -101,6 +115,7 @@ module.exports = {
   map,
   filter,
   reduce,
+  reduceRight,
   find,
   findIndex,
   every,

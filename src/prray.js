@@ -24,6 +24,10 @@ class Prray extends Array {
     const promise = methods.reduce(this, func, initialValue)
     return prraypromise(promise)
   }
+  reduceRight(func, initialValue) {
+    const promise = methods.reduceRight(this, func, initialValue)
+    return prraypromise(promise)
+  }
   sort(func) {
     const promise = methods.sort(this, func)
     return prraypromise(promise)
