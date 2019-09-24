@@ -1,20 +1,134 @@
-🚀🚀🛸 An async version of `Array`, support async methods such as `mapAsync`, `filterAsync`, `reduceAsync`, `everyAsync`, `someAsync`, `findAsync`, `findIndexAsync` ...
+// TODO: talk about tests, under development
 
-You also can **chain method calls** even if them returns promise 😻!
+"Promisified" Array.
+
+Prray aims to replace original Array in some cases for convenience. Its methods comes with promise support, that is to say you can call method `map` with async function as parameter to perform ideal effect. And it's compatible with original Array as far as possible.
 
 ```javascript
-const p = require('prray')
+import { prray } from 'prray'
 
 (async () => {
-  const urls = [ /* some urls */ ]
 
-  await p(urls).mapAsync(saveToDB)
+  // Convert original array to "prray"
+  const prr = prray(['www.google.com', 'npmjs.org'])
 
-  await p(urls).mapAsync(fetch)
-    .filterAsync(isExisted)
-    .mapAsync(saveAsync)
+  // Now you can do something like this
+  const responses = await prr.map(fetch)
+
+  // Method chaining with async function works well just like with common function.
+  const htmls = await prr.map(fetch).map(r => r.text())
+
+  // You don't even have to distinguish between async function and common function.
+  await prr.filter(asyncFunc).sort(commonFunc).reduce(asyncFunc2)
+
 })()
 ```
+
+
+## Install
+
+npm
+
+```
+npm install prray --save
+```
+
+yarn
+
+```
+yarn add prray
+```
+
+
+## Compatibility with original Array
+
+```javascript
+import { prray, Prray } from 'prray'
+
+const arr = [1,2,3]
+const prr = prray(arr)
+
+prr[0]  // 1
+prr.length  // 4
+
+[...prr]  // [1,2,3]
+
+prr instanceof Array // true
+
+Array.isArray(prr) // true
+
+JSON.stringify(prr)  // "[1, 2, 3]"
+
+prr instanceof Prray // true
+```
+
+Prray is "almost" compatible with original Array, but it also has differences. As features, the way some methods works are actually quite different with original.
+
+For example, let's talk about method `map`. If calling it with async mapper, it will returns an array of promise in original Array, but returns a promise of array(prray actually) in Prray. And it will alway returns a promise whenever the mapper is async or not.
+
+The details of each method are below, and methods which different with original is marked with `*`
+
+
+## Usage
+
+#### prray(array)
+
+Method `prray` convert a normal array to prray.
+
+```javascript
+import { prray } from 'prray'
+
+const prr = prray([1,2,3])
+```
+
+#### new Prray()
+
+Class `Prray`. You can think of it as `Array`.
+
+```javascript
+import { Prray } from 'prray'
+
+new Prray()  // think of new Array()
+new Prray(1)  // think of new Array(1)
+new Prray('a', 'b')  // think of new Array('a', 'b')
+```
+
+#### * Prray.prototype.map(callback)
+
+The `map` method returns promise of a new array with the return values or the resolved values of return promises of calling a provided callback on every element. You can think of it as **an async version of `Array.prototype.map`**.
+
+- `callback(currentValue, index, prray)`
+
+```javascript
+// With async callback
+const resps = await prr.map(fetch)
+
+// With common callback
+const nums = await prr.map(v => v + 1)
+
+// Method chaining
+const jsons = await prr.map(fetch).map(res => res.json())
+```
+
+#### * Prray.prototype.filter(callback)
+
+The `filter` method returns promise of a new array with all elements that pass the test implemented by the provided function. You can think of it as **an async version of `Array.prototype.filter`**.
+
+```javascript
+// With async callback
+const existedFiles = await prr.filter(isFileExisted)
+
+// With common callback
+const evenNums = await prr.filter(v => v % 2 === 0)
+
+// Method chaining
+await prr.filter(isFileExisted).map(removeFile)
+```
+
+
+----------------------------------------------------------------------------
+
+You also can **chain method calls** even if them returns promise 😻!
 
 ## Different from [Bluebird](https://github.com/petkaantonov/bluebird)
 
@@ -206,4 +320,4 @@ console.log(p.toArray())  // [1,2,3]
 - [ ] Browser compatibility survey
 - [ ] Prettier document
 - [ ] Revise documentation, including syntax errors
-- ...
+- ......
