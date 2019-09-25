@@ -18,32 +18,32 @@ const tests = [
   genRandArr(),
 ]
 
-test('prray sort', async (t) => {
+test('prray sortAsync', async (t) => {
   for (const arr of tests) {
     const p = prray(arr)
     const expect = prray(arr.sort(func))
 
-    t.true(p.sort(funcAsync) instanceof PrrayPromise)
-    t.true(p.sort(func) instanceof PrrayPromise)
-    t.true(p.sort() instanceof PrrayPromise)
+    t.true(p.sortAsync(funcAsync) instanceof PrrayPromise)
+    t.true(p.sortAsync(func) instanceof PrrayPromise)
+    t.true(p.sortAsync() instanceof PrrayPromise)
 
-    t.deepEqual(await p.sort(funcAsync), expect)
-    t.deepEqual(await p.sort(func), expect)
-    t.deepEqual(await p.sort(), expect)
+    t.deepEqual(await p.sortAsync(funcAsync), expect)
+    t.deepEqual(await p.sortAsync(func), expect)
+    t.deepEqual(await p.sortAsync(), expect)
   }
 })
 
-test('prraypromise sort', async (t) => {
+test('prraypromise sortAsync', async (t) => {
   for (const arr of tests) {
     const pp = prraypromise(Promise.resolve(arr))
     const expect = prray(arr.sort(func))
 
-    t.true(pp.sort(funcAsync) instanceof PrrayPromise)
-    t.true(pp.sort(func) instanceof PrrayPromise)
-    t.true(pp.sort() instanceof PrrayPromise)
+    t.true(pp.sortAsync(funcAsync) instanceof PrrayPromise)
+    t.true(pp.sortAsync(func) instanceof PrrayPromise)
+    t.true(pp.sortAsync() instanceof PrrayPromise)
 
-    t.deepEqual(await pp.sort(funcAsync), expect)
-    t.deepEqual(await pp.sort(func), expect)
-    t.deepEqual(await pp.sort(), expect)
+    t.deepEqual(await pp.sortAsync(funcAsync), expect)
+    t.deepEqual(await pp.sortAsync(func), expect)
+    t.deepEqual(await pp.sortAsync(), expect)
   }
 })

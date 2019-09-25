@@ -5,39 +5,39 @@ class Prray extends Array {
   constructor(...args) {
     super(...args)
   }
-  map(mapper) {
+  mapAsync(mapper) {
     const promise = methods.map(this, mapper)
     return prraypromise(promise)
   }
-  filter(func) {
+  filterAsync(func) {
     const promise = methods.filter(this, func)
     return prraypromise(promise)
   }
-  reduce(func, initialValue) {
+  reduceAsync(func, initialValue) {
     const promise = methods.reduce(this, func, initialValue)
     return prraypromise(promise)
   }
-  reduceRight(func, initialValue) {
+  reduceRightAsync(func, initialValue) {
     const promise = methods.reduceRight(this, func, initialValue)
     return prraypromise(promise)
   }
-  sort(func) {
+  sortAsync(func) {
     const promise = methods.sort(this, func)
     return prraypromise(promise)
   }
-  find(func) {
+  findAsync(func) {
     return methods.find(this, func)
   }
-  findIndex(func) {
+  findIndexAsync(func) {
     return methods.findIndex(this, func)
   }
-  every(func) {
+  everyAsync(func) {
     return methods.every(this, func)
   }
-  some(func) {
+  someAsync(func) {
     return methods.some(this, func)
   }
-  forEach(func) {
+  forEachAsync(func) {
     return methods.forEach(this, func)
   }
   slice(start, end) {

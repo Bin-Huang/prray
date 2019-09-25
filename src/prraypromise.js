@@ -9,39 +9,39 @@ class PrrayPromise extends Promise {
   constructor(props) {
     super(props)
   }
-  map(mapper) {
+  mapAsync(mapper) {
     const promise = this.then(v => methods.map(v, mapper))
     return prraypromise(promise)
   }
-  filter(func) {
+  filterAsync(func) {
     const promise = this.then(v => methods.filter(v, func))
     return prraypromise(promise)
   }
-  reduce(func, initialValue) {
+  reduceAsync(func, initialValue) {
     const promise = this.then(v => methods.reduce(v, func, initialValue))
     return prraypromise(promise)
   }
-  reduceRight(func, initialValue) {
+  reduceRightAsync(func, initialValue) {
     const promise = this.then(v => methods.reduceRight(v, func, initialValue))
     return prraypromise(promise)
   }
-  sort(func) {
+  sortAsync(func) {
     const promise = this.then(v => methods.sort(v, func))
     return prraypromise(promise)
   }
-  find(func) {
+  findAsync(func) {
     return this.then(v => methods.find(v, func))
   }
-  findIndex(func) {
+  findIndexAsync(func) {
     return this.then(v => methods.findIndex(v, func))
   }
-  every(func) {
+  everyAsync(func) {
     return this.then(v => methods.every(v, func))
   }
-  some(func) {
+  someAsync(func) {
     return this.then(v => methods.some(v, func))
   }
-  forEach(func) {
+  forEachAsync(func) {
     return this.then(v => methods.forEach(v, func))
   }
   slice(start, end) {
