@@ -1,7 +1,7 @@
 import test from 'ava'
 import { prray } from '../src/prray'
-import { prraypromise, PrrayPromise } from '../src/prraypromise'
-import { delay, genRandArr } from './test-utils'
+import { PrrayPromise } from '../src/prraypromise'
+import { toPrrayPromise, delay, genRandArr } from './test-utils'
 
 const funcAsync = (a, b) => delay(100).then(() => a - b)
 const func = (a, b) => a - b
@@ -35,7 +35,7 @@ test('prray sortAsync', async (t) => {
 
 test('prraypromise sortAsync', async (t) => {
   for (const arr of tests) {
-    const pp = prraypromise(Promise.resolve(arr))
+    const pp = toPrrayPromise(arr)
     const expect = prray(arr.sort(func))
 
     t.true(pp.sortAsync(funcAsync) instanceof PrrayPromise)

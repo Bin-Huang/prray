@@ -1,3 +1,6 @@
+import { prraypromise, PrrayPromise } from '../src/prraypromise'
+import { prray } from '../src/prray'
+
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const isGte3Async = (v: number) => delay(100).then(() => v >= 3)
@@ -11,6 +14,10 @@ const addOne = (i: number) => i + 1
 
 const genRandArr = () => [Math.random(), Math.random(), Math.random(), Math.random(), Math.random()]
 
+function toPrrayPromise<T>(arr: T[]): PrrayPromise<T> {
+  return prraypromise(Promise.resolve(prray(arr)))
+}
+
 export {
   delay,
   isGte3,
@@ -20,4 +27,5 @@ export {
   addOne,
   addOneAsync,
   genRandArr,
+  toPrrayPromise,
 }

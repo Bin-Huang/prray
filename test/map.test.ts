@@ -1,7 +1,7 @@
 import test from 'ava'
 import { prray } from '../src/prray'
-import { prraypromise, PrrayPromise } from '../src/prraypromise'
-import { addOneAsync, addOne } from './test-utils'
+import { PrrayPromise } from '../src/prraypromise'
+import { toPrrayPromise, addOneAsync, addOne } from './test-utils'
 
 test('prray mapAsync', async (t) => {
   const p = prray([1,2,3])
@@ -14,7 +14,7 @@ test('prray mapAsync', async (t) => {
 })
 
 test('prraypromise mapAsync', async (t) => {
-  const pp = prraypromise(Promise.resolve([1,2,3]))
+  const pp = toPrrayPromise([1,2,3])
 
   t.true(pp.mapAsync(addOneAsync) instanceof PrrayPromise)
   t.true(pp.mapAsync(addOne) instanceof PrrayPromise)

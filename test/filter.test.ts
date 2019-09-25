@@ -1,7 +1,7 @@
 import test from 'ava'
 import { prray } from '../src/prray'
-import { PrrayPromise, prraypromise } from '../src/prraypromise'
-import { isEven, isEvenAsync } from './test-utils'
+import { PrrayPromise } from '../src/prraypromise'
+import { toPrrayPromise, isEven, isEvenAsync } from './test-utils'
 
 test('prray filterAsync', async (t) => {
   const p = prray([1,2,3,4])
@@ -14,7 +14,7 @@ test('prray filterAsync', async (t) => {
 })
 
 test('prraypromise filterAsync', async (t) => {
-  const pp = prraypromise(Promise.resolve([1,2,3,4]))
+  const pp = toPrrayPromise([1,2,3,4])
 
   t.true(pp.filterAsync(isEvenAsync) instanceof PrrayPromise)
   t.true(pp.filterAsync(isEven) instanceof PrrayPromise)

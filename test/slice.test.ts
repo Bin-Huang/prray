@@ -1,10 +1,11 @@
 import test from 'ava'
 import { prray, Prray } from '../src/prray'
-import { prraypromise, PrrayPromise } from '../src/prraypromise'
+import { PrrayPromise } from '../src/prraypromise'
+import { toPrrayPromise } from './test-utils'
 
 const arr = [1,2,3,4,5,6,7,8,9]
 const p = prray(arr)
-const pp = prraypromise(Promise.resolve(arr))
+const pp = toPrrayPromise(arr)
 
 test('prray slice', async (t) => {
   t.true(p.slice(1) instanceof Prray)

@@ -1,4 +1,6 @@
-async function map(arr: any, func: any) {
+import { IMapCallback, ITester } from './types'
+
+async function map<T, U>(arr: any, func: IMapCallback<T, U>) {
   const result = []
   for (let ix = 0; ix < arr.length; ix++) {
     const v = arr[ix]
@@ -7,7 +9,7 @@ async function map(arr: any, func: any) {
   return Promise.all(result)
 }
 
-async function filter(arr: any, func: any) {
+async function filter<T>(arr: any, func: ITester<T>) {
   const result = []
   const conds = await map(arr, func)
   for (let ix = 0; ix < arr.length; ix++) {

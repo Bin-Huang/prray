@@ -1,29 +1,28 @@
 import * as methods from './methods'
+import { Prray } from './prray'
 
 let prrayConvertor: any
 function setPrrayConvertor(thePrrayConvertor: any) {
   prrayConvertor = thePrrayConvertor
 }
 
-class PrrayPromise<T> extends Promise<T> {
+class PrrayPromise<T> extends Promise<Prray<T>> {
   constructor(props: (resolve: any, reject: any) => any) {
     super(props)
   }
   mapAsync(mapper: any) {
     const promise = this.then(v => methods.map(v, mapper))
-    return prraypromise(promise)
+    return prraypromise(promise as any)
   }
   filterAsync(func: any) {
     const promise = this.then(v => methods.filter(v, func))
-    return prraypromise(promise)
+    return prraypromise(promise as any)
   }
   reduceAsync(func: any, initialValue?: any) {
-    const promise = this.then(v => methods.reduce(v, func, initialValue))
-    return prraypromise(promise)
+    return this.then(v => methods.reduce(v, func, initialValue))
   }
   reduceRightAsync(func: any, initialValue?: any) {
-    const promise = this.then(v => methods.reduceRight(v, func, initialValue))
-    return prraypromise(promise)
+    return this.then(v => methods.reduceRight(v, func, initialValue))
   }
   sortAsync(func?: any) {
     const promise = this.then(v => methods.sort(v, func))
@@ -50,7 +49,7 @@ class PrrayPromise<T> extends Promise<T> {
   }
 }
 
-function prraypromise<T>(promise: Promise<T>) {
+function prraypromise<T>(promise: Promise<Prray<T>>) {
   if (promise instanceof Promise) {
     return new PrrayPromise<T>((resolve, reject) => {
       promise.then((arr) => {
