@@ -1,18 +1,18 @@
 import test from 'ava'
-const sinon = require('sinon')
-const { prraypromise } = require('../src/prraypromise')
-const { prray } = require('../src/prray')
-const { delay } = require('./test-utils')
+import * as sinon from 'sinon'
+import { prray } from '../src/prray'
+import { prraypromise } from '../src/prraypromise'
+import { delay } from './test-utils'
 
 test('prray forEachAsync', async (t) => {
-  const result1 = []
+  const result1: number[] = []
   await prray([1,2,3]).forEachAsync(async (v) => {
     await delay(100)
     result1.push(v + 1)
   })
   t.deepEqual(result1, [2,3,4])
 
-  const result2 = []
+  const result2: number[] = []
   await prray([1,2,3]).forEachAsync((v) => {
     result2.push(v + 1)
   })
@@ -20,14 +20,14 @@ test('prray forEachAsync', async (t) => {
 })
 
 test('prraypromise forEachAsync', async (t) => {
-  const result1 = []
+  const result1: number[] = []
   await prraypromise(Promise.resolve([1,2,3])).forEachAsync(async (v) => {
     await delay(100)
     result1.push(v + 1)
   })
   t.deepEqual(result1, [2,3,4])
 
-  const result2 = []
+  const result2: number[] = []
   await prraypromise(Promise.resolve([1,2,3])).forEachAsync((v) => {
     result2.push(v + 1)
   })

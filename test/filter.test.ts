@@ -1,7 +1,7 @@
 import test from 'ava'
-const { prray } = require('../src/prray')
-const { isEven, isEvenAsync } = require('./test-utils')
-const { PrrayPromise, prraypromise } = require('../src/prraypromise')
+import { prray } from '../src/prray'
+import { PrrayPromise, prraypromise } from '../src/prraypromise'
+import { isEven, isEvenAsync } from './test-utils'
 
 test('prray filterAsync', async (t) => {
   const p = prray([1,2,3,4])

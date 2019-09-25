@@ -1,6 +1,6 @@
 import test from 'ava'
-const { prraypromise, PrrayPromise } = require('../src/prraypromise')
-const { prray, Prray } = require('../src/prray')
+import { prray, Prray } from '../src/prray'
+import { prraypromise, PrrayPromise } from '../src/prraypromise'
 
 const arr = [1,2,3,4,5,6,7,8,9]
 const p = prray(arr)

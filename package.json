@@ -2,9 +2,11 @@
   "name": "prray",
   "version": "0.4.4",
   "description": "promise-version array, support `mapAsync`, `filterAsync` and `reduceAsync`",
-  "main": "./src/index",
+  "main": "./dist/src/index",
+  "typings": "./dist/src/index.d.ts",
   "scripts": {
-    "test": "ava test/*.test.js"
+    "test": "npm run compile && ava ./dist/test/*.test.js",
+    "compile": "tsc"
   },
   "repository": "Bin-Huang/prray",
   "homepage": "https://github.com/Bin-Huang/prray",

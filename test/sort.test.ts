@@ -1,7 +1,7 @@
 import test from 'ava'
-const { prraypromise, PrrayPromise } = require('../src/prraypromise')
-const { prray } = require('../src/prray')
-const { delay, genRandArr } = require('./test-utils')
+import { prray } from '../src/prray'
+import { prraypromise, PrrayPromise } from '../src/prraypromise'
+import { delay, genRandArr } from './test-utils'
 
 const funcAsync = (a, b) => delay(100).then(() => a - b)
 const func = (a, b) => a - b

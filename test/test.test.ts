@@ -1,5 +1,5 @@
 import test from 'ava'
-const { prray, Prray } = require('../src/prray')
+import { prray, Prray } from '../src/prray'
 
 test('array compatibility', async (t) => {
   const p = prray([1,2,3,4])

@@ -1,4 +1,4 @@
-async function map(arr, func) {
+async function map(arr: any, func: any) {
   const result = []
   for (let ix = 0; ix < arr.length; ix++) {
     const v = arr[ix]
@@ -7,7 +7,7 @@ async function map(arr, func) {
   return Promise.all(result)
 }
 
-async function filter(arr, func) {
+async function filter(arr: any, func: any) {
   const result = []
   const conds = await map(arr, func)
   for (let ix = 0; ix < arr.length; ix++) {
@@ -19,7 +19,7 @@ async function filter(arr, func) {
   return result
 }
 
-async function reduce(arr, func, initialValue) {
+async function reduce(arr: any, func: any, initialValue: any) {
   let pre = initialValue
   let ix = 0
   if (initialValue === undefined) {
@@ -33,7 +33,7 @@ async function reduce(arr, func, initialValue) {
   return pre
 }
 
-async function reduceRight(arr, func, initialValue) {
+async function reduceRight(arr: any, func: any, initialValue: any) {
   let pre = initialValue
   let ix = arr.length - 1
   if (initialValue === undefined) {
@@ -47,7 +47,7 @@ async function reduceRight(arr, func, initialValue) {
   return pre
 }
 
-async function findIndex(arr, func) {
+async function findIndex(arr: any, func: any) {
   const conds = await map(arr, func)  // 可以优化
   for (let ix = 0; ix < conds.length; ix++) {
     if (conds[ix]) {
@@ -57,7 +57,7 @@ async function findIndex(arr, func) {
   return -1
 }
 
-async function find(arr, func) {
+async function find(arr: any, func: any) {
   const conds = await map(arr, func)  // 可以优化
   for (let ix = 0; ix < conds.length; ix++) {
     if (conds[ix]) {
@@ -67,7 +67,7 @@ async function find(arr, func) {
   return undefined
 }
 
-async function every(arr, func) {
+async function every(arr: any, func: any) {
   const conds = await map(arr, func)  // 可以优化
   for (const cond of conds) {
     if (!cond) {
@@ -77,7 +77,7 @@ async function every(arr, func) {
   return true
 }
 
-async function some(arr, func) {
+async function some(arr: any, func: any) {
   const conds = await map(arr, func)  // 可以优化
   for (const cond of conds) {
     if (cond) {
@@ -87,7 +87,7 @@ async function some(arr, func) {
   return false
 }
 
-async function sort(arr, func) {
+async function sort(arr: any, func: any) {
   if (!func) {
     return [...arr].sort()
   }
@@ -107,11 +107,11 @@ async function sort(arr, func) {
   return arr
 }
 
-async function forEach(arr, func) {
+async function forEach(arr: any, func: any) {
   await map(arr, func)
 }
 
-function slice(arr, start = 0, end = Infinity) {
+function slice(arr: any, start = 0, end = Infinity) {
   if (start === 0 && end === Infinity) {
     return arr
   }
@@ -140,7 +140,7 @@ function slice(arr, start = 0, end = Infinity) {
   return result
 }
 
-module.exports = {
+export {
   map,
   filter,
   reduce,

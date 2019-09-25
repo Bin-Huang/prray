@@ -1,58 +1,58 @@
-const methods = require('./methods')
+import * as methods from './methods'
 
-let prrayConvertor
-function setPrrayConvertor(thePrrayConvertor) {
+let prrayConvertor: any
+function setPrrayConvertor(thePrrayConvertor: any) {
   prrayConvertor = thePrrayConvertor
 }
 
-class PrrayPromise extends Promise {
-  constructor(props) {
+class PrrayPromise<T> extends Promise<T> {
+  constructor(props: (resolve: any, reject: any) => any) {
     super(props)
   }
-  mapAsync(mapper) {
+  mapAsync(mapper: any) {
     const promise = this.then(v => methods.map(v, mapper))
     return prraypromise(promise)
   }
-  filterAsync(func) {
+  filterAsync(func: any) {
     const promise = this.then(v => methods.filter(v, func))
     return prraypromise(promise)
   }
-  reduceAsync(func, initialValue) {
+  reduceAsync(func: any, initialValue?: any) {
     const promise = this.then(v => methods.reduce(v, func, initialValue))
     return prraypromise(promise)
   }
-  reduceRightAsync(func, initialValue) {
+  reduceRightAsync(func: any, initialValue?: any) {
     const promise = this.then(v => methods.reduceRight(v, func, initialValue))
     return prraypromise(promise)
   }
-  sortAsync(func) {
+  sortAsync(func?: any) {
     const promise = this.then(v => methods.sort(v, func))
     return prraypromise(promise)
   }
-  findAsync(func) {
+  findAsync(func: any) {
     return this.then(v => methods.find(v, func))
   }
-  findIndexAsync(func) {
+  findIndexAsync(func: any) {
     return this.then(v => methods.findIndex(v, func))
   }
-  everyAsync(func) {
+  everyAsync(func: any) {
     return this.then(v => methods.every(v, func))
   }
-  someAsync(func) {
+  someAsync(func: any) {
     return this.then(v => methods.some(v, func))
   }
-  forEachAsync(func) {
+  forEachAsync(func: any) {
     return this.then(v => methods.forEach(v, func))
   }
-  slice(start, end) {
+  slice(start?: number, end?: number) {
     const promise = this.then(v => methods.slice(v, start, end))
     return prraypromise(promise)
   }
 }
 
-function prraypromise(promise) {
+function prraypromise<T>(promise: Promise<T>) {
   if (promise instanceof Promise) {
-    return new PrrayPromise((resolve, reject) => {
+    return new PrrayPromise<T>((resolve, reject) => {
       promise.then((arr) => {
         if (arr instanceof Array) {
           resolve(prrayConvertor(arr))
@@ -66,4 +66,4 @@ function prraypromise(promise) {
   throw new Error('expected promise')
 }
 
-module.exports = { PrrayPromise, prraypromise, setPrrayConvertor }
+export { PrrayPromise, prraypromise, setPrrayConvertor }

@@ -1,7 +1,7 @@
 import test from 'ava'
-const { prraypromise } = require('../src/prraypromise')
-const { prray } = require('../src/prray')
-const { isGte3, isGte3Async } = require('./test-utils')
+import { prray } from '../src/prray'
+import { prraypromise } from '../src/prraypromise'
+import { isGte3, isGte3Async } from './test-utils'
 
 const p1 = prray([1,2,3])
 const p2 = prray([0,2])

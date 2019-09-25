@@ -1,7 +1,7 @@
 import test from 'ava'
-const { prraypromise, PrrayPromise } = require('../src/prraypromise')
-const { prray } = require('../src/prray')
-const { addOneAsync, addOne } = require('./test-utils')
+import { prray } from '../src/prray'
+import { prraypromise, PrrayPromise } from '../src/prraypromise'
+import { addOneAsync, addOne } from './test-utils'
 
 test('prray mapAsync', async (t) => {
   const p = prray([1,2,3])
