@@ -1,6 +1,8 @@
-import { prraypromise, setPrrayConvertor, PrrayPromise } from './prraypromise'
+import { prraypromise, PrrayPromise } from './prraypromise'
 import * as methods from './methods'
 import { IMapCallback, ITester, IReduceCallback } from './types'
+
+// TODO: Update method types
 
 class Prray<T> extends Array {
   constructor(...args: any[]) {
@@ -8,21 +10,21 @@ class Prray<T> extends Array {
   }
   mapAsync<U>(mapper: IMapCallback<T, U>): PrrayPromise<U> {
     const promise = methods.map(this, mapper)
-    return prraypromise(promise.then(result => prray(result)))
+    return prraypromise(promise.then(prray))
   }
   filterAsync(func: ITester<T>): PrrayPromise<T> {
     const promise = methods.filter(this, func)
-    return prraypromise(promise.then(result => prray(result)))
+    return prraypromise(promise.then(prray))
   }
   reduceAsync<U>(func: IReduceCallback<T, U>, initialValue?: U): Promise<U> {
     return methods.reduce(this, func, initialValue)
   }
-  reduceRightAsync(func: any, initialValue?: any) {
+  reduceRightAsync<U>(func: IReduceCallback<T, U>, initialValue?: U): Promise<U> {
     return methods.reduceRight(this, func, initialValue)
   }
-  sortAsync(func?: any) {
+  sortAsync(func?: any): PrrayPromise<T> {
     const promise = methods.sort(this, func)
-    return prraypromise(promise)
+    return prraypromise(promise.then(prray))
   }
   findAsync(func: ITester<T>): Promise<T> {
     return methods.find(this, func)
@@ -39,7 +41,7 @@ class Prray<T> extends Array {
   forEachAsync<U>(func: IMapCallback<T, U>) {
     return methods.forEach(this, func)
   }
-  slice(start?: number, end?: number) {
+  slice(start?: number, end?: number): Prray<T> {
     // 虽然原生 slice 也可以返回 Prray，但为了兼容其他环境(比如其他浏览器实现)，因此覆盖
     const result = methods.slice(this, start, end)
     return prray(result)
@@ -55,7 +57,5 @@ function prray<T>(arr: T[]): Prray<T> {
     return new Prray(...arr)
   }
 }
-
-setPrrayConvertor(prray)
 
 export { Prray, prray }

@@ -108,7 +108,7 @@ export async function some(arr: any, func: any) {
   return result
 }
 
-export async function sort(arr: any, func: any) {
+export async function sort<T>(arr: T[], func: any): Promise<T[]> {
   if (!func) {
     return [...arr].sort()
   }
@@ -132,7 +132,7 @@ export async function forEach<T>(arr: T[], func: ICallback<T>) {
   return loop(arr, async (value, ix) => func(value, ix, arr), {})
 }
 
-export function slice<T>(arr: T[], start = 0, end = Infinity): any {
+export function slice<T>(arr: T[], start = 0, end = Infinity): T[] {
   if (start === 0 && end === Infinity) {
     return arr
   }
