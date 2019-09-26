@@ -42,9 +42,12 @@ class Prray<T> extends Array {
     return methods.forEach(this, func)
   }
   slice(start?: number, end?: number): Prray<T> {
-    // 虽然原生 slice 也可以返回 Prray，但为了兼容其他环境(比如其他浏览器实现)，因此覆盖
-    const result = methods.slice(this, start, end)
-    return prray(result)
+    const result: T[] = super.slice(start, end)
+    if (result instanceof Prray) {
+      return result
+    } else {
+      return prray(result)
+    }
   }
 }
 

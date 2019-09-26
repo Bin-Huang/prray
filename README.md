@@ -1,8 +1,10 @@
 // TODO: talk about tests, under development
 
-"Promisified" Array.
+Prray -- "Promisified" Array, aims to replace original Array in some cases for convenience
 
-Prray aims to replace original Array in some cases for convenience. Its methods comes with promise support, that is to say you can call method `map` with async function as parameter to perform ideal effect. And it's compatible with original Array as far as possible.
+- comes with async methods, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
+- supports method chaning with async methods
+- compatible with original array
 
 ```javascript
 import { prray } from 'prray'
@@ -13,13 +15,12 @@ import { prray } from 'prray'
   const prr = prray(['www.google.com', 'npmjs.org'])
 
   // Now you can do something like this
-  const responses = await prr.map(fetch)
+  const responses = await prr.mapAsync(fetch)
 
   // Method chaining with async function works well just like with common function.
-  const htmls = await prr.map(fetch).map(r => r.text())
+  const htmls = await prr.mapAsync(fetch).mapAsync(r => r.text())
 
-  // You don't even have to distinguish between async function and common function.
-  await prr.filter(asyncFunc).sort(commonFunc).reduce(asyncFunc2)
+  await prr.sortAsync(asyncFunc).map(commonFunc).reduceAsync(asyncFunc2)
 
 })()
 ```
@@ -59,15 +60,18 @@ Array.isArray(prr) // true
 
 JSON.stringify(prr)  // "[1, 2, 3]"
 
-prr instanceof Prray // true
+// Type compatibility in typescript
+function yourFunc(arr: number[]) {
+  return arr
+}
+yourFunc(new Prray(1,2,3))  // Type Prray is compatible with Array
 ```
 
-Prray is "almost" compatible with original Array, but it also has differences. As features, the way some methods works are actually quite different with original.
-
-For example, let's talk about method `map`. If calling it with async mapper, it will returns an array of promise in original Array, but returns a promise of array(prray actually) in Prray. And it will alway returns a promise whenever the mapper is async or not.
-
-The details of each method are below, and methods which different with original is marked with `*`
-
+How to distinguish prray with array:
+```javascript
+prr instanceof Prray // true
+arr instanceof Prray // false
+```
 
 ## Usage
 
@@ -88,26 +92,31 @@ Class `Prray`. You can think of it as `Array`.
 ```javascript
 import { Prray } from 'prray'
 
-new Prray()  // think of new Array()
-new Prray(1)  // think of new Array(1)
-new Prray('a', 'b')  // think of new Array('a', 'b')
+new Prray()  // just like new Array()
+new Prray(1)  // just like new Array(1)
+new Prray('a', 'b')  // just like new Array('a', 'b')
 ```
 
-#### * Prray.prototype.map(callback)
+#### Prray.prototype.map(callback)
 
-The `map` method returns promise of a new array with the return values or the resolved values of return promises of calling a provided callback on every element. You can think of it as **an async version of `Array.prototype.map`**.
+- `callback(currentValue, index, prray)`
+
+Compatible with [Array.prototype.map]()
+
+#### Prray.prototype.mapAsync(callback)
+
+The `map` method returns promise of a new array with the return values or the resolved values of return promises of calling a provided callback on every element.
 
 - `callback(currentValue, index, prray)`
 
 ```javascript
-// With async callback
-const resps = await prr.map(fetch)
-
-// With common callback
-const nums = await prr.map(v => v + 1)
+const resps = await prr.mapAsync(fetch)
 
 // Method chaining
-const jsons = await prr.map(fetch).map(res => res.json())
+const jsons = await prr.mapAsync(fetch).mapAsync(res => res.json())
+
+// Method chaining with other methods
+const jsons = await prr.mapAsync(func1).filter(func2).everyAsync(fun3)
 ```
 
 #### * Prray.prototype.filter(callback)
