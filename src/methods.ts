@@ -1,23 +1,22 @@
-import { IMapCallback, ITester } from './types'
+import { IMapCallback, ITester, ICallback } from './types'
 
-export async function map<T, U>(arr: any, func: IMapCallback<T, U>) {
-  const result = []
-  for (let ix = 0; ix < arr.length; ix++) {
-    const v = arr[ix]
-    result.push(func(v, ix, arr))
-  }
-  return Promise.all(result)
+export async function map<T, U>(arr: T[], func: IMapCallback<T, U>) {
+  const result: U[] = []
+  await loop<T>(
+    arr,
+    async (value, ix) => result[ix] = await func(value, ix, arr),
+    {}
+  )
+  return result
 }
 
-export async function filter<T>(arr: any, func: ITester<T>) {
-  const result = []
-  const conds = await map(arr, func)
-  for (let ix = 0; ix < arr.length; ix++) {
-    const v = arr[ix]
-    if (conds[ix]) {
-      result.push(v)
-    }
-  }
+export async function filter<T>(arr: T[], func: ITester<T>) {
+  const result: T[] = []
+  await loop(
+    arr,
+    async (value, ix) => await func(value, ix, arr) ? result.push(value) : null,
+    {}
+  )
   return result
 }
 
@@ -49,44 +48,64 @@ export async function reduceRight(arr: any, func: any, initialValue: any) {
   return pre
 }
 
-export async function findIndex(arr: any, func: any) {
-  const conds = await map(arr, func)  // 可以优化
-  for (let ix = 0; ix < conds.length; ix++) {
-    if (conds[ix]) {
-      return ix
-    }
-  }
-  return -1
+export async function findIndex<T>(arr: T[], func: ITester<T>): Promise<number> {
+  let result = -1
+  await loop(
+    arr,
+    async (value, ix, _, breakLoop) => {
+      if (await func(value, ix, arr)) {
+        result = ix
+        breakLoop()
+      }
+    },
+    {},
+  )
+  return result
 }
 
-export async function find(arr: any, func: any) {
-  const conds = await map(arr, func)  // 可以优化
-  for (let ix = 0; ix < conds.length; ix++) {
-    if (conds[ix]) {
-      return arr[ix]
-    }
-  }
-  return undefined
+export async function find<T>(arr: T[], func: ITester<T>): Promise<T | undefined> {
+  let result: T | undefined
+  await loop(
+    arr,
+    async (value, ix, _, breakLoop) => {
+      if (await func(value, ix, arr)) {
+        result = value
+        breakLoop()
+      }
+    },
+    {},
+  )
+  return result
 }
 
-export async function every(arr: any, func: any) {
-  const conds = await map(arr, func)  // 可以优化
-  for (const cond of conds) {
-    if (!cond) {
-      return false
-    }
-  }
-  return true
+export async function every<T>(arr: T[], func: ITester<T>) {
+  let result = true
+  await loop(
+    arr,
+    async (value, ix, _, breakLoop) =>  {
+      if (! await func(value, ix, arr)) {
+        result = false
+        breakLoop()
+      }
+    },
+    {},
+  )
+  return result
 }
 
 export async function some(arr: any, func: any) {
-  const conds = await map(arr, func)  // 可以优化
-  for (const cond of conds) {
-    if (cond) {
-      return true
-    }
-  }
-  return false
+  let result = false
+  await loop(
+    arr,
+    async (value, ix, _, breakLoop) =>  {
+      if (await func(value, ix, arr)) {
+        result = true
+        breakLoop()
+      }
+    },
+    {},
+  )
+  return result
 }
 
 export async function sort(arr: any, func: any) {
@@ -109,11 +128,11 @@ export async function sort(arr: any, func: any) {
   return arr
 }
 
-export async function forEach(arr: any, func: any) {
-  await map(arr, func)
+export async function forEach<T>(arr: T[], func: ICallback<T>) {
+  return loop(arr, async (value, ix) => func(value, ix, arr), {})
 }
 
-export function slice(arr: any, start = 0, end = Infinity) {
+export function slice<T>(arr: T[], start = 0, end = Infinity): any {
   if (start === 0 && end === Infinity) {
     return arr
   }
