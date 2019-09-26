@@ -1,6 +1,6 @@
 import { IMapCallback, ITester } from './types'
 
-async function map<T, U>(arr: any, func: IMapCallback<T, U>) {
+export async function map<T, U>(arr: any, func: IMapCallback<T, U>) {
   const result = []
   for (let ix = 0; ix < arr.length; ix++) {
     const v = arr[ix]
@@ -9,7 +9,7 @@ async function map<T, U>(arr: any, func: IMapCallback<T, U>) {
   return Promise.all(result)
 }
 
-async function filter<T>(arr: any, func: ITester<T>) {
+export async function filter<T>(arr: any, func: ITester<T>) {
   const result = []
   const conds = await map(arr, func)
   for (let ix = 0; ix < arr.length; ix++) {
@@ -21,7 +21,7 @@ async function filter<T>(arr: any, func: ITester<T>) {
   return result
 }
 
-async function reduce(arr: any, func: any, initialValue: any) {
+export async function reduce(arr: any, func: any, initialValue: any) {
   let pre = initialValue
   let ix = 0
   if (initialValue === undefined) {
@@ -35,7 +35,7 @@ async function reduce(arr: any, func: any, initialValue: any) {
   return pre
 }
 
-async function reduceRight(arr: any, func: any, initialValue: any) {
+export async function reduceRight(arr: any, func: any, initialValue: any) {
   let pre = initialValue
   let ix = arr.length - 1
   if (initialValue === undefined) {
@@ -49,7 +49,7 @@ async function reduceRight(arr: any, func: any, initialValue: any) {
   return pre
 }
 
-async function findIndex(arr: any, func: any) {
+export async function findIndex(arr: any, func: any) {
   const conds = await map(arr, func)  // 可以优化
   for (let ix = 0; ix < conds.length; ix++) {
     if (conds[ix]) {
@@ -59,7 +59,7 @@ async function findIndex(arr: any, func: any) {
   return -1
 }
 
-async function find(arr: any, func: any) {
+export async function find(arr: any, func: any) {
   const conds = await map(arr, func)  // 可以优化
   for (let ix = 0; ix < conds.length; ix++) {
     if (conds[ix]) {
@@ -69,7 +69,7 @@ async function find(arr: any, func: any) {
   return undefined
 }
 
-async function every(arr: any, func: any) {
+export async function every(arr: any, func: any) {
   const conds = await map(arr, func)  // 可以优化
   for (const cond of conds) {
     if (!cond) {
@@ -79,7 +79,7 @@ async function every(arr: any, func: any) {
   return true
 }
 
-async function some(arr: any, func: any) {
+export async function some(arr: any, func: any) {
   const conds = await map(arr, func)  // 可以优化
   for (const cond of conds) {
     if (cond) {
@@ -89,7 +89,7 @@ async function some(arr: any, func: any) {
   return false
 }
 
-async function sort(arr: any, func: any) {
+export async function sort(arr: any, func: any) {
   if (!func) {
     return [...arr].sort()
   }
@@ -109,11 +109,11 @@ async function sort(arr: any, func: any) {
   return arr
 }
 
-async function forEach(arr: any, func: any) {
+export async function forEach(arr: any, func: any) {
   await map(arr, func)
 }
 
-function slice(arr: any, start = 0, end = Infinity) {
+export function slice(arr: any, start = 0, end = Infinity) {
   if (start === 0 && end === Infinity) {
     return arr
   }
@@ -142,16 +142,50 @@ function slice(arr: any, start = 0, end = Infinity) {
   return result
 }
 
-export {
-  map,
-  filter,
-  reduce,
-  reduceRight,
-  find,
-  findIndex,
-  every,
-  some,
-  forEach,
-  sort,
-  slice,
+export function loop<T>(
+  array: T[],
+  func: (value: T, index: number, array: T[], breakLoop: () => any) => any,
+  { concurrency= Infinity },
+) {
+  if (array.length <= concurrency) {
+    const promises = array.map((v, ix) => func(v, ix, array, () => null))
+    return Promise.all(promises)
+  }
+
+	return new Promise((resolve, reject) => {
+    const length = array.length
+    if (length === 0) {
+      resolve()
+    }
+
+    let isEnding = false
+    let currentIndex = 0
+    let workingNum = Math.min(concurrency, length)
+    
+    const breakLoop = () => {
+      isEnding = true
+      resolve()
+    }
+
+		const woker = async () => {
+      while (!isEnding && currentIndex < length) {
+        const ix = currentIndex++
+        try {
+          await func(array[ix], ix, array, breakLoop)
+        } catch (error) {
+          isEnding = true
+          reject(error)
+          return
+        }
+      }
+      workingNum --
+      if (workingNum === 0) {
+        resolve()
+      }
+		}
+
+		for (let i = 0; i < Math.min(concurrency, length); i++) {
+      woker()
+		}
+	})
 }
