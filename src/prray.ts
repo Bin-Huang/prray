@@ -4,7 +4,13 @@ import { IMapCallback, ITester, IReduceCallback } from './types'
 
 // TODO: Update method types
 
+// TODO: Prray.of, Prray.from, Prray.isArray, Prray.isPrray
+
 class Prray<T> extends Array {
+  static of<T>(...args: T[]): Prray<T> {
+    return prray(Array.prototype.slice.call(args))
+  }
+
   constructor(...args: any[]) {
     super(...args)
   }
