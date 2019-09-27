@@ -60,6 +60,12 @@ Array.isArray(prr) // true
 
 JSON.stringify(prr)  // "[1, 2, 3]"
 
+const iterator = prr[Symbol.iterator]()
+iterator.next().value  // 1
+iterator.next().value  // 2
+iterator.next().value  // 3
+iterator.next().done  // true
+
 // Type compatibility in typescript
 function yourFunc(arr: number[]) {
   return arr

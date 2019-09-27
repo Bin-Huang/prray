@@ -21,4 +21,11 @@ test('array compatibility', async (t) => {
   for (const item in p) {
     t.is(p[item], ix ++)
   }
+
+  const iterator = p[Symbol.iterator]()
+  t.is(iterator.next().value, 1)
+  t.is(iterator.next().value, 2)
+  t.is(iterator.next().value, 3)
+  t.is(iterator.next().value, 4)
+  t.true(iterator.next().done)
 })

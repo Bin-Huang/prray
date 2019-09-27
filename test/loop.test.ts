@@ -3,6 +3,8 @@ import * as sinon from 'sinon'
 import { delay, genRandArr, timer, isClose } from './test-utils'
 import { loop } from '../src/methods'
 
+// TODO: Update threshold
+
 test('loop with concurrency 100', async (t) => {
   const arr = genRandArr(1000)
   const record = timer()
