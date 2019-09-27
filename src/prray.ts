@@ -4,11 +4,18 @@ import { IMapCallback, ITester, IReduceCallback } from './types'
 
 // TODO: Update method types
 
-// TODO: Prray.of, Prray.from, Prray.isArray, Prray.isPrray
+// TODO: Prray.from, Prray.isArray, Prray.isPrray
+// TODO: thisArg
 
 class Prray<T> extends Array {
   static of<T>(...args: T[]): Prray<T> {
-    return prray(Array.prototype.slice.call(args))
+    return prray(super.of(...args))
+  }
+
+  static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>): Prray<T>
+  static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>, mapFunc: (v: T, ix: number) => U, thisArg?: any): Prray<U>
+  static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>, mapFunc?: (v: T, ix: number) => U, thisArg?: any): Prray<any> {
+    return prray(super.from(arrayLike, mapFunc, thisArg))
   }
 
   constructor(...args: any[]) {
