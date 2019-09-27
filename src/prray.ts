@@ -6,7 +6,7 @@ import { IMapCallback, ITester, IReduceCallback } from './types'
 
 // TODO: thisArg
 
-class Prray<T> extends Array {
+export class Prray<T> extends Array {
 
   static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>): Prray<T>
   static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>, mapFunc: (v: T, ix: number) => U, thisArg?: any): Prray<U>
@@ -67,16 +67,25 @@ class Prray<T> extends Array {
   }
   slice(start?: number, end?: number): Prray<T> {
     const result: T[] = super.slice(start, end)
-    if (result instanceof Prray) {
-      return result
-    } else {
-      return Prray.from(result)
-    }
+    return ensurePrray(result)
+  }
+
+  map<U>(callback): Prray<U> {
+    return ensurePrray(super.map(callback))
+  }
+  filter(callback): Prray<T> {
+    return ensurePrray(super.filter(callback))
   }
 }
 
-function prray<T>(arr: T[]): Prray<T> {
+export function prray<T>(arr: T[]): Prray<T> {
   return Prray.from(arr)
 }
 
-export { Prray, prray }
+function ensurePrray<T>(arr: T[]): Prray<T> {
+  if (arr instanceof Prray) {
+    return arr
+  } else {
+    return Prray.from(arr)
+  }
+}

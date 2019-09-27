@@ -39,13 +39,23 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
   slice(start?: number, end?: number): PrrayPromise<T> {
     return prraypromise(this.then(prray => prray.slice(start, end)))
   }
+  map<U>(callback): PrrayPromise<U> {
+    return prraypromise(this.then(prray => prray.map(callback)))
+  }
+  filter(callback): PrrayPromise<T> {
+    return prraypromise(this.then(prray => prray.filter(callback)))
+  }
 }
 
 function prraypromise<T>(promise: Promise<Prray<T>>) {
-  return new PrrayPromise<T>((resolve, reject) => {
-    promise.then(resolve)
-    promise.catch(reject)
-  })
+  if (promise instanceof PrrayPromise) {
+    return promise
+  } else {
+    return new PrrayPromise<T>((resolve, reject) => {
+      promise.then(resolve)
+      promise.catch(reject)
+    })
+  }
 }
 
 export { PrrayPromise, prraypromise }
