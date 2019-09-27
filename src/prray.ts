@@ -8,14 +8,22 @@ import { IMapCallback, ITester, IReduceCallback } from './types'
 // TODO: thisArg
 
 class Prray<T> extends Array {
-  static of<T>(...args: T[]): Prray<T> {
-    return prray(super.of(...args))
-  }
 
   static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>): Prray<T>
   static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>, mapFunc: (v: T, ix: number) => U, thisArg?: any): Prray<U>
   static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>, mapFunc?: (v: T, ix: number) => U, thisArg?: any): Prray<any> {
-    return prray(super.from(arrayLike, mapFunc, thisArg))
+    const arr = arrayLike instanceof Array && mapFunc === undefined
+      ? arrayLike
+      : super.from(arrayLike, mapFunc, thisArg)
+    const prr = new Prray<T>()
+    for (let i = arr.length - 1; i >= 0; i --) {
+      prr[i] = arr[i]
+    }
+    return prr
+  }
+
+  static of<T>(...args: T[]): Prray<T> {
+    return Prray.from(args)
   }
 
   constructor(...args: any[]) {
@@ -23,11 +31,11 @@ class Prray<T> extends Array {
   }
   mapAsync<U>(mapper: IMapCallback<T, U>): PrrayPromise<U> {
     const promise = methods.map(this, mapper)
-    return prraypromise(promise.then(prray))
+    return prraypromise(promise.then((arr) => Prray.from(arr)))
   }
   filterAsync(func: ITester<T>): PrrayPromise<T> {
     const promise = methods.filter(this, func)
-    return prraypromise(promise.then(prray))
+    return prraypromise(promise.then((arr) => Prray.from(arr)))
   }
   reduceAsync<U>(func: IReduceCallback<T, U>, initialValue?: U): Promise<U> {
     return methods.reduce(this, func, initialValue)
@@ -37,7 +45,7 @@ class Prray<T> extends Array {
   }
   sortAsync(func?: any): PrrayPromise<T> {
     const promise = methods.sort(this, func)
-    return prraypromise(promise.then(prray))
+    return prraypromise(promise.then((arr) => Prray.from(arr)))
   }
   findAsync(func: ITester<T>): Promise<T> {
     return methods.find(this, func)
@@ -59,19 +67,13 @@ class Prray<T> extends Array {
     if (result instanceof Prray) {
       return result
     } else {
-      return prray(result)
+      return Prray.from(result)
     }
   }
 }
 
 function prray<T>(arr: T[]): Prray<T> {
-  if (arr.length === 1) {
-    const prr = new Prray<T>()
-    prr[0] = arr[0]
-    return prr
-  } else {
-    return new Prray(...arr)
-  }
+  return Prray.from(arr)
 }
 
 export { Prray, prray }

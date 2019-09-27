@@ -33,4 +33,8 @@ test('prray from', async (t) => {
   t.is(p4[2], 3)
   t.is(p4.length, 3)
 
+  const p5 = Prray.from([1])
+  t.true(p5 instanceof Prray)
+  t.is(p5[0], 1)
+  t.is(p5.length, 1)
 })
