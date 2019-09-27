@@ -4,7 +4,6 @@ import { IMapCallback, ITester, IReduceCallback } from './types'
 
 // TODO: Update method types
 
-// TODO: Prray.from, Prray.isArray, Prray.isPrray
 // TODO: thisArg
 
 class Prray<T> extends Array {
@@ -24,6 +23,10 @@ class Prray<T> extends Array {
 
   static of<T>(...args: T[]): Prray<T> {
     return Prray.from(args)
+  }
+
+  static isPrray(obj: any): boolean {
+    return obj instanceof Prray
   }
 
   constructor(...args: any[]) {
