@@ -3,7 +3,7 @@ import * as methods from './methods'
 import { IMapCallback, ITester, IReduceCallback } from './types'
 
 // TODO: Update method types
-
+// TODO: Mutable and Immutable
 // TODO: thisArg
 
 export class Prray<T> extends Array {

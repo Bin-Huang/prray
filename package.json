@@ -5,7 +5,7 @@
   "main": "./dist/src/index",
   "typings": "./dist/src/index.d.ts",
   "scripts": {
-    "test": "npm run compile && ava ./dist/test/*.test.js",
+    "test": "rm -rf dist && npm run compile && ava ./dist/test/*.test.js",
     "compile": "tsc"
   },
   "repository": "Bin-Huang/prray",

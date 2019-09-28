@@ -45,6 +45,48 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
   filter(callback): PrrayPromise<T> {
     return prraypromise(this.then(prray => prray.filter(callback)))
   }
+  find(callback): Promise<T> {
+    return this.then(prray => prray.find(callback))
+  }
+  findIndex(callback): Promise<number> {
+    return this.then(prray => prray.findIndex(callback))
+  }
+  every(callback): Promise<boolean> {
+    return this.then(prray => prray.every(callback))
+  }
+  some(callback): Promise<boolean> {
+    return this.then(prray => prray.some(callback))
+  }
+  includes(element: T, fromIndex?: number): Promise<boolean> {
+    return this.then(prray => prray.includes(element, fromIndex))
+  }
+  indexOf(element: T, fromIndex?: number): Promise<number> {
+    return this.then(prray => prray.indexOf(element, fromIndex))
+  }
+  lastIndexOf(element: T, fromIndex?: number): Promise<number> {
+    return this.then(prray => {
+      fromIndex = fromIndex === undefined ? prray.length - 1 : fromIndex  // fix odd bug
+      return prray.lastIndexOf(element, fromIndex)
+    })
+  }
+  join(separator?: string): Promise<string> {
+    return this.then(prray => prray.join(separator))
+  }
+  keys(): Promise<IterableIterator<number>> {
+    return this.then(prray => prray.keys())
+  }
+  values(): Promise<IterableIterator<T>> {
+    return this.then(prray => prray.values())
+  }
+  entries(): Promise<IterableIterator<[number, T]>> {
+    return this.then(prray => prray.entries())
+  }
+  fill(value: T, start?: number, end?: number): PrrayPromise<T> {
+    return prraypromise(this.then(prray => prray.fill(value, start, end)))
+  }
+  sort(callback?: (a: T, b: T) => number): PrrayPromise<T> {
+    return prraypromise(this.then(prray => prray.sort(callback)))
+  }
 }
 
 function prraypromise<T>(promise: Promise<Prray<T>>) {
