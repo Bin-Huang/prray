@@ -6,7 +6,7 @@ import { IMapCallback, ITester, IReduceCallback } from './types'
 // TODO: Mutable and Immutable
 // TODO: thisArg
 
-export class Prray<T> extends Array {
+export class Prray<T> extends Array<T> {
 
   static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>): Prray<T>
   static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>, mapFunc: (v: T, ix: number) => U, thisArg?: any): Prray<U>
@@ -40,11 +40,15 @@ export class Prray<T> extends Array {
     const promise = methods.filter(this, func)
     return prraypromise(promise.then((arr) => Prray.from(arr)))
   }
-  reduceAsync<U>(func: IReduceCallback<T, U>, initialValue?: U): Promise<U> {
-    return methods.reduce(this, func, initialValue)
+  reduceAsync(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>): Promise<T>
+  reduceAsync<U>(callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>, initialValue?: U): Promise<U>
+  reduceAsync(callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>, initialValue?: any): Promise<any> {
+    return methods.reduce(this, callback, initialValue)
   }
-  reduceRightAsync<U>(func: IReduceCallback<T, U>, initialValue?: U): Promise<U> {
-    return methods.reduceRight(this, func, initialValue)
+  reduceRightAsync(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>): Promise<T>
+  reduceRightAsync<U>(callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>, initialValue?: U): Promise<U>
+  reduceRightAsync(callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>, initialValue?: any): Promise<any> {
+    return methods.reduceRight(this, callback, initialValue)
   }
   sortAsync(func?: any): PrrayPromise<T> {
     const promise = methods.sort(this, func)
@@ -75,6 +79,21 @@ export class Prray<T> extends Array {
   }
   filter(callback): Prray<T> {
     return ensurePrray(super.filter(callback))
+  }
+  concat(...items: ConcatArray<T>[]): Prray<T>
+  concat(...items: (ConcatArray<T> | T)[]): Prray<T>
+  concat(...items: any[]): Prray<T> {
+    return ensurePrray(super.concat(...items))
+  }
+  reverse(): Prray<T> {
+    return super.reverse() as Prray<T>
+  }
+  splice(start: number, deleteCount?: number, ...items: T[]): Prray<T> {
+    // Why? If pass parameter deleteCount as undefined directly, the delete count will be zero actually :(
+    const result = arguments.length >= 2
+      ? super.splice(start, deleteCount, ...items)
+      : super.splice(start)
+    return ensurePrray(result)
   }
 }
 
