@@ -265,6 +265,17 @@ _Compatible with [Array.prototype.toLocaleString](https://developer.mozilla.org/
 
 The toLocaleString() method returns a string representing the elements of the prray. The elements are converted to Strings using their toLocaleString methods and these Strings are separated by a locale-specific String (such as a comma “,”).
 
+#### Prray.prototype.forEachAsync(func)
+
+_Think of it as async version of method `forEach`_
+
+The forEachAsync() method executes a provided function once for each prray element asynchronously and returns a promise resolved after all iterations resolved.
+
+```javascript
+const emails = prray([/* emails */])
+await emails.forEachAsync(sendAsync)
+```
+
 #### Prray.prototype.forEach(func)
 
 _Compatible with [Array.prototype.forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)_
