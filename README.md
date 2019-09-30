@@ -114,12 +114,6 @@ new Prray(1)  // likes new Array(1)
 new Prray('a', 'b')  // likes new Array('a', 'b')
 ```
 
-#### Prray.prototype.map(func)
-
-_Compatible with [Array.prototype.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)_
-
-The map() method creates a new prray with the results of calling a provided function on every element in the calling prray.
-
 #### Prray.prototype.mapAsync(func)
 
 The `map` method returns promise of a new prray with the return values or the resolved values of return promises of calling a provided function on every element.
@@ -136,11 +130,11 @@ const jsons = await prr.mapAsync(fetch).mapAsync(res => res.json())
 const jsons = await prr.mapAsync(func1).filter(func2).everyAsync(fun3)
 ```
 
-#### Prray.prototype.filter(func)
+#### Prray.prototype.map(func)
 
-_Compatible with [Array.prototype.filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)_
+_Compatible with [Array.prototype.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)_
 
-The filter() method creates a new prray with all elements that pass the test implemented by the provided function.
+The map() method creates a new prray with the results of calling a provided function on every element in the calling prray.
 
 #### Prray.prototype.filterAsync(func)
 
@@ -156,6 +150,78 @@ const evenNums = await prr.filterAsync(v => v % 2 === 0)
 // Method chaining
 await prr.filterAsync(isFileExisted).map(removeFile)
 ```
+
+#### Prray.prototype.filter(func)
+
+_Compatible with [Array.prototype.filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)_
+
+The filter() method creates a new prray with all elements that pass the test implemented by the provided function.
+
+#### Prray.prototype.toString()
+
+_Compatible with [Array.prototype.toString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toString)_
+
+The toString() method returns a string representing the specified prray and its elements.
+
+#### Prray.prototype.toLocaleString()
+
+_Compatible with [Array.prototype.toLocaleString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toLocaleString)_
+
+The toLocaleString() method returns a string representing the elements of the prray. The elements are converted to Strings using their toLocaleString methods and these Strings are separated by a locale-specific String (such as a comma “,”).
+
+#### Prray.prototype.forEach(func)
+
+_Compatible with [Array.prototype.forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)_
+
+The forEach() method executes a provided function once for each prray element.
+
+#### Prray.prototype.pop()
+
+_Compatible with [Array.prototype.pop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop)_
+
+The pop() method removes the last element from a prray and returns that element. This method changes the length of the prray.
+
+#### Prray.prototype.push(...elements)
+
+_Compatible with [Array.prototype.push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push)_
+
+The push() method adds one or more elements to the end of a prray and returns the new length of the prray.
+
+#### Prray.prototype.reverse()
+
+_Compatible with [Array.prototype.reverse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse)_
+
+The reverse() method reverses a prray in place. The first prray element becomes the last, and the last prray element becomes the first.
+
+#### Prray.prototype.reduce(func, initialValue)
+
+_Compatible with [Array.prototype.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)_
+
+The reduce() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
+
+#### Prray.prototype.reduceRight(func, initialValue)
+
+_Compatible with [Array.prototype.reduceRight](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight)_
+
+The reduceRight() method applies a function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
+
+#### Prray.prototype.shift()
+
+_Compatible with [Array.prototype.shift](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift)_
+
+The shift() method removes the first element from a prray and returns that removed element. This method changes the length of the prray.
+
+#### Prray.prototype.unshift(...elements)
+
+_Compatible with [Array.prototype.unshift](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift)_
+
+The unshift() method adds one or more elements to the beginning of a prray and returns the new length of the prray.
+
+#### Prray.prototype.splice(start, deleteCount, ...items)
+
+_Compatible with [Array.prototype.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)_
+
+The splice() method changes the contents of a prray by removing or replacing existing elements and/or adding new elements in place.
 
 #### Prray.prototype.toArray()
 
