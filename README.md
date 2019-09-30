@@ -235,6 +235,12 @@ _Compatible with [Array.prototype.fill](https://developer.mozilla.org/en-US/docs
 
 The fill() method fills (modifies) all the elements of a prray from a start index (default zero) to an end index (default array length) with a static value. It returns the modified prray.
 
+#### Prray.prototype.sortAsync(func)
+
+_Think of it as async version of method `sort`_
+
+The sortAsync() method sorts the elements of a prray in place and returns the sorted prray. The provided function can be an async function that returns promise resolved with a number.
+
 #### Prray.prototype.sort(func)
 
 _Compatible with [Array.prototype.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)_

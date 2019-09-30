@@ -37,12 +37,12 @@
 [x] filterAsync
 [] reduceAsync
 [] reduceRightAsync
-[] sortAsync
+[x] sortAsync
 [] findAsync
 [] findIndexAsync
 [] everyAsync
 [] someAsync
-[] forEachAsync
+[x] forEachAsync
 [x] slice
 [x] map<U>
 [x] filter
