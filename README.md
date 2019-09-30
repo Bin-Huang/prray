@@ -181,6 +181,19 @@ _Compatible with [Array.prototype.every](https://developer.mozilla.org/en-US/doc
 
 The every() method tests whether all elements in the prray pass the test implemented by the provided function. It returns a Boolean value. 
 
+#### Prray.prototype.someAsync(func)
+
+_Think of it as async version of method `some`_
+
+The some() method tests whether at least one element in the prray passes the test implemented by the provided function. It returns a promise resolved with Boolean value. 
+
+The provided function can be an async function that returns a promise resolved with Boolean value.
+
+```javascript
+const filenames = prray([/* filenames */])
+const containExistedFile = await filenames.someAsync(checkFileAsync)
+```
+
 #### Prray.prototype.some(func)
 
 _Compatible with [Array.prototype.some](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)_
