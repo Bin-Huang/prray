@@ -95,6 +95,9 @@ export class Prray<T> extends Array<T> {
       : super.splice(start)
     return _ensurePrray(result)
   }
+  toArray(): T[] {
+    return [ ...this ]
+  }
 }
 
 export function prray<T>(arr: T[]): Prray<T> {

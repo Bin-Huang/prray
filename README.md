@@ -1,10 +1,10 @@
 // TODO: talk about tests, under development
 // TODO: original array ?-> normal array
 
-Prray -- "Promisified" Array, aims to replace original Array in some cases for convenience
+Prray -- "Promisified" Array, aims to replace original Array in some cases for convenience.
 
 - comes with async methods, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
-- supports method chaning with async methods
+- supports method chaining with async callbacks
 - compatible with original array
 - well-tested (coverage 93.17%)
 
@@ -19,10 +19,16 @@ import { prray } from 'prray'
   // Now you can do something like this
   const responses = await prr.mapAsync(fetch)
 
-  // Method chaining with async function works well just like with common function.
+  // Method chaining with async callbacks works well
   const htmls = await prr.mapAsync(fetch).mapAsync(r => r.text())
 
-  await prr.sortAsync(asyncFunc).map(commonFunc).reduceAsync(asyncFunc2)
+  // Method chaining with async callbacks and common callbacks
+  await prr.map(commonFunc)
+    .sortAsync(asyncFunc)
+    .concat(['github.com', 'wikipedia.org'])
+    .reverse()
+    .splice(1, 2)
+    .reduceAsync(asyncFunc2)
 
 })()
 ```
@@ -57,7 +63,6 @@ prr.length  // 4
 [...prr]  // [1,2,3]
 
 prr instanceof Array // true
-
 Array.isArray(prr) // true
 
 JSON.stringify(prr)  // "[1, 2, 3]"
@@ -79,7 +84,7 @@ Distinguish prray with array:
 
 ```javascript
 Prray.isPrray(prr)  // true
-Prray.isPrray(arr)  // false
+Prray.isPrray([1,2,3])  // false
 
 prr instanceof Prray // true
 arr instanceof Prray // false
@@ -89,7 +94,7 @@ arr instanceof Prray // false
 
 #### prray(array)
 
-Method `prray` convert a normal array to prray.
+The prray() method creates and returns a new Prray instance with every element in the array.
 
 ```javascript
 import { prray } from 'prray'
@@ -109,17 +114,17 @@ new Prray(1)  // likes new Array(1)
 new Prray('a', 'b')  // likes new Array('a', 'b')
 ```
 
-#### Prray.prototype.map(callback)
+#### Prray.prototype.map(func)
 
-- `callback(currentValue, index, prray)`
+_Compatible with [Array.prototype.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)_
 
-Compatible with [Array.prototype.map]()
+The map() method creates a new prray with the results of calling a provided function on every element in the calling prray.
 
-#### Prray.prototype.mapAsync(callback)
+#### Prray.prototype.mapAsync(func)
 
-The `map` method returns promise of a new array with the return values or the resolved values of return promises of calling a provided callback on every element.
+The `map` method returns promise of a new prray with the return values or the resolved values of return promises of calling a provided function on every element.
 
-- `callback(currentValue, index, prray)`
+- `func(currentValue, index, prray)`
 
 ```javascript
 const resps = await prr.mapAsync(fetch)
@@ -131,19 +136,35 @@ const jsons = await prr.mapAsync(fetch).mapAsync(res => res.json())
 const jsons = await prr.mapAsync(func1).filter(func2).everyAsync(fun3)
 ```
 
-#### * Prray.prototype.filter(callback)
+#### Prray.prototype.filter(func)
 
-The `filter` method returns promise of a new array with all elements that pass the test implemented by the provided function. You can think of it as **an async version of `Array.prototype.filter`**.
+_Compatible with [Array.prototype.filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)_
+
+The filter() method creates a new prray with all elements that pass the test implemented by the provided function.
+
+#### Prray.prototype.filterAsync(func)
+
+The `filterAsync` method returns promise of a new array with all elements that pass the test implemented by the provided function. You can think of it as **an async version of `Array.prototype.filter`**.
 
 ```javascript
-// With async callback
-const existedFiles = await prr.filter(isFileExisted)
+// With async function
+const existedFiles = await prr.filterAsync(isFileExisted)
 
-// With common callback
-const evenNums = await prr.filter(v => v % 2 === 0)
+// With common function
+const evenNums = await prr.filterAsync(v => v % 2 === 0)
 
 // Method chaining
-await prr.filter(isFileExisted).map(removeFile)
+await prr.filterAsync(isFileExisted).map(removeFile)
+```
+
+#### Prray.prototype.toArray()
+
+The toArray() method creates and returns a new normal array with every element in the prray.
+
+```javascript
+const prr = new Prray(1,2,3)
+
+prr.toArray()  // [1,2,3]
 ```
 
 #### Prray.from(arrayLike)
@@ -181,10 +202,6 @@ Prray.isPrray([1,2,3]) // false
 Prray.isPrray(new Prray(1,2,3)) // true
 ```
 
-----------------------------------------------------------------------------
-
-You also can **chain method calls** even if them returns promise 😻!
-
 ## Different from [Bluebird](https://github.com/petkaantonov/bluebird)
 
 **First**, prray does not provide another implementation of promise, which is essentially different from Bluebird.
@@ -211,168 +228,3 @@ await Bluebird.map(responses, saveAsync)
 If you want a good promise implementation, this is bluebird.
 
 If you want to handle asynchronous batch operations on data(array), prray is an option for you.
-
-## Installation
-
-npm:
-
-```
-npm install prray --save
-```
-
-yarn:
-
-```
-yarn add prray
-```
-
-## Prray
-
-Get a prray from existing array using function `p`.
-
-```javascript
-const p = require('prray')
-const arr = [1,2,3]
-
-const prray = p(arr)
-prray.mapAsync(funcAsync).then(console.log)
-```
-
-- Prray#mapAsync -> Array#map
-- Prray#filterAsync -> Array#filter
-- Prray#reduceAsync -> Array#reduce
-- Prray#everyAsync -> Array#every
-- Prray#someAsync -> Array#some
-- Prray#findAsync -> Array#find
-- Prray#findIndexAsync -> Array#findIndex
-- Prray#toArray
-
-## Method Chaining
-
-```javascript
-await p(arr).filterAsync(existAsync).mapAsync(postAsync)
-
-// equals to:
-
-let existed = await p(arr).filterAsync(existAsync)
-await existed.mapAsync(postAsync)
-```
-
-## Methods
-
-### mapAsync(mapper, concurrency?)
-
-an async version of Array#map
-
-```javascript
-await p(urls).mapAsync(async (url, ix) => {
-  const res = await fetch(url)
-  return res.json()
-})
-```
-
-### filterAsync(filterer, concurrency?)
-
-an async version of Array#filter
-
-```javascript
-await p(filenames).filterAsync(async (filename, ix) => {
-  return existsAsync(filename)
-})
-```
-
-### reduceAsync(reducer, initialValue)
-
-an async version of Array#reduce
-
-```javascript
-await p(userIds).reduceAsync(async (sum, uid, ix) => {
-  const score = await getScoreFromDB(uid)
-  return sum + score
-}, 0)
-```
-
-### everyAsync(tester, concurrency?)
-
-an async version of Array#every
-
-```javascript
-const areVip = await p(users).everyAsync(async (user, ix) => {
-  return await userModel.isVip(user)
-})
-console.log(areVip) // true
-```
-
-### someAsync(tester, concurrency?)
-
-an async version of Array#some
-
-```javascript
-const hasVipUser = await p(users).someAsync(async (user, ix) => {
-  return await userModel.isVip(user)
-})
-console.log(areVip) // true
-```
-
-### findAsync(tester, concurrency?)
-
-an async version of Array#find
-
-```javascript
-const vipUser = await p(users).findAsync(isVipAsync)
-```
-
-### findIndexAsync(tester, concurrency?)
-
-an async version of Array#findIndex
-
-```javascript
-const ix = await p(users).findIndexAsync(isVipAsync)
-const vipUser = users[ix]
-```
-
-### and all of common methods of Array
-
-Such as `map`, `filter`, `indexOf`, `lastIndexOf` ...
-
-## concurrency
-
-You may optionally specify a concurrency limit when calling async method. It is useful when perform some resource-consuming operations in large batches, such as querying the database.
- 
-```javascript
-await p(urls).mapAsync(fetch, 10) // concurrency limit 10
-```
-
-> NOTE: method `reduceAsync` does NOT support concurrency limit, its concurrency is alway 1.
-
-## Compatible with Array
-
-```javascript
-const prr = p([1,2,3,4])
-
-Array.isArray(prr) // true
-prr instanceof Array // true
-JSON.stringify(prr) === JSON.stringify([1,2,3,4])  // true
-console.log(prr.map) // [Function]
-console.log(prr.length) // 4
-
-console.log(prr.mapAsync) // [Function]
-```
-
-In some cases you may need a 'pure' array, just call method `toArray`.
-
-```javascript
-const p = p([1,2,3])
-console.log(p.toArray())  // [1,2,3]
-```
-
-## TODO
-
-- [x] Concurrency
-- [ ] A well-designed logo
-- [ ] Sub-task promise supports `timeout`, such like `await prr.mapAsync(fetch, {timeout: 3000})`
-- [ ] Sub-task promise supports `retry` when rejected, such like `await prr.mapAsync(fetch, {retries: 2})`
-- [ ] Browser compatibility survey
-- [ ] Prettier document
-- [ ] Revise documentation, including syntax errors
-- ......

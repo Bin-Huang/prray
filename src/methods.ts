@@ -166,6 +166,8 @@ export function loop<T>(
   func: (value: T, index: number, array: T[], breakLoop: () => any) => any,
   { concurrency= Infinity },
 ) {
+  // FEATURE: options { concurrency, timeout, retries, defaults, fallback }
+
   if (array.length <= concurrency) {
     const promises = array.map((v, ix) => func(v, ix, array, () => null))
     return Promise.all(promises)

@@ -151,6 +151,9 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
         : prray.splice(start)
     ))
   }
+  toArray(): Promise<T[]> {
+    return this.then(prray => prray.toArray())
+  }
 }
 
 function prraypromise<T>(promise: Promise<Prray<T>>) {
