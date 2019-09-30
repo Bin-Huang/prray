@@ -71,19 +71,19 @@ export class Prray<T> extends Array<T> {
   }
   slice(start?: number, end?: number): Prray<T> {
     const result: T[] = super.slice(start, end)
-    return ensurePrray(result)
+    return _ensurePrray(result)
   }
 
   map<U>(callback): Prray<U> {
-    return ensurePrray(super.map(callback))
+    return _ensurePrray(super.map(callback))
   }
   filter(callback): Prray<T> {
-    return ensurePrray(super.filter(callback))
+    return _ensurePrray(super.filter(callback))
   }
   concat(...items: ConcatArray<T>[]): Prray<T>
   concat(...items: (ConcatArray<T> | T)[]): Prray<T>
   concat(...items: any[]): Prray<T> {
-    return ensurePrray(super.concat(...items))
+    return _ensurePrray(super.concat(...items))
   }
   reverse(): Prray<T> {
     return super.reverse() as Prray<T>
@@ -93,7 +93,7 @@ export class Prray<T> extends Array<T> {
     const result = arguments.length >= 2
       ? super.splice(start, deleteCount, ...items)
       : super.splice(start)
-    return ensurePrray(result)
+    return _ensurePrray(result)
   }
 }
 
@@ -101,7 +101,7 @@ export function prray<T>(arr: T[]): Prray<T> {
   return Prray.from(arr)
 }
 
-function ensurePrray<T>(arr: T[]): Prray<T> {
+export function _ensurePrray<T>(arr: T[]): Prray<T> {
   if (arr instanceof Prray) {
     return arr
   } else {

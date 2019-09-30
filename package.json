@@ -5,7 +5,7 @@
   "main": "./dist/src/index",
   "typings": "./dist/src/index.d.ts",
   "scripts": {
-    "test": "rm -rf dist && npm run compile && ava ./dist/test/*.test.js",
+    "test": "rm -rf dist && npm run compile && nyc ava ./dist/test/*.test.js",
     "compile": "tsc"
   },
   "repository": "Bin-Huang/prray",
@@ -28,6 +28,7 @@
     "@types/delay": "^2.0.1",
     "@types/p-map": "^1.1.0",
     "ava": "^2.4.0",
+    "nyc": "^14.1.1",
     "sinon": "^7.4.2"
   }
 }
