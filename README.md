@@ -157,6 +157,102 @@ _Compatible with [Array.prototype.filter](https://developer.mozilla.org/en-US/do
 
 The filter() method creates a new prray with all elements that pass the test implemented by the provided function.
 
+#### Prray.prototype.slice(start, end)
+
+_Compatible with [Array.prototype.slice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)_
+
+The slice() method returns a shallow copy of a portion of a prray into a new prray object selected from begin to end (end not included) where begin and end represent the index of items in that prray. The original prray will not be modified.
+
+#### Prray.prototype.find(func)
+
+_Compatible with [Array.prototype.find](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)_
+
+The find() method returns the value of the first element in the provided prray that satisfies the provided testing function.
+
+#### Prray.prototype.findIndex(func)
+
+_Compatible with [Array.prototype.findIndex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex)_
+
+The findIndex() method returns the index of the first element in the prray that satisfies the provided testing function. Otherwise, it returns -1, indicating that no element passed the test.
+
+#### Prray.prototype.every(func)
+
+_Compatible with [Array.prototype.every](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)_
+
+The every() method tests whether all elements in the prray pass the test implemented by the provided function. It returns a Boolean value. 
+
+#### Prray.prototype.some(func)
+
+_Compatible with [Array.prototype.some](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)_
+
+The some() method tests whether at least one element in the prray passes the test implemented by the provided function. It returns a Boolean value. 
+
+#### Prray.prototype.includes(value)
+
+_Compatible with [Array.prototype.includes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)_
+
+The includes() method determines whether a prray includes a certain value among its entries, returning true or false as appropriate.
+
+#### Prray.prototype.indexOf(value)
+
+_Compatible with [Array.prototype.indexOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)_
+
+The indexOf() method returns the first index at which a given element can be found in the prray, or -1 if it is not present.
+
+#### Prray.prototype.lastIndexOf(value)
+
+_Compatible with [Array.prototype.lastIndexOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf)_
+
+The lastIndexOf() method returns the last index at which a given element can be found in the prray, or -1 if it is not present. The prray is searched backwards, starting at fromIndex.
+
+#### Prray.prototype.join(separator)
+
+_Compatible with [Array.prototype.join](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join)_
+
+The join() method creates and returns a new string by concatenating all of the elements in a prray (or an array-like object), separated by commas or a specified separator string. If the prray has only one item, then that item will be returned without using the separator.
+
+#### Prray.prototype.keys()
+
+_Compatible with [Array.prototype.keys](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/keys)_
+
+The keys() method returns a new Array Iterator object that contains the keys for each index in the prray.
+
+#### Prray.prototype.values()
+
+_Compatible with [Array.prototype.values](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values)_
+
+The values() method returns a new Array Iterator object that contains the values for each index in the prray.
+
+#### Prray.prototype.entries()
+
+_Compatible with [Array.prototype.entries](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/entries)_
+
+The entries() method returns a new Array Iterator object that contains the key/value pairs for each index in the prray.
+
+#### Prray.prototype.fill(value, start, end)
+
+_Compatible with [Array.prototype.fill](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill)_
+
+The fill() method fills (modifies) all the elements of a prray from a start index (default zero) to an end index (default array length) with a static value. It returns the modified prray.
+
+#### Prray.prototype.sort(func)
+
+_Compatible with [Array.prototype.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)_
+
+The sort() method sorts the elements of a prray in place and returns the sorted prray. The default sort order is built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values.
+
+#### Prray.prototype.concat(arr)
+
+_Compatible with [Array.prototype.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)_
+
+The concat() method is used to merge two or more prrays and arrays. This method does not change the existing prrays, but instead returns a new prray.
+
+#### Prray.prototype.copyWithin(target, star, end)
+
+_Compatible with [Array.prototype.copyWithin](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin)_
+
+The copyWithin() method shallow copies part of a prray to another location in the same prray and returns it without modifying its length.
+
 #### Prray.prototype.toString()
 
 _Compatible with [Array.prototype.toString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toString)_
