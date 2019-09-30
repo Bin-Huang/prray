@@ -1,10 +1,12 @@
 // TODO: talk about tests, under development
+// TODO: original array ?-> normal array
 
 Prray -- "Promisified" Array, aims to replace original Array in some cases for convenience
 
 - comes with async methods, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
 - supports method chaning with async methods
 - compatible with original array
+- well-tested (coverage 93.17%)
 
 ```javascript
 import { prray } from 'prray'
@@ -67,14 +69,18 @@ iterator.next().value  // 3
 iterator.next().done  // true
 
 // Type compatibility in typescript
-function yourFunc(arr: number[]) {
+function func(arr: number[]) {
   return arr
 }
-yourFunc(new Prray(1,2,3))  // Type Prray is compatible with Array
+func(new Prray(1,2,3))  // Type Prray is compatible with type Array
 ```
 
-How to distinguish prray with array:
+Distinguish prray with array:
+
 ```javascript
+Prray.isPrray(prr)  // true
+Prray.isPrray(arr)  // false
+
 prr instanceof Prray // true
 arr instanceof Prray // false
 ```
@@ -98,9 +104,9 @@ Class `Prray`. You can think of it as `Array`.
 ```javascript
 import { Prray } from 'prray'
 
-new Prray()  // just like new Array()
-new Prray(1)  // just like new Array(1)
-new Prray('a', 'b')  // just like new Array('a', 'b')
+new Prray()  // likes new Array()
+new Prray(1)  // likes new Array(1)
+new Prray('a', 'b')  // likes new Array('a', 'b')
 ```
 
 #### Prray.prototype.map(callback)
@@ -140,6 +146,40 @@ const evenNums = await prr.filter(v => v % 2 === 0)
 await prr.filter(isFileExisted).map(removeFile)
 ```
 
+#### Prray.from(arrayLike)
+
+_Compatible with [`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from) but returns a prray._
+
+The Prray.from() method creates a new, shallow-copied Prray instance from an array-like or iterable object.
+
+```javascript
+import { Prray } from 'prray'
+
+Prray.from([1,2,3,4])
+```
+
+#### Prray.of(...args)
+
+_Compatible with [`Array.of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of) but returns a prray._
+
+The Prray.of() method creates a new Prray instance from a variable number of arguments, regardless of number or type of the arguments.
+
+```javascript
+import { Prray } from 'prray'
+
+Prray.of(1,2,3,4)
+```
+
+#### Prray.isPrray(obj)
+
+The Prray.isArray() method determines whether the passed value is a Prray.
+
+```javascript
+import { Prray } from 'prray'
+
+Prray.isPrray([1,2,3]) // false
+Prray.isPrray(new Prray(1,2,3)) // true
+```
 
 ----------------------------------------------------------------------------
 
