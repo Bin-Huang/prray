@@ -1,1 +1,89 @@
-- prraypromise support common sync method, such as `map`, `indexOf`
+## Project polish
+
+[] Add real-world tests
+[] Add types for all of methods
+[] Set ts mode to strict
+
+## Document polish
+
+[] contribute (issues, pr, fork)
+[] back
+[] benchmark
+
+## Implement methods
+
+[x] Array.prototype.concat()
+[x] Array.prototype.copyWithin()
+[x] Array.prototype.entries()
+[x] Array.prototype.every()
+[x] Array.prototype.fill()
+[x] Array.prototype.filter()
+[x] Array.prototype.find()
+[x] Array.prototype.findIndex()
+[xx] Array.prototype.flat()
+[xx] Array.prototype.flatMap()
+[x] Array.prototype.forEach()
+[x] Array.prototype.includes()
+[x] Array.prototype.indexOf()
+[x] Array.prototype.join()
+[x] Array.prototype.keys()
+[x] Array.prototype.lastIndexOf()
+[x] Array.prototype.map()
+[x] Array.prototype.pop()
+[x] Array.prototype.push()
+[x] Array.prototype.reduce()
+[x] Array.prototype.reduceRight()
+[x] Array.prototype.reverse()
+[x] Array.prototype.shift()
+[x] Array.prototype.slice()
+[x] Array.prototype.some()
+[x] Array.prototype.sort()
+[x] Array.prototype.splice()
+[x] Array.prototype.toLocaleString()
+[xx] Array.prototype.toSource()
+[x] Array.prototype.toString()
+[x] Array.prototype.unshift()
+[x] Array.prototype.values()
+
+## Document methods
+
+[x] mapAsync<U>
+[x] filterAsync
+[x] reduceAsync
+[x] reduceRightAsync
+[x] sortAsync
+[x] findAsync
+[x] findIndexAsync
+[x] everyAsync
+[x] someAsync
+[x] forEachAsync
+[x] slice
+[x] map<U>
+[x] filter
+[x] find
+[x] findIndex
+[x] every
+[x] some
+[x] includes
+[x] indexOf
+[x] lastIndexOf
+[x] join
+[x] keys
+[x] values
+[x] entries
+[x] fill
+[x] sort
+[x] concat
+[x] copyWithin
+[x] toString
+[x] toLocaleString
+[x] forEach
+[x] pop
+[x] push
+[x] reverse
+[x] reduce
+[x] reduceRight
+[x] shift
+[x] unshift
+[x] splice
+[x] toArray

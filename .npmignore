@@ -1,0 +1,9 @@
+node_modules/
+.vscode/
+.nyc_output
+npm-debug.log
+tests/
+tsconfig.json
+tslint.json
+.vscode/
+.prettierrc

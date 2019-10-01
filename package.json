@@ -1,10 +1,20 @@
 {
   "name": "prray",
-  "version": "0.4.4",
-  "description": "promise-version array, support `mapAsync`, `filterAsync` and `reduceAsync`",
+  "version": "0.5.0",
+  "description": "'Promisified' Array, comes with async methods(such as mapAsync). It is compatible with original array",
   "main": "./dist/src/index",
+  "typings": "./dist/src/index.d.ts",
   "scripts": {
-    "test": "ava dist/test/test.js"
+    "test": "rm -rf dist && npm run compile && nyc ava ./dist/test/*.test.js",
+    "compile": "tsc",
+    "prettier": "prettier --config .prettierrc --write '**/*.ts'",
+    "prepublish": "npm run prettier && npm run test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier",
+      "pre-push": "npm run prettier && npm run test"
+    }
   },
   "repository": "Bin-Huang/prray",
   "homepage": "https://github.com/Bin-Huang/prray",
@@ -16,15 +26,12 @@
   ],
   "author": "Ben Huang",
   "license": "ISC",
-  "dependencies": {
-    "delay": "^3.0.0",
-    "p-every": "^1.0.2",
-    "p-filter": "^1.0.0",
-    "p-map": "^1.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/delay": "^2.0.1",
-    "@types/p-map": "^1.1.0",
-    "ava": "^2.1.0"
+    "ava": "^2.4.0",
+    "husky": "^3.0.7",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "sinon": "^7.4.2"
   }
 }

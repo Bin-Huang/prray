@@ -1,108 +1,204 @@
-import { PPromise, ppromise } from './ppromise'
-import pMap from 'p-map'
-import pFilter from 'p-filter'
-// import pReduce from 'p-reduce'
-import pEvery from 'p-every'
-import { PrrayPromise, prraypromise } from './prraypromise'
+import { IMapCallback, ITester, ICallback } from './types'
 
-export interface IEveryAsync {
-  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): Promise<boolean> 
-}
-export const everyAsync: IEveryAsync = function (tester, concurrency) {
-  return this.then((r) => concurrency ? pEvery(r, tester, {concurrency}) : pEvery(r, tester))
+export async function map<T, U>(arr: T[], func: IMapCallback<T, U>) {
+  const result: U[] = []
+  await loop<T>(arr, async (value, ix) => (result[ix] = await func(value, ix, arr)), {})
+  return result
 }
 
-export interface ISomeAsync {
-  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): Promise<boolean> 
-}
-export const someAsync: ISomeAsync = function (tester, concurrency) {
-  const negate = async (item, ix) => !(await tester(item, ix))
-  return this.then((r) => concurrency ? pEvery(r, negate, {concurrency}) : pEvery(r, negate)).then(r => !r)
+export async function filter<T>(arr: T[], func: ITester<T>) {
+  const result: T[] = []
+  await loop(arr, async (value, ix) => ((await func(value, ix, arr)) ? result.push(value) : null), {})
+  return result
 }
 
-class EndError<T> extends Error {
-  public ele: T
-  public ix: number
-	constructor(ele: T, ix: number) {
-		super();
-    this.ele = ele;
-    this.ix = ix
-	}
-}
-
-export interface IFindAsync {
-  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): Promise<T | null> 
-}
-function find<T>(datas: T[], tester: (ele: T, ix: number) => boolean | Promise<boolean>, opts?: any): Promise<{ ele: T, ix: number } | null> {
-  const finder = (ele: T, ix: number) => Promise.resolve(tester(ele, ix)).then((r) => {
-    if (r) {
-      throw new EndError(ele, ix)
-    }
-  })
-  return pMap(datas, finder, opts).then(() => null).catch((r) => {
-    if (r instanceof EndError) {
-      return r
-    }
-    return null
-  })
-}
-export const findAsync: IFindAsync = function (tester, concurrency) {
-    return this.then((r) => concurrency ? find(r, tester, {concurrency}) : find(r, tester))
-        .then((r) => r === null ? null : r.ele)
-}
-
-export interface IFindIndexAsync {
-  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): Promise<number | -1> 
-}
-export const findIndexAsync: IFindIndexAsync = function (tester, concurrency) {
-    return this.then((r) => concurrency ? find(r, tester, {concurrency}) : find(r, tester))
-        .then((r) => r === null ? -1 : r.ix)
-}
-
-export type IToArray = <T>(this: PrrayPromise<T>) => Promise<T[]>
-export const toArray: IToArray = function() {
-  return this.then((r) => [...r])
-}
-
-export type IMapper<T, U> = (item: T, index: number) => U | Promise<U>
-export interface IMapAsync {
-  <T, U>(this: PrrayPromise<T>, mapper: IMapper<T, U>, concurrency?: number): PrrayPromise<U> 
-}
-export const mapAsync: IMapAsync = function (mapper, concurrency) {
-  const prom = this.then((r) => concurrency ? pMap(r, mapper, {concurrency}) : pMap(r, mapper))
-  return prraypromise(prom)
-}
-
-export type ITester<T> = (item: T, index: number) => boolean | Promise<boolean>
-export interface IFilterAsync {
-  <T>(this: PrrayPromise<T>, tester: ITester<T>, concurrency?: number): PrrayPromise<T> 
-}
-export const filterAsync: IFilterAsync = function (filterer, concurrency) {
-  const prom = this.then((r) => concurrency ? pFilter(r, filterer, {concurrency}) : pFilter(r, filterer))
-  return prraypromise(prom)
-}
-
-export type IReducer<T,U> = (pre: U, current: T, index: number) => U | Promise<U>
-export interface IReduceAsync {
-  <T, S>(this: PrrayPromise<T>, reducer: IReducer<T, S>, initialValue?: S): PPromise<S> 
-}
-async function reduce(datas: any[], reducer, init?) {
-  // TODO: Better implementation
-  let result
-  let slices
-  if (init === undefined) {
-    result = datas[0]
-    slices = datas.slice(1)
-  } else {
-    result = init
-    slices = datas
+export async function reduce(arr: any, func: any, initialValue: any) {
+  let pre = initialValue
+  let ix = 0
+  if (initialValue === undefined) {
+    pre = arr[0]
+    ix = 1
   }
-  for (let ix = 0; ix < slices.length; ix ++) {
-    result = await reducer(result, slices[ix], ix)
+  for (ix; ix < arr.length; ix++) {
+    const current = arr[ix]
+    pre = await func(pre, current, ix, arr)
+  }
+  return pre
+}
+
+export async function reduceRight(arr: any, func: any, initialValue: any) {
+  let pre = initialValue
+  let ix = arr.length - 1
+  if (initialValue === undefined) {
+    pre = arr[arr.length - 1]
+    ix = arr.length - 2
+  }
+  for (ix; ix >= 0; ix--) {
+    const current = arr[ix]
+    pre = await func(pre, current, ix, arr)
+  }
+  return pre
+}
+
+export async function findIndex<T>(arr: T[], func: ITester<T>): Promise<number> {
+  let result = -1
+  await loop(
+    arr,
+    async (value, ix, _, breakLoop) => {
+      if (await func(value, ix, arr)) {
+        result = ix
+        breakLoop()
+      }
+    },
+    {},
+  )
+  return result
+}
+
+export async function find<T>(arr: T[], func: ITester<T>): Promise<T | undefined> {
+  let result: T | undefined
+  await loop(
+    arr,
+    async (value, ix, _, breakLoop) => {
+      if (await func(value, ix, arr)) {
+        result = value
+        breakLoop()
+      }
+    },
+    {},
+  )
+  return result
+}
+
+export async function every<T>(arr: T[], func: ITester<T>) {
+  let result = true
+  await loop(
+    arr,
+    async (value, ix, _, breakLoop) => {
+      if (!(await func(value, ix, arr))) {
+        result = false
+        breakLoop()
+      }
+    },
+    {},
+  )
+  return result
+}
+
+export async function some(arr: any, func: any) {
+  let result = false
+  await loop(
+    arr,
+    async (value, ix, _, breakLoop) => {
+      if (await func(value, ix, arr)) {
+        result = true
+        breakLoop()
+      }
+    },
+    {},
+  )
+  return result
+}
+
+export async function sort<T>(arr: T[], func: any): Promise<T[]> {
+  if (!func) {
+    return [...arr].sort()
+  }
+  if (arr.length < 2) {
+    return arr
+  }
+  // 插入排序
+  for (let i = 1; i < arr.length; i++) {
+    for (let j = 0; j < i; j++) {
+      if ((await func(arr[i], arr[j])) < 0) {
+        arr.splice(j, 0, arr[i])
+        arr.splice(i + 1, 1)
+        break
+      }
+    }
+  }
+  return arr
+}
+
+export async function forEach<T>(arr: T[], func: ICallback<T>) {
+  return loop(arr, async (value, ix) => func(value, ix, arr), {})
+}
+
+export function slice<T>(arr: T[], start = 0, end = Infinity): T[] {
+  if (start === 0 && end === Infinity) {
+    return arr
+  }
+  if (start > arr.length) {
+    start = arr.length
+  }
+  if (start < -arr.length) {
+    start = -arr.length
+  }
+  if (end > arr.length) {
+    end = arr.length
+  }
+  if (end < -arr.length) {
+    end = -arr.length
+  }
+  if (start < 0) {
+    start = arr.length + start
+  }
+  if (end < 0) {
+    end = arr.length + end
+  }
+  const result = []
+  for (let ix = start; ix < end; ix++) {
+    result.push(arr[ix])
   }
   return result
 }
-export const reduceAsync: IReduceAsync = function (reducer, initialValue?) {
-  const prom = this.then((r) => reduce(r, reducer, initialValue))
-  return ppromise(prom)// TODO: if return promise<array>, returns prraypromise<array>???
+
+export function loop<T>(
+  array: T[],
+  func: (value: T, index: number, array: T[], breakLoop: () => any) => any,
+  { concurrency = Infinity },
+) {
+  // FEATURE: options { concurrency, timeout, retries, defaults, fallback }
+
+  if (array.length <= concurrency) {
+    const promises = array.map((v, ix) => func(v, ix, array, () => null))
+    return Promise.all(promises)
+  }
+
+  return new Promise((resolve, reject) => {
+    const length = array.length
+    if (length === 0) {
+      resolve()
+    }
+
+    let isEnding = false
+    let currentIndex = 0
+    let workingNum = Math.min(concurrency, length)
+
+    const breakLoop = () => {
+      isEnding = true
+      resolve()
+    }
+
+    const woker = async () => {
+      while (!isEnding && currentIndex < length) {
+        const ix = currentIndex++
+        try {
+          await func(array[ix], ix, array, breakLoop)
+        } catch (error) {
+          isEnding = true
+          reject(error)
+          return
+        }
+      }
+      workingNum--
+      if (workingNum === 0) {
+        resolve()
+      }
+    }
+
+    for (let i = 0; i < Math.min(concurrency, length); i++) {
+      woker()
+    }
+  })
 }
