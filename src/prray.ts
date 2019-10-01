@@ -5,7 +5,6 @@ import * as methods from './methods'
 // TODO: thisArg
 
 export class Prray<T> extends Array<T> {
-
   static of<T>(...args: T[]): Prray<T> {
     return Prray.from(args)
   }
@@ -77,11 +76,15 @@ export class Prray<T> extends Array<T> {
     return prraypromise(promise.then(arr => Prray.from(arr)))
   }
 
-  findAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean): Promise<T | undefined> {
+  findAsync(
+    func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
+  ): Promise<T | undefined> {
     return methods.find(this, func)
   }
 
-  findIndexAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean): Promise<number> {
+  findIndexAsync(
+    func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
+  ): Promise<number> {
     return methods.findIndex(this, func)
   }
 
@@ -129,7 +132,6 @@ export class Prray<T> extends Array<T> {
   toArray(): T[] {
     return [...this]
   }
-
 }
 
 export function prray<T>(arr: T[]): Prray<T> {

@@ -1,7 +1,6 @@
 import { Prray } from './prray'
 
 class PrrayPromise<T> extends Promise<Prray<T>> {
-
   constructor(executor: (resolve: (prray: Prray<T>) => any, reject: (err: Error) => any) => any) {
     super(executor)
   }
@@ -44,11 +43,15 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
     return prraypromise(this.then(prray => prray.sortAsync(func)))
   }
 
-  findAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean): Promise<T | undefined> {
+  findAsync(
+    func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
+  ): Promise<T | undefined> {
     return this.then(prray => prray.findAsync(func))
   }
 
-  findIndexAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean): Promise<number> {
+  findIndexAsync(
+    func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
+  ): Promise<number> {
     return this.then(prray => prray.findIndexAsync(func))
   }
 
@@ -211,7 +214,6 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
   toArray(): Promise<T[]> {
     return this.then(prray => prray.toArray())
   }
-
 }
 
 function prraypromise<T>(promise: Promise<Prray<T>>) {
