@@ -40,8 +40,8 @@
 [x] sortAsync
 [] findAsync
 [] findIndexAsync
-[] everyAsync
-[] someAsync
+[x] everyAsync
+[x] someAsync
 [x] forEachAsync
 [x] slice
 [x] map<U>

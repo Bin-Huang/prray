@@ -175,6 +175,26 @@ _Compatible with [Array.prototype.findIndex](https://developer.mozilla.org/en-US
 
 The findIndex() method returns the index of the first element in the prray that satisfies the provided testing function. Otherwise, it returns -1, indicating that no element passed the test.
 
+#### Prray.prototype.everyAsync(func)
+
+_Think of it as async version of method `every`_
+
+The everyAsync() method tests whether all elements in the prray pass the test implemented by the provided function. It returns a Boolean value. 
+
+The provided function can be an async function that returns a promise resolved with Boolean value.
+
+```javascript
+function checkFileAsync(filename) {
+  return new Promise((resolve, reject) => {
+    fs.access(filename, fs.F_OK, err => err ? resolve(false) : resolve(true))
+  })
+}
+
+const filenames = prray([/* filenames */])
+
+const isAllFileExisted = await filenames.everyAsync(checkFileAsync)
+```
+
 #### Prray.prototype.every(func)
 
 _Compatible with [Array.prototype.every](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)_
@@ -190,7 +210,14 @@ The some() method tests whether at least one element in the prray passes the tes
 The provided function can be an async function that returns a promise resolved with Boolean value.
 
 ```javascript
+function checkFileAsync(filename) {
+  return new Promise((resolve, reject) => {
+    fs.access(filename, fs.F_OK, err => err ? resolve(false) : resolve(true))
+  })
+}
+
 const filenames = prray([/* filenames */])
+
 const containExistedFile = await filenames.someAsync(checkFileAsync)
 ```
 
