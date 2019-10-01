@@ -1,18 +1,32 @@
-import { IMapCallback, ITester, ICallback } from './types'
-
-export async function map<T, U>(arr: T[], func: IMapCallback<T, U>) {
+export async function map<T, U>(arr: T[], func: (currentValue: T, index: number, array: T[]) => Promise<U> | U) {
   const result: U[] = []
   await loop<T>(arr, async (value, ix) => (result[ix] = await func(value, ix, arr)), {})
   return result
 }
 
-export async function filter<T>(arr: T[], func: ITester<T>) {
+export async function filter<T>(
+  arr: T[],
+  func: (currentValue: T, index: number, array: T[]) => Promise<boolean> | boolean,
+) {
   const result: T[] = []
   await loop(arr, async (value, ix) => ((await func(value, ix, arr)) ? result.push(value) : null), {})
   return result
 }
 
-export async function reduce(arr: any, func: any, initialValue: any) {
+export async function reduce<T>(
+  arr: T[],
+  func: (preValue: T, currentValue: T, index: number, array: T[]) => Promise<T> | T,
+)
+export async function reduce<T, U>(
+  arr: T[],
+  func: (preValue: U, currentValue: T, index: number, array: T[]) => Promise<U> | U,
+  initialValue?: U,
+)
+export async function reduce<T>(
+  arr: T[],
+  func: (preValue: any, currentValue: T, index: number, array: T[]) => Promise<any> | any,
+  initialValue?: any,
+) {
   let pre = initialValue
   let ix = 0
   if (initialValue === undefined) {
@@ -26,7 +40,20 @@ export async function reduce(arr: any, func: any, initialValue: any) {
   return pre
 }
 
-export async function reduceRight(arr: any, func: any, initialValue: any) {
+export async function reduceRight<T>(
+  arr: T[],
+  func: (preValue: T, currentValue: T, index: number, array: T[]) => Promise<T> | T,
+)
+export async function reduceRight<T, U>(
+  arr: T[],
+  func: (preValue: U, currentValue: T, index: number, array: T[]) => Promise<U> | U,
+  initialValue?: U,
+)
+export async function reduceRight<T>(
+  arr: T[],
+  func: (preValue: any, currentValue: T, index: number, array: T[]) => Promise<any> | any,
+  initialValue?: any,
+) {
   let pre = initialValue
   let ix = arr.length - 1
   if (initialValue === undefined) {
@@ -40,7 +67,10 @@ export async function reduceRight(arr: any, func: any, initialValue: any) {
   return pre
 }
 
-export async function findIndex<T>(arr: T[], func: ITester<T>): Promise<number> {
+export async function findIndex<T>(
+  arr: T[],
+  func: (currentValue: T, index: number, array: T[]) => Promise<boolean> | boolean,
+): Promise<number> {
   let result = -1
   await loop(
     arr,
@@ -55,7 +85,10 @@ export async function findIndex<T>(arr: T[], func: ITester<T>): Promise<number> 
   return result
 }
 
-export async function find<T>(arr: T[], func: ITester<T>): Promise<T | undefined> {
+export async function find<T>(
+  arr: T[],
+  func: (currentValue: T, index: number, array: T[]) => Promise<boolean> | boolean,
+): Promise<T | undefined> {
   let result: T | undefined
   await loop(
     arr,
@@ -70,7 +103,10 @@ export async function find<T>(arr: T[], func: ITester<T>): Promise<T | undefined
   return result
 }
 
-export async function every<T>(arr: T[], func: ITester<T>) {
+export async function every<T>(
+  arr: T[],
+  func: (currentValue: T, index: number, array: T[]) => Promise<boolean> | boolean,
+) {
   let result = true
   await loop(
     arr,
@@ -85,7 +121,10 @@ export async function every<T>(arr: T[], func: ITester<T>) {
   return result
 }
 
-export async function some(arr: any, func: any) {
+export async function some<T>(
+  arr: T[],
+  func: (currentValue: T, index: number, array: T[]) => Promise<boolean> | boolean,
+) {
   let result = false
   await loop(
     arr,
@@ -100,7 +139,7 @@ export async function some(arr: any, func: any) {
   return result
 }
 
-export async function sort<T>(arr: T[], func: any): Promise<T[]> {
+export async function sort<T>(arr: T[], func: (a: T, b: T) => Promise<number> | number): Promise<T[]> {
   if (!func) {
     return [...arr].sort()
   }
@@ -120,7 +159,7 @@ export async function sort<T>(arr: T[], func: any): Promise<T[]> {
   return arr
 }
 
-export async function forEach<T>(arr: T[], func: ICallback<T>) {
+export async function forEach<T>(arr: T[], func: (currentValue: T, index: number, array: T[]) => Promise<any> | any) {
   return loop(arr, async (value, ix) => func(value, ix, arr), {})
 }
 
