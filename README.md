@@ -461,7 +461,7 @@ Prray.isPrray([1,2,3]) // false
 Prray.isPrray(new Prray(1,2,3)) // true
 ```
 
-## Different from [Bluebird](https://github.com/petkaantonov/bluebird)
+<!-- ## Different from [Bluebird](https://github.com/petkaantonov/bluebird)
 
 **First**, prray does not provide another implementation of promise, which is essentially different from Bluebird.
 
@@ -486,4 +486,4 @@ await Bluebird.map(responses, saveAsync)
 
 If you want a good promise implementation, this is bluebird.
 
-If you want to handle asynchronous batch operations on data(array), prray is an option for you.
+If you want to handle asynchronous batch operations on data(array), prray is an option for you. -->

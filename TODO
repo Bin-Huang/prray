@@ -1,3 +1,17 @@
+## Project polish
+
+[] Add real-world tests
+[] Add types for all of methods
+[] Set ts mode to strict
+
+## Document polish
+
+[] contribute (issues, pr, fork)
+[] back
+[] benchmark
+
+## Implement methods
+
 [x] Array.prototype.concat()
 [x] Array.prototype.copyWithin()
 [x] Array.prototype.entries()
@@ -31,7 +45,7 @@
 [x] Array.prototype.unshift()
 [x] Array.prototype.values()
 
-## document
+## Document methods
 
 [x] mapAsync<U>
 [x] filterAsync
