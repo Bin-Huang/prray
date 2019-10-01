@@ -10,6 +10,6 @@ test('prray toString', async (t) => {
 
 test('prraypromise toString', async (t) => {
   const arr = [1,2,3]
-  const prr = prray(arr)
-  t.is(await toPrrayPromise(prr).toString(), arr.toString())
+  const pp = toPrrayPromise(arr)
+  t.is(await pp.toString(), arr.toString())
 })
