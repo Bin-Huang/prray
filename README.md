@@ -157,15 +157,19 @@ const prr = prray([1,2,3])
 
 #### new Prray()
 
-Class `Prray`. You can think of it as `Array`.
+The class `Prray`. You can think of it as class `Array`.
 
 ```javascript
 import { Prray } from 'prray'
 
-new Prray()  // likes new Array()
-new Prray(1)  // likes new Array(1)
-new Prray('a', 'b')  // likes new Array('a', 'b')
+const p1 = new Prray()
+const p2 = new Prray(1)
+const p3 = new Prray('a', 'b')
 ```
+
+**Instead `new Prray()`, use methods `prray`, `Prray.from` or `Prray.from` if you want to create a new prray instance**. Because the class Prray is so compatible with class Array, 
+some "weird" behavior that exists in `new Array()` can also occur: when you `new Array(1)`, you get `[ <1 empty item> ]` instead `[ 1 ]`.
+
 
 #### Prray.from(arrayLike)
 
@@ -176,7 +180,7 @@ The Prray.from() method creates a new, shallow-copied Prray instance from an arr
 ```javascript
 import { Prray } from 'prray'
 
-Prray.from([1,2,3,4])
+const prr = Prray.from([1,2,3,4])
 ```
 
 #### Prray.of(...args)
@@ -188,7 +192,7 @@ The Prray.of() method creates a new Prray instance from a variable number of arg
 ```javascript
 import { Prray } from 'prray'
 
-Prray.of(1,2,3,4)
+const prr = Prray.of(1,2,3,4)
 ```
 
 #### Prray.isPrray(obj)
