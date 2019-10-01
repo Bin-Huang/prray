@@ -163,6 +163,19 @@ _Compatible with [Array.prototype.slice](https://developer.mozilla.org/en-US/doc
 
 The slice() method returns a shallow copy of a portion of a prray into a new prray object selected from begin to end (end not included) where begin and end represent the index of items in that prray. The original prray will not be modified.
 
+#### Prray.prototype.findAsync(func)
+
+_Think of it as async version of method `find`_
+
+The findAsync() method returns a promise resolved with the value of the first element in the provided prray that satisfies the provided testing function.
+
+The provided function can be an async function that returns a promise resolved with Boolean value.
+
+```javascript
+const workers = prray([/* workers */])
+const unhealthy = await workers.findAsync(checkHealth)
+```
+
 #### Prray.prototype.find(func)
 
 _Compatible with [Array.prototype.find](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)_

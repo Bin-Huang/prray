@@ -38,7 +38,7 @@
 [] reduceAsync
 [] reduceRightAsync
 [x] sortAsync
-[] findAsync
+[x] findAsync
 [x] findIndexAsync
 [x] everyAsync
 [x] someAsync
