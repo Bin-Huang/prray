@@ -1,14 +1,7 @@
-## Features
-
-[] concurrency
-[] retries
-[] fallback
-[] defaults
-
 ## Project polish
 
+[x] Add types for all of methods
 [] Add real-world tests
-[] Add types for all of methods
 [] Set ts mode to strict
 
 ## Document polish
@@ -16,6 +9,24 @@
 [] contribute (issues, pr, fork)
 [] back
 [] benchmark
+
+## Features
+
+### Async controls
+
+[] concurrency
+[] retries
+[] fallback
+[] defaults
+
+### Complain of normal array???
+
+[] safely reverse()
+
+### Useful methods???
+
+[] compact
+
 
 ## Implement methods
 
