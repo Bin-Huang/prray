@@ -169,6 +169,20 @@ _Compatible with [Array.prototype.find](https://developer.mozilla.org/en-US/docs
 
 The find() method returns the value of the first element in the provided prray that satisfies the provided testing function.
 
+#### Prray.prototype.findIndexAsync(func)
+
+_Think of it as async version of method `findIndex`_
+
+The findIndexAsync() method returns a promise resolved with the index of the first element in the prray that satisfies the provided testing function. Otherwise, it returns promise resolved with -1, indicating that no element passed the test.
+
+The provided function can be an async function that returns a promise resolved with Boolean value.
+
+```javascript
+const workers = prray([/* workers */])
+const ix = await workers.findIndexAsync(checkHealth)
+const unhealthy = workers[ix]
+```
+
 #### Prray.prototype.findIndex(func)
 
 _Compatible with [Array.prototype.findIndex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex)_

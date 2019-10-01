@@ -39,7 +39,7 @@
 [] reduceRightAsync
 [x] sortAsync
 [] findAsync
-[] findIndexAsync
+[x] findIndexAsync
 [x] everyAsync
 [x] someAsync
 [x] forEachAsync
