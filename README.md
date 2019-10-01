@@ -1,6 +1,3 @@
-// TODO: talk about tests, under development
-// TODO: original array ?-> normal array
-
 Prray -- "Promisified" Array, comes with async methods, aims to replace original Array in some cases for convenience.
 
 - comes with async methods, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
