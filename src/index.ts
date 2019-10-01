@@ -1,3 +1,3 @@
-const { Prray, prray } = require('./prray')
+import { Prray, prray } from './prray'
 
-module.exports = { Prray, prray }
+export { prray, Prray }
