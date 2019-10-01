@@ -164,6 +164,41 @@ new Prray(1)  // likes new Array(1)
 new Prray('a', 'b')  // likes new Array('a', 'b')
 ```
 
+#### Prray.from(arrayLike)
+
+_Compatible with [`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from) but returns a prray._
+
+The Prray.from() method creates a new, shallow-copied Prray instance from an array-like or iterable object.
+
+```javascript
+import { Prray } from 'prray'
+
+Prray.from([1,2,3,4])
+```
+
+#### Prray.of(...args)
+
+_Compatible with [`Array.of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of) but returns a prray._
+
+The Prray.of() method creates a new Prray instance from a variable number of arguments, regardless of number or type of the arguments.
+
+```javascript
+import { Prray } from 'prray'
+
+Prray.of(1,2,3,4)
+```
+
+#### Prray.isPrray(obj)
+
+The Prray.isArray() method determines whether the passed value is a Prray.
+
+```javascript
+import { Prray } from 'prray'
+
+Prray.isPrray([1,2,3]) // false
+Prray.isPrray(new Prray(1,2,3)) // true
+```
+
 #### Prray.prototype.mapAsync(func)
 
 The `map` method returns promise of a new prray with the return values or the resolved values of return promises of calling a provided function on every element.
@@ -473,41 +508,6 @@ The toArray() method creates and returns a new normal array with every element i
 const prr = new Prray(1,2,3)
 
 prr.toArray()  // [1,2,3]
-```
-
-#### Prray.from(arrayLike)
-
-_Compatible with [`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from) but returns a prray._
-
-The Prray.from() method creates a new, shallow-copied Prray instance from an array-like or iterable object.
-
-```javascript
-import { Prray } from 'prray'
-
-Prray.from([1,2,3,4])
-```
-
-#### Prray.of(...args)
-
-_Compatible with [`Array.of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of) but returns a prray._
-
-The Prray.of() method creates a new Prray instance from a variable number of arguments, regardless of number or type of the arguments.
-
-```javascript
-import { Prray } from 'prray'
-
-Prray.of(1,2,3,4)
-```
-
-#### Prray.isPrray(obj)
-
-The Prray.isArray() method determines whether the passed value is a Prray.
-
-```javascript
-import { Prray } from 'prray'
-
-Prray.isPrray([1,2,3]) // false
-Prray.isPrray(new Prray(1,2,3)) // true
 ```
 
 <!-- ## Different from [Bluebird](https://github.com/petkaantonov/bluebird)
