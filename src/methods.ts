@@ -1,32 +1,37 @@
-export async function map<T, U>(arr: T[], func: (currentValue: T, index: number, array: T[]) => Promise<U> | U) {
+import { Prray } from './prray'
+
+export async function map<T, U>(
+  arr: Prray<T>,
+  func: (currentValue: T, index: number, array: Prray<T>) => Promise<U> | U,
+): Promise<U[]> {
   const result: U[] = []
   await loop<T>(arr, async (value, ix) => (result[ix] = await func(value, ix, arr)), {})
   return result
 }
 
 export async function filter<T>(
-  arr: T[],
-  func: (currentValue: T, index: number, array: T[]) => Promise<boolean> | boolean,
-) {
+  arr: Prray<T>,
+  func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
+): Promise<T[]> {
   const result: T[] = []
   await loop(arr, async (value, ix) => ((await func(value, ix, arr)) ? result.push(value) : null), {})
   return result
 }
 
 export async function reduce<T>(
-  arr: T[],
-  func: (preValue: T, currentValue: T, index: number, array: T[]) => Promise<T> | T,
-)
+  arr: Prray<T>,
+  func: (preValue: T, currentValue: T, index: number, array: Prray<T>) => Promise<T> | T,
+): Promise<T[]>
 export async function reduce<T, U>(
-  arr: T[],
-  func: (preValue: U, currentValue: T, index: number, array: T[]) => Promise<U> | U,
+  arr: Prray<T>,
+  func: (preValue: U, currentValue: T, index: number, array: Prray<T>) => Promise<U> | U,
   initialValue?: U,
-)
+): Promise<U[]>
 export async function reduce<T>(
-  arr: T[],
-  func: (preValue: any, currentValue: T, index: number, array: T[]) => Promise<any> | any,
+  arr: Prray<T>,
+  func: (preValue: any, currentValue: T, index: number, array: Prray<T>) => Promise<any> | any,
   initialValue?: any,
-) {
+): Promise<any[]> {
   let pre = initialValue
   let ix = 0
   if (initialValue === undefined) {
@@ -41,19 +46,19 @@ export async function reduce<T>(
 }
 
 export async function reduceRight<T>(
-  arr: T[],
-  func: (preValue: T, currentValue: T, index: number, array: T[]) => Promise<T> | T,
-)
+  arr: Prray<T>,
+  func: (preValue: T, currentValue: T, index: number, array: Prray<T>) => Promise<T> | T,
+): Promise<T[]>
 export async function reduceRight<T, U>(
-  arr: T[],
-  func: (preValue: U, currentValue: T, index: number, array: T[]) => Promise<U> | U,
+  arr: Prray<T>,
+  func: (preValue: U, currentValue: T, index: number, array: Prray<T>) => Promise<U> | U,
   initialValue?: U,
-)
+): Promise<U[]>
 export async function reduceRight<T>(
-  arr: T[],
-  func: (preValue: any, currentValue: T, index: number, array: T[]) => Promise<any> | any,
+  arr: Prray<T>,
+  func: (preValue: any, currentValue: T, index: number, array: Prray<T>) => Promise<any> | any,
   initialValue?: any,
-) {
+): Promise<any[]> {
   let pre = initialValue
   let ix = arr.length - 1
   if (initialValue === undefined) {
@@ -68,8 +73,8 @@ export async function reduceRight<T>(
 }
 
 export async function findIndex<T>(
-  arr: T[],
-  func: (currentValue: T, index: number, array: T[]) => Promise<boolean> | boolean,
+  arr: Prray<T>,
+  func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
 ): Promise<number> {
   let result = -1
   await loop(
@@ -86,8 +91,8 @@ export async function findIndex<T>(
 }
 
 export async function find<T>(
-  arr: T[],
-  func: (currentValue: T, index: number, array: T[]) => Promise<boolean> | boolean,
+  arr: Prray<T>,
+  func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
 ): Promise<T | undefined> {
   let result: T | undefined
   await loop(
@@ -104,9 +109,9 @@ export async function find<T>(
 }
 
 export async function every<T>(
-  arr: T[],
-  func: (currentValue: T, index: number, array: T[]) => Promise<boolean> | boolean,
-) {
+  arr: Prray<T>,
+  func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
+): Promise<boolean> {
   let result = true
   await loop(
     arr,
@@ -122,9 +127,9 @@ export async function every<T>(
 }
 
 export async function some<T>(
-  arr: T[],
-  func: (currentValue: T, index: number, array: T[]) => Promise<boolean> | boolean,
-) {
+  arr: Prray<T>,
+  func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
+): Promise<boolean> {
   let result = false
   await loop(
     arr,
@@ -139,7 +144,7 @@ export async function some<T>(
   return result
 }
 
-export async function sort<T>(arr: T[], func: (a: T, b: T) => Promise<number> | number): Promise<T[]> {
+export async function sort<T>(arr: Prray<T>, func?: (a: T, b: T) => Promise<number> | number): Promise<T[]> {
   if (!func) {
     return [...arr].sort()
   }
@@ -159,11 +164,14 @@ export async function sort<T>(arr: T[], func: (a: T, b: T) => Promise<number> | 
   return arr
 }
 
-export async function forEach<T>(arr: T[], func: (currentValue: T, index: number, array: T[]) => Promise<any> | any) {
+export async function forEach<T>(
+  arr: Prray<T>,
+  func: (currentValue: T, index: number, array: Prray<T>) => Promise<any> | any,
+) {
   return loop(arr, async (value, ix) => func(value, ix, arr), {})
 }
 
-export function slice<T>(arr: T[], start = 0, end = Infinity): T[] {
+export function slice<T>(arr: Prray<T>, start = 0, end = Infinity): T[] {
   if (start === 0 && end === Infinity) {
     return arr
   }
@@ -193,8 +201,8 @@ export function slice<T>(arr: T[], start = 0, end = Infinity): T[] {
 }
 
 export function loop<T>(
-  array: T[],
-  func: (value: T, index: number, array: T[], breakLoop: () => any) => any,
+  array: Prray<T>,
+  func: (value: T, index: number, array: Prray<T>, breakLoop: () => any) => any,
   { concurrency = Infinity },
 ) {
   // FEATURE: options { concurrency, timeout, retries, defaults, fallback }

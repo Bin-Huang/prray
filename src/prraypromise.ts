@@ -1,6 +1,6 @@
 import { Prray } from './prray'
 
-class PrrayPromise<T> extends Promise<Prray<T>> {
+export class PrrayPromise<T> extends Promise<Prray<T>> {
   constructor(executor: (resolve: (prray: Prray<T>) => any, reject: (err: Error) => any) => any) {
     super(executor)
   }
@@ -156,7 +156,7 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
     return this.then(prray => prray.forEach(callback))
   }
 
-  pop(): Promise<T> {
+  pop(): Promise<T | undefined> {
     return this.then(prray => prray.pop())
   }
 
@@ -196,7 +196,7 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
     )
   }
 
-  shift(): Promise<T> {
+  shift(): Promise<T | undefined> {
     return this.then(prray => prray.shift())
   }
 
@@ -216,7 +216,7 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
   }
 }
 
-function prraypromise<T>(promise: Promise<Prray<T>>) {
+export function prraypromise<T>(promise: Promise<Prray<T>>): PrrayPromise<T> {
   if (promise instanceof PrrayPromise) {
     return promise
   } else {
@@ -226,5 +226,3 @@ function prraypromise<T>(promise: Promise<Prray<T>>) {
     })
   }
 }
-
-export { PrrayPromise, prraypromise }
