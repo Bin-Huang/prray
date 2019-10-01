@@ -1,7 +1,5 @@
 import { Prray } from './prray'
 
-// TODO: prray methods -> prraypromise methods
-
 class PrrayPromise<T> extends Promise<Prray<T>> {
   constructor(props: (resolve: any, reject: any) => any) {
     super(props)
