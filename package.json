@@ -6,7 +6,8 @@
   "typings": "./dist/src/index.d.ts",
   "scripts": {
     "test": "rm -rf dist && npm run compile && nyc ava ./dist/test/*.test.js",
-    "compile": "tsc"
+    "compile": "tsc",
+    "prepublish": "npm run test"
   },
   "repository": "Bin-Huang/prray",
   "homepage": "https://github.com/Bin-Huang/prray",
