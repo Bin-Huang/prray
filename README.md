@@ -3,7 +3,7 @@ Prray -- "Promisified" Array, comes with async methods, aims to replace original
 - comes with async methods, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
 - supports method chaining with async callbacks
 - compatible with original array
-- well-tested (coverage 93.17%)
+- [well-tested](https://github.com/Bin-Huang/prray/tree/master/test) (coverage 93.17%)
 - zero-dependency
 
 ```javascript
@@ -86,6 +86,8 @@ Prray.isPrray([1,2,3])  // false
 prr instanceof Prray // true
 arr instanceof Prray // false
 ```
+
+There are a lots of [unit tests]((https://github.com/Bin-Huang/prray/tree/master/test)) for prray to compatible with original array.
 
 ## Usage
 
