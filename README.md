@@ -79,17 +79,20 @@ function func(arr: number[]) {
 func(new Prray(1,2,3))  // Type Prray is compatible with type Array
 ```
 
-Distinguish prray with array:
+There are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to compatible with normal array.
+
+## Distinguish between prray and normal array
 
 ```javascript
+const prr = new Prray(1,2,3)
+const arr = new Array(1,2,3)
+
 Prray.isPrray(prr)  // true
-Prray.isPrray([1,2,3])  // false
+Prray.isPrray(arr)  // false
 
 prr instanceof Prray // true
 arr instanceof Prray // false
 ```
-
-There are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to compatible with normal array.
 
 ## Usage
 
