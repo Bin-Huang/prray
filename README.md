@@ -31,7 +31,6 @@ import { prray } from 'prray'
 })()
 ```
 
-
 ## Install
 
 npm
@@ -89,6 +88,55 @@ arr instanceof Prray // false
 ```
 
 ## Usage
+
+- Package exports
+  - [prray(array)](#prrayarray)
+  - [new Prray()](#new-prray)
+- Prray static methods
+  - [Prray.from(arrayLike)](#prrayfromarraylike)
+  - [Prray.of(...args)](#prrayofargs)
+  - [Prray.isPrray(obj)](#prrayisprrayobj)
+- Prray instance methods
+  - [Prray.prototype.mapAsync(func)](#prrayprototypemapasyncfunc)
+  - [Prray.prototype.map(func)](#prrayprototypemapfunc)
+  - [Prray.prototype.filterAsync(func)](#prrayprototypefilterasyncfunc)
+  - [Prray.prototype.filter(func)](#prrayprototypefilterfunc)
+  - [Prray.prototype.reduceAsync(func, initialValue)](#prrayprototypereduceasyncfunc-initialvalue)
+  - [Prray.prototype.reduce(func, initialValue)](#prrayprototypereducefunc-initialvalue)
+  - [Prray.prototype.reduceRightAsync(func, initialValue)](#prrayprototypereducerightasyncfunc-initialvalue)
+  - [Prray.prototype.reduceRight(func, initialValue)](#prrayprototypereducerightfunc-initialvalue)
+  - [Prray.prototype.findAsync(func)](#prrayprototypefindasyncfunc)
+  - [Prray.prototype.find(func)](#prrayprototypefindfunc)
+  - [Prray.prototype.findIndexAsync(func)](#prrayprototypefindindexasyncfunc)
+  - [Prray.prototype.findIndex(func)](#prrayprototypefindindexfunc)
+  - [Prray.prototype.everyAsync(func)](#prrayprototypeeveryasyncfunc)
+  - [Prray.prototype.every(func)](#prrayprototypeeveryfunc)
+  - [Prray.prototype.someAsync(func)](#prrayprototypesomeasyncfunc)
+  - [Prray.prototype.some(func)](#prrayprototypesomefunc)
+  - [Prray.prototype.sortAsync(func)](#prrayprototypesortasyncfunc)
+  - [Prray.prototype.sort(func)](#prrayprototypesortfunc)
+  - [Prray.prototype.forEachAsync(func)](#prrayprototypeforeachasyncfunc)
+  - [Prray.prototype.forEach(func)](#prrayprototypeforeachfunc)
+  - [Prray.prototype.slice(start, end)](#prrayprototypeslicestart-end)
+  - [Prray.prototype.includes(value)](#prrayprototypeincludesvalue)
+  - [Prray.prototype.indexOf(value)](#prrayprototypeindexofvalue)
+  - [Prray.prototype.lastIndexOf(value)](#prrayprototypelastindexofvalue)
+  - [Prray.prototype.join(separator)](#prrayprototypejoinseparator)
+  - [Prray.prototype.keys()](#prrayprototypekeys)
+  - [Prray.prototype.values()](#prrayprototypevalues)
+  - [Prray.prototype.entries()](#prrayprototypeentries)
+  - [Prray.prototype.fill(value, start, end)](#prrayprototypefillvalue-start-end)
+  - [Prray.prototype.concat(arr)](#prrayprototypeconcatarr)
+  - [Prray.prototype.copyWithin(target, star, end)](#prrayprototypecopywithintarget-star-end)
+  - [Prray.prototype.pop()](#prrayprototypepop)
+  - [Prray.prototype.push(...elements)](#prrayprototypepushelements)
+  - [Prray.prototype.reverse()](#prrayprototypereverse)
+  - [Prray.prototype.shift()](#prrayprototypeshift)
+  - [Prray.prototype.unshift(...elements)](#prrayprototypeunshiftelements)
+  - [Prray.prototype.splice(start, deleteCount, ...items)](#prrayprototypesplicestart-deletecount-items)
+  - [Prray.prototype.toString()](#prrayprototypetostring)
+  - [Prray.prototype.toLocaleString()](#prrayprototypetolocalestring)
+  - [Prray.prototype.toArray()](#prrayprototypetoarray)
 
 #### prray(array)
 
@@ -155,11 +203,29 @@ _Compatible with [Array.prototype.filter](https://developer.mozilla.org/en-US/do
 
 The filter() method creates a new prray with all elements that pass the test implemented by the provided function.
 
-#### Prray.prototype.slice(start, end)
+#### Prray.prototype.reduceAsync(func, initialValue)
 
-_Compatible with [Array.prototype.slice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)_
+_Think of it as async version of method `reduce`_
 
-The slice() method returns a shallow copy of a portion of a prray into a new prray object selected from begin to end (end not included) where begin and end represent the index of items in that prray. The original prray will not be modified.
+The reduceAsync() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
+
+#### Prray.prototype.reduce(func, initialValue)
+
+_Compatible with [Array.prototype.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)_
+
+The reduce() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
+
+#### Prray.prototype.reduceRightAsync(func, initialValue)
+
+_Think of it as async version of method `reduceRight`_
+
+The reduceRightAsync() method applies a function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
+
+#### Prray.prototype.reduceRight(func, initialValue)
+
+_Compatible with [Array.prototype.reduceRight](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight)_
+
+The reduceRight() method applies a function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
 
 #### Prray.prototype.findAsync(func)
 
@@ -252,6 +318,41 @@ _Compatible with [Array.prototype.some](https://developer.mozilla.org/en-US/docs
 
 The some() method tests whether at least one element in the prray passes the test implemented by the provided function. It returns a Boolean value. 
 
+#### Prray.prototype.sortAsync(func)
+
+_Think of it as async version of method `sort`_
+
+The sortAsync() method sorts the elements of a prray in place and returns the sorted prray. The provided function can be an async function that returns promise resolved with a number.
+
+#### Prray.prototype.sort(func)
+
+_Compatible with [Array.prototype.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)_
+
+The sort() method sorts the elements of a prray in place and returns the sorted prray. The default sort order is built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values.
+
+#### Prray.prototype.forEachAsync(func)
+
+_Think of it as async version of method `forEach`_
+
+The forEachAsync() method executes a provided function once for each prray element asynchronously and returns a promise resolved after all iterations resolved.
+
+```javascript
+const emails = prray([/* emails */])
+await emails.forEachAsync(sendAsync)
+```
+
+#### Prray.prototype.forEach(func)
+
+_Compatible with [Array.prototype.forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)_
+
+The forEach() method executes a provided function once for each prray element.
+
+#### Prray.prototype.slice(start, end)
+
+_Compatible with [Array.prototype.slice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)_
+
+The slice() method returns a shallow copy of a portion of a prray into a new prray object selected from begin to end (end not included) where begin and end represent the index of items in that prray. The original prray will not be modified.
+
 #### Prray.prototype.includes(value)
 
 _Compatible with [Array.prototype.includes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)_
@@ -300,18 +401,6 @@ _Compatible with [Array.prototype.fill](https://developer.mozilla.org/en-US/docs
 
 The fill() method fills (modifies) all the elements of a prray from a start index (default zero) to an end index (default array length) with a static value. It returns the modified prray.
 
-#### Prray.prototype.sortAsync(func)
-
-_Think of it as async version of method `sort`_
-
-The sortAsync() method sorts the elements of a prray in place and returns the sorted prray. The provided function can be an async function that returns promise resolved with a number.
-
-#### Prray.prototype.sort(func)
-
-_Compatible with [Array.prototype.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)_
-
-The sort() method sorts the elements of a prray in place and returns the sorted prray. The default sort order is built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values.
-
 #### Prray.prototype.concat(arr)
 
 _Compatible with [Array.prototype.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)_
@@ -323,35 +412,6 @@ The concat() method is used to merge two or more prrays and arrays. This method 
 _Compatible with [Array.prototype.copyWithin](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin)_
 
 The copyWithin() method shallow copies part of a prray to another location in the same prray and returns it without modifying its length.
-
-#### Prray.prototype.toString()
-
-_Compatible with [Array.prototype.toString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toString)_
-
-The toString() method returns a string representing the specified prray and its elements.
-
-#### Prray.prototype.toLocaleString()
-
-_Compatible with [Array.prototype.toLocaleString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toLocaleString)_
-
-The toLocaleString() method returns a string representing the elements of the prray. The elements are converted to Strings using their toLocaleString methods and these Strings are separated by a locale-specific String (such as a comma “,”).
-
-#### Prray.prototype.forEachAsync(func)
-
-_Think of it as async version of method `forEach`_
-
-The forEachAsync() method executes a provided function once for each prray element asynchronously and returns a promise resolved after all iterations resolved.
-
-```javascript
-const emails = prray([/* emails */])
-await emails.forEachAsync(sendAsync)
-```
-
-#### Prray.prototype.forEach(func)
-
-_Compatible with [Array.prototype.forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)_
-
-The forEach() method executes a provided function once for each prray element.
 
 #### Prray.prototype.pop()
 
@@ -371,30 +431,6 @@ _Compatible with [Array.prototype.reverse](https://developer.mozilla.org/en-US/d
 
 The reverse() method reverses a prray in place. The first prray element becomes the last, and the last prray element becomes the first.
 
-#### Prray.prototype.reduceAsync(func, initialValue)
-
-_Think of it as async version of method `reduce`_
-
-The reduceAsync() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
-
-#### Prray.prototype.reduce(func, initialValue)
-
-_Compatible with [Array.prototype.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)_
-
-The reduce() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
-
-#### Prray.prototype.reduceRightAsync(func, initialValue)
-
-_Think of it as async version of method `reduceRight`_
-
-The reduceRightAsync() method applies a function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
-
-#### Prray.prototype.reduceRight(func, initialValue)
-
-_Compatible with [Array.prototype.reduceRight](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight)_
-
-The reduceRight() method applies a function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
-
 #### Prray.prototype.shift()
 
 _Compatible with [Array.prototype.shift](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift)_
@@ -412,6 +448,18 @@ The unshift() method adds one or more elements to the beginning of a prray and r
 _Compatible with [Array.prototype.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)_
 
 The splice() method changes the contents of a prray by removing or replacing existing elements and/or adding new elements in place.
+
+#### Prray.prototype.toString()
+
+_Compatible with [Array.prototype.toString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toString)_
+
+The toString() method returns a string representing the specified prray and its elements.
+
+#### Prray.prototype.toLocaleString()
+
+_Compatible with [Array.prototype.toLocaleString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toLocaleString)_
+
+The toLocaleString() method returns a string representing the elements of the prray. The elements are converted to Strings using their toLocaleString methods and these Strings are separated by a locale-specific String (such as a comma “,”).
 
 #### Prray.prototype.toArray()
 
