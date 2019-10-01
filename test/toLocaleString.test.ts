@@ -10,6 +10,6 @@ test('prray toLocaleString', async (t) => {
 
 test('prraypromise toLocaleString', async (t) => {
   const arr = [1,2,3]
-  const prr = prray(arr)
-  t.is(await toPrrayPromise(prr).toLocaleString(), arr.toLocaleString())
+  const pp = toPrrayPromise(arr)
+  t.is(await pp.toLocaleString(), arr.toLocaleString())
 })
