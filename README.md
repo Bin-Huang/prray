@@ -1,26 +1,28 @@
-Prray -- "Promisified" Array, comes with async methods, aims to replace original Array in some cases for convenience.
+Prray -- "Promisified" Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.
 
-- comes with async methods, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
-- supports method chaining with async callbacks
-- compatible with original array
+- comes with async method supports, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
+- supports **real async method chaining**
+- **compatible** with normal array
 - [well-tested](https://github.com/Bin-Huang/prray/tree/master/test) (coverage 93.17%)
 - zero-dependency
+
+> Prray aims to replace normal Array in some cases for convenience 😄😜.
 
 ```javascript
 import { prray } from 'prray'
 
 (async () => {
 
-  // Convert original array to "prray"
+  // Convert normal array to "prray"
   const prr = prray(['www.google.com', 'npmjs.org'])
 
   // Now you can do something like this
   const responses = await prr.mapAsync(fetch)
 
-  // Method chaining with async callbacks works well
+  // Async method chaining
   const htmls = await prr.mapAsync(fetch).mapAsync(r => r.text())
 
-  // Method chaining with async callbacks and common callbacks
+  // Method chaining with async and common methods
   await prr.map(commonFunc)
     .sortAsync(asyncFunc)
     .concat(['github.com', 'wikipedia.org'])
@@ -46,7 +48,7 @@ yarn add prray
 ```
 
 
-## Compatibility with original Array
+## Compatibility with normal Array
 
 ```javascript
 import { prray, Prray } from 'prray'
@@ -87,7 +89,7 @@ prr instanceof Prray // true
 arr instanceof Prray // false
 ```
 
-There are a lots of [unit tests]((https://github.com/Bin-Huang/prray/tree/master/test)) for prray to compatible with original array.
+There are a lots of [unit tests]((https://github.com/Bin-Huang/prray/tree/master/test)) for prray to compatible with normal array.
 
 ## Usage
 
