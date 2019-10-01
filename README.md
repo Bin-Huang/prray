@@ -373,11 +373,23 @@ _Compatible with [Array.prototype.reverse](https://developer.mozilla.org/en-US/d
 
 The reverse() method reverses a prray in place. The first prray element becomes the last, and the last prray element becomes the first.
 
+#### Prray.prototype.reduceAsync(func, initialValue)
+
+_Think of it as async version of method `reduce`_
+
+The reduceAsync() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
+
 #### Prray.prototype.reduce(func, initialValue)
 
 _Compatible with [Array.prototype.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)_
 
 The reduce() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
+
+#### Prray.prototype.reduceRightAsync(func, initialValue)
+
+_Think of it as async version of method `reduceRight`_
+
+The reduceRightAsync() method applies a function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
 
 #### Prray.prototype.reduceRight(func, initialValue)
 

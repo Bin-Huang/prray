@@ -35,8 +35,8 @@
 
 [x] mapAsync<U>
 [x] filterAsync
-[] reduceAsync
-[] reduceRightAsync
+[x] reduceAsync
+[x] reduceRightAsync
 [x] sortAsync
 [x] findAsync
 [x] findIndexAsync
