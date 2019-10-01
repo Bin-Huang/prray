@@ -7,15 +7,17 @@ import { IMapCallback, ITester, IReduceCallback } from './types'
 // TODO: thisArg
 
 export class Prray<T> extends Array<T> {
-
-  static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>): Prray<T>
-  static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>, mapFunc: (v: T, ix: number) => U, thisArg?: any): Prray<U>
-  static from<T,U>(arrayLike: Iterable<T> | ArrayLike<T>, mapFunc?: (v: T, ix: number) => U, thisArg?: any): Prray<any> {
-    const arr = arrayLike instanceof Array && mapFunc === undefined
-      ? arrayLike
-      : super.from(arrayLike, mapFunc, thisArg)
+  static from<T, U>(arrayLike: Iterable<T> | ArrayLike<T>): Prray<T>
+  static from<T, U>(arrayLike: Iterable<T> | ArrayLike<T>, mapFunc: (v: T, ix: number) => U, thisArg?: any): Prray<U>
+  static from<T, U>(
+    arrayLike: Iterable<T> | ArrayLike<T>,
+    mapFunc?: (v: T, ix: number) => U,
+    thisArg?: any,
+  ): Prray<any> {
+    const arr =
+      arrayLike instanceof Array && mapFunc === undefined ? arrayLike : super.from(arrayLike, mapFunc, thisArg)
     const prr = new Prray<T>()
-    for (let i = arr.length - 1; i >= 0; i --) {
+    for (let i = arr.length - 1; i >= 0; i--) {
       prr[i] = arr[i]
     }
     return prr
@@ -34,25 +36,39 @@ export class Prray<T> extends Array<T> {
   }
   mapAsync<U>(mapper: IMapCallback<T, U>): PrrayPromise<U> {
     const promise = methods.map(this, mapper)
-    return prraypromise(promise.then((arr) => Prray.from(arr)))
+    return prraypromise(promise.then(arr => Prray.from(arr)))
   }
   filterAsync(func: ITester<T>): PrrayPromise<T> {
     const promise = methods.filter(this, func)
-    return prraypromise(promise.then((arr) => Prray.from(arr)))
+    return prraypromise(promise.then(arr => Prray.from(arr)))
   }
   reduceAsync(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>): Promise<T>
-  reduceAsync<U>(callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>, initialValue?: U): Promise<U>
-  reduceAsync(callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>, initialValue?: any): Promise<any> {
+  reduceAsync<U>(
+    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>,
+    initialValue?: U,
+  ): Promise<U>
+  reduceAsync(
+    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>,
+    initialValue?: any,
+  ): Promise<any> {
     return methods.reduce(this, callback, initialValue)
   }
-  reduceRightAsync(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>): Promise<T>
-  reduceRightAsync<U>(callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>, initialValue?: U): Promise<U>
-  reduceRightAsync(callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>, initialValue?: any): Promise<any> {
+  reduceRightAsync(
+    callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>,
+  ): Promise<T>
+  reduceRightAsync<U>(
+    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>,
+    initialValue?: U,
+  ): Promise<U>
+  reduceRightAsync(
+    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>,
+    initialValue?: any,
+  ): Promise<any> {
     return methods.reduceRight(this, callback, initialValue)
   }
   sortAsync(func?: any): PrrayPromise<T> {
     const promise = methods.sort(this, func)
-    return prraypromise(promise.then((arr) => Prray.from(arr)))
+    return prraypromise(promise.then(arr => Prray.from(arr)))
   }
   findAsync(func: ITester<T>): Promise<T> {
     return methods.find(this, func)
@@ -90,13 +106,11 @@ export class Prray<T> extends Array<T> {
   }
   splice(start: number, deleteCount?: number, ...items: T[]): Prray<T> {
     // Why? If pass parameter deleteCount as undefined directly, the delete count will be zero actually :(
-    const result = arguments.length >= 2
-      ? super.splice(start, deleteCount, ...items)
-      : super.splice(start)
+    const result = arguments.length >= 2 ? super.splice(start, deleteCount, ...items) : super.splice(start)
     return _ensurePrray(result)
   }
   toArray(): T[] {
-    return [ ...this ]
+    return [...this]
   }
 }
 

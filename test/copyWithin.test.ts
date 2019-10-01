@@ -2,7 +2,7 @@ import test from 'ava'
 import { prray } from '../src/prray'
 import { toPrrayPromise } from './test-utils'
 
-test('prray copyWithin', async (t) => {
+test('prray copyWithin', async t => {
   const arr = [1, 2, 3, 4, 5]
   const prr = prray([1, 2, 3, 4, 5])
 
@@ -14,7 +14,7 @@ test('prray copyWithin', async (t) => {
   t.deepEqual(prr.copyWithin(-2, -3, -1), prray(arr.copyWithin(-2, -3, -1)))
 })
 
-test('prraypromise copyWithin', async (t) => {
+test('prraypromise copyWithin', async t => {
   const arr = [1, 2, 3, 4, 5]
   const prr = prray([1, 2, 3, 4, 5])
 

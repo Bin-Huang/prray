@@ -6,7 +6,7 @@ const arr = ['a', 'b', 'c', 'd']
 const p = prray(arr)
 const pp = toPrrayPromise(arr)
 
-test('prray entries', async (t) => {
+test('prray entries', async t => {
   const i = p.entries()
   t.is(typeof i.next, 'function')
   t.deepEqual(i.next().value, [0, 'a'])
@@ -16,7 +16,7 @@ test('prray entries', async (t) => {
   t.is(i.next().done, true)
 })
 
-test('prraypromise entries', async (t) => {
+test('prraypromise entries', async t => {
   const i = await pp.entries()
   t.is(typeof i.next, 'function')
   t.deepEqual(i.next().value, [0, 'a'])

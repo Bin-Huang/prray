@@ -2,7 +2,7 @@ import test from 'ava'
 import { prray, Prray } from '../src/prray'
 import { toPrrayPromise } from './test-utils'
 
-test('prray fill', async (t) => {
+test('prray fill', async t => {
   t.deepEqual(prray([1, 2, 3]).fill(4), prray([4, 4, 4]))
   t.deepEqual(prray([1, 2, 3]).fill(4, 1), prray([1, 4, 4]))
   t.deepEqual(prray([1, 2, 3]).fill(4, 1, 2), prray([1, 4, 3]))
@@ -16,11 +16,11 @@ test('prray fill', async (t) => {
 
   const prr = new Prray(3).fill({}) // [{}, {}, {}];
   t.deepEqual(prr, prray([{}, {}, {}]))
-  ;(prr[0] as any).hi = "hi";
-  t.deepEqual(prr, prray([{ hi: "hi" }, { hi: "hi" }, { hi: "hi" }]))
+  ;(prr[0] as any).hi = 'hi'
+  t.deepEqual(prr, prray([{ hi: 'hi' }, { hi: 'hi' }, { hi: 'hi' }]))
 })
 
-test('prraypromise fill', async (t) => {
+test('prraypromise fill', async t => {
   t.deepEqual(await toPrrayPromise([1, 2, 3]).fill(4), prray([4, 4, 4]))
   t.deepEqual(await toPrrayPromise([1, 2, 3]).fill(4, 1), prray([1, 4, 4]))
   t.deepEqual(await toPrrayPromise([1, 2, 3]).fill(4, 1, 2), prray([1, 4, 3]))
@@ -34,6 +34,6 @@ test('prraypromise fill', async (t) => {
 
   const prr = await toPrrayPromise(new Array(3)).fill({}) // [{}, {}, {}];
   t.deepEqual(prr, prray([{}, {}, {}]))
-  ;(prr[0] as any).hi = "hi";
-  t.deepEqual(prr, prray([{ hi: "hi" }, { hi: "hi" }, { hi: "hi" }]))
+  ;(prr[0] as any).hi = 'hi'
+  t.deepEqual(prr, prray([{ hi: 'hi' }, { hi: 'hi' }, { hi: 'hi' }]))
 })

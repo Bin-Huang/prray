@@ -2,21 +2,13 @@ import { IMapCallback, ITester, ICallback } from './types'
 
 export async function map<T, U>(arr: T[], func: IMapCallback<T, U>) {
   const result: U[] = []
-  await loop<T>(
-    arr,
-    async (value, ix) => result[ix] = await func(value, ix, arr),
-    {}
-  )
+  await loop<T>(arr, async (value, ix) => (result[ix] = await func(value, ix, arr)), {})
   return result
 }
 
 export async function filter<T>(arr: T[], func: ITester<T>) {
   const result: T[] = []
-  await loop(
-    arr,
-    async (value, ix) => await func(value, ix, arr) ? result.push(value) : null,
-    {}
-  )
+  await loop(arr, async (value, ix) => ((await func(value, ix, arr)) ? result.push(value) : null), {})
   return result
 }
 
@@ -82,8 +74,8 @@ export async function every<T>(arr: T[], func: ITester<T>) {
   let result = true
   await loop(
     arr,
-    async (value, ix, _, breakLoop) =>  {
-      if (! await func(value, ix, arr)) {
+    async (value, ix, _, breakLoop) => {
+      if (!(await func(value, ix, arr))) {
         result = false
         breakLoop()
       }
@@ -97,7 +89,7 @@ export async function some(arr: any, func: any) {
   let result = false
   await loop(
     arr,
-    async (value, ix, _, breakLoop) =>  {
+    async (value, ix, _, breakLoop) => {
       if (await func(value, ix, arr)) {
         result = true
         breakLoop()
@@ -116,12 +108,12 @@ export async function sort<T>(arr: T[], func: any): Promise<T[]> {
     return arr
   }
   // 插入排序
-  for(let i = 1;i < arr.length; i++){
-    for(let j = 0;j<i;j++){
+  for (let i = 1; i < arr.length; i++) {
+    for (let j = 0; j < i; j++) {
       if ((await func(arr[i], arr[j])) < 0) {
-        arr.splice(j,0,arr[i]);
-        arr.splice(i+1,1);
-        break;
+        arr.splice(j, 0, arr[i])
+        arr.splice(i + 1, 1)
+        break
       }
     }
   }
@@ -139,14 +131,14 @@ export function slice<T>(arr: T[], start = 0, end = Infinity): T[] {
   if (start > arr.length) {
     start = arr.length
   }
-  if (start < - arr.length) {
-    start = - arr.length
+  if (start < -arr.length) {
+    start = -arr.length
   }
   if (end > arr.length) {
     end = arr.length
   }
-  if (end < - arr.length) {
-    end = - arr.length
+  if (end < -arr.length) {
+    end = -arr.length
   }
   if (start < 0) {
     start = arr.length + start
@@ -155,7 +147,7 @@ export function slice<T>(arr: T[], start = 0, end = Infinity): T[] {
     end = arr.length + end
   }
   const result = []
-  for (let ix = start; ix < end; ix ++) {
+  for (let ix = start; ix < end; ix++) {
     result.push(arr[ix])
   }
   return result
@@ -164,7 +156,7 @@ export function slice<T>(arr: T[], start = 0, end = Infinity): T[] {
 export function loop<T>(
   array: T[],
   func: (value: T, index: number, array: T[], breakLoop: () => any) => any,
-  { concurrency= Infinity },
+  { concurrency = Infinity },
 ) {
   // FEATURE: options { concurrency, timeout, retries, defaults, fallback }
 
@@ -173,7 +165,7 @@ export function loop<T>(
     return Promise.all(promises)
   }
 
-	return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const length = array.length
     if (length === 0) {
       resolve()
@@ -182,13 +174,13 @@ export function loop<T>(
     let isEnding = false
     let currentIndex = 0
     let workingNum = Math.min(concurrency, length)
-    
+
     const breakLoop = () => {
       isEnding = true
       resolve()
     }
 
-		const woker = async () => {
+    const woker = async () => {
       while (!isEnding && currentIndex < length) {
         const ix = currentIndex++
         try {
@@ -199,14 +191,14 @@ export function loop<T>(
           return
         }
       }
-      workingNum --
+      workingNum--
       if (workingNum === 0) {
         resolve()
       }
-		}
+    }
 
-		for (let i = 0; i < Math.min(concurrency, length); i++) {
+    for (let i = 0; i < Math.min(concurrency, length); i++) {
       woker()
-		}
-	})
+    }
+  })
 }

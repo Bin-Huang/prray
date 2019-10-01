@@ -10,7 +10,7 @@ const getTests = () => {
   return [
     [],
     [2],
-    [4,2],
+    [4, 2],
     // ['3','b',1,2,'a',4,'2000'],
     genRandArr(),
     genRandArr(),
@@ -20,7 +20,7 @@ const getTests = () => {
   ]
 }
 
-test('prray sortAsync', async (t) => {
+test('prray sortAsync', async t => {
   for (const arr of getTests()) {
     const p = prray(arr)
     const expect = prray(arr.sort(func))
@@ -33,12 +33,12 @@ test('prray sortAsync', async (t) => {
     t.deepEqual(await p.sortAsync(func), expect)
     t.deepEqual(await p.sortAsync(), expect)
 
-    // FIXME: 
+    // FIXME:
     // t.is(await p.sortAsync(), p)  // mutable
   }
 })
 
-test('prraypromise sortAsync', async (t) => {
+test('prraypromise sortAsync', async t => {
   for (const arr of getTests()) {
     const p = prray(arr)
     const pp = toPrrayPromise(arr)
@@ -52,7 +52,7 @@ test('prraypromise sortAsync', async (t) => {
     t.deepEqual(await pp.sortAsync(func), expect)
     t.deepEqual(await pp.sortAsync(), expect)
 
-    // FIXME: 
+    // FIXME:
     // t.deepEqual(await pp.sortAsync(), p)  //  mutable
   }
 })

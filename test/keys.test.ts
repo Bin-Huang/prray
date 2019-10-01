@@ -6,7 +6,7 @@ const arr = ['a', 'b', 'c', 'd']
 const p = prray(arr)
 const pp = toPrrayPromise(arr)
 
-test('prray keys', async (t) => {
+test('prray keys', async t => {
   const i = p.keys()
   t.is(typeof i.next, 'function')
   t.is(i.next().value, 0)
@@ -16,7 +16,7 @@ test('prray keys', async (t) => {
   t.is(i.next().done, true)
 })
 
-test('prraypromise keys', async (t) => {
+test('prraypromise keys', async t => {
   const i = await pp.keys()
   t.is(typeof i.next, 'function')
   t.is(i.next().value, 0)

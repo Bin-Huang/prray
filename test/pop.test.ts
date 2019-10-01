@@ -4,7 +4,7 @@ import { toPrrayPromise } from './test-utils'
 
 const arr = ['a', 'b', 'c', 'd']
 
-test('prray pop', async (t) => {
+test('prray pop', async t => {
   const p = prray(arr)
 
   t.is(p.pop(), 'd')
@@ -14,7 +14,7 @@ test('prray pop', async (t) => {
   t.is(p.pop(), undefined)
 })
 
-test('prraypromise pop', async (t) => {
+test('prraypromise pop', async t => {
   const pp = toPrrayPromise(arr)
 
   t.is(await pp.pop(), 'd')

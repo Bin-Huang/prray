@@ -2,13 +2,13 @@ import test from 'ava'
 import { prray } from '../src/prray'
 import { toPrrayPromise, isGte3, isGte3Async } from './test-utils'
 
-const p1 = prray([3,4])
-const p2 = prray([1,2,3])
+const p1 = prray([3, 4])
+const p2 = prray([1, 2, 3])
 
-const pp1 = toPrrayPromise([3,4])
-const pp2 = toPrrayPromise([1,2,3])
+const pp1 = toPrrayPromise([3, 4])
+const pp2 = toPrrayPromise([1, 2, 3])
 
-test('prray everyAsync', async (t) => {
+test('prray everyAsync', async t => {
   t.true(p1.everyAsync(isGte3Async) instanceof Promise)
   t.true(p1.everyAsync(isGte3) instanceof Promise)
 
@@ -19,7 +19,7 @@ test('prray everyAsync', async (t) => {
   t.is(await p2.everyAsync(isGte3), false)
 })
 
-test('prraypromise everyAsync', async (t) => {
+test('prraypromise everyAsync', async t => {
   t.true(pp1.everyAsync(isGte3Async) instanceof Promise)
   t.true(pp1.everyAsync(isGte3) instanceof Promise)
 

@@ -4,7 +4,7 @@ import { toPrrayPromise } from './test-utils'
 
 const arr = ['a', 'b']
 
-test('prray push', async (t) => {
+test('prray push', async t => {
   const prr = prray(arr)
 
   t.is(prr.push('c'), 3)
@@ -12,7 +12,7 @@ test('prray push', async (t) => {
   t.deepEqual(prr, prray(['a', 'b', 'c', 'd', 'e']))
 })
 
-test('prraypromise push', async (t) => {
+test('prraypromise push', async t => {
   const prr = prray(arr)
   const pp = toPrrayPromise(prr)
 

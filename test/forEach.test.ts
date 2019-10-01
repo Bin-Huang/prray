@@ -3,7 +3,7 @@ import * as sinon from 'sinon'
 import { prray } from '../src/prray'
 import { toPrrayPromise } from './test-utils'
 
-test('prray forEach compatibility', async (t) => {
+test('prray forEach compatibility', async t => {
   const func = sinon.fake()
   const prr = prray(['a', 'b', 'c'])
   prr.forEach(func)
@@ -24,7 +24,7 @@ test('prray forEach compatibility', async (t) => {
   t.is(func.args[2][2], prr)
 })
 
-test('prraypromise forEach compatibility', async (t) => {
+test('prraypromise forEach compatibility', async t => {
   const func = sinon.fake()
   const p = toPrrayPromise(['a', 'b', 'c'])
   await p.forEach(func)

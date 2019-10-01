@@ -5,60 +5,72 @@ import { loop } from '../src/methods'
 
 // TODO: Update threshold
 
-test('loop with concurrency 100', async (t) => {
+test('loop with concurrency 100', async t => {
   const arr = genRandArr(1000)
   const record = timer()
   let running = 0
-  await loop(arr, async () => {
-    running ++
-    await delay(100)
-    t.true(running <= 100)
-    running --
-  }, { concurrency: 100 })
+  await loop(
+    arr,
+    async () => {
+      running++
+      await delay(100)
+      t.true(running <= 100)
+      running--
+    },
+    { concurrency: 100 },
+  )
   t.true(isClose(record(), 10 * 100))
 })
 
-test('loop with concurrency infinity', async (t) => {
+test('loop with concurrency infinity', async t => {
   const arr = genRandArr(1000)
   const record = timer()
   await loop(arr, () => delay(100), {})
   t.true(isClose(record(), 100))
 })
 
-test('loop with concurrency 1', async (t) => {
+test('loop with concurrency 1', async t => {
   const arr = genRandArr(100)
   const record = timer()
   await loop(arr, () => delay(10), { concurrency: 1 })
   t.true(isClose(record(), 10 * 100, { threshold: 200 }))
 })
 
-test('loop with break', async (t) => {
+test('loop with break', async t => {
   const arr = [false, false, false, false, false, false, false, false] // length 8
   const record = timer()
-  await loop(arr, async (v, ix, prr, breakLoop) => {
-    if (ix >= 6) {
-      breakLoop()
-      return
-    }
-    prr[ix] = true
-    await delay(100)
-  }, { concurrency: 2 })
+  await loop(
+    arr,
+    async (v, ix, prr, breakLoop) => {
+      if (ix >= 6) {
+        breakLoop()
+        return
+      }
+      prr[ix] = true
+      await delay(100)
+    },
+    { concurrency: 2 },
+  )
   t.true(isClose(record(), 300))
   t.deepEqual(arr, [true, true, true, true, true, true, false, false])
 })
 
-test('loop with unhandled error', async (t) => {
+test('loop with unhandled error', async t => {
   const arr = [false, false, false, false, false, false, false, false] // length 8
   let isThrown = false
   const record = timer()
   try {
-    await loop(arr, async (v, ix, prr) => {
-      if (ix >= 6) {
-        throw new Error('err')
-      }
-      prr[ix] = true
-      await delay(100)
-    }, { concurrency: 2 })
+    await loop(
+      arr,
+      async (v, ix, prr) => {
+        if (ix >= 6) {
+          throw new Error('err')
+        }
+        prr[ix] = true
+        await delay(100)
+      },
+      { concurrency: 2 },
+    )
   } catch (e) {
     isThrown = true
   }
@@ -67,19 +79,19 @@ test('loop with unhandled error', async (t) => {
   t.true(isThrown)
 })
 
-test('loop with empty array', async (t) => {
+test('loop with empty array', async t => {
   const record = timer()
   await loop([], () => delay(100), { concurrency: 10 })
   t.true(isClose(record(), 0))
 })
 
-test('loop with empty array, concurrency Infinity', async (t) => {
+test('loop with empty array, concurrency Infinity', async t => {
   const record = timer()
   await loop([], () => delay(100), {})
   t.true(isClose(record(), 0))
 })
 
-test('loop detail', async (t) => {
+test('loop detail', async t => {
   const arr = ['a', 'b', 'c', 'd', 'e', 'f']
   const func = sinon.fake()
   await loop(arr, func, { concurrency: 2 })

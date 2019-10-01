@@ -22,7 +22,7 @@ export function delay(ms: number) {
  */
 export function genRandArr(len = 5) {
   const ret: number[] = []
-  for (let i = 0; i < len; i ++) {
+  for (let i = 0; i < len; i++) {
     ret.push(Math.random())
   }
   return ret

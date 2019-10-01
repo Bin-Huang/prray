@@ -13,19 +13,33 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
     return prraypromise(this.then(prray => prray.filterAsync(func)))
   }
   reduceAsync(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>): Promise<T>
-  reduceAsync<U>(callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>, initialValue?: U): Promise<U>
-  reduceAsync(callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>, initialValue?: any): Promise<any> {
+  reduceAsync<U>(
+    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>,
+    initialValue?: U,
+  ): Promise<U>
+  reduceAsync(
+    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>,
+    initialValue?: any,
+  ): Promise<any> {
     return this.then(prray => prray.reduceAsync(callback, initialValue))
   }
-  reduceRightAsync(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>): Promise<T>
-  reduceRightAsync<U>(callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>, initialValue?: U): Promise<U>
-  reduceRightAsync(callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>, initialValue?: any): Promise<any> {
+  reduceRightAsync(
+    callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>,
+  ): Promise<T>
+  reduceRightAsync<U>(
+    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>,
+    initialValue?: U,
+  ): Promise<U>
+  reduceRightAsync(
+    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>,
+    initialValue?: any,
+  ): Promise<any> {
     return this.then(prray => prray.reduceRightAsync(callback, initialValue))
   }
   sortAsync(func?: any): PrrayPromise<T> {
     return prraypromise(this.then(prray => prray.sortAsync(func)))
   }
-  findAsync(func: any): Promise<T|undefined> {
+  findAsync(func: any): Promise<T | undefined> {
     return this.then(prray => prray.findAsync(func))
   }
   findIndexAsync(func: any): Promise<number> {
@@ -69,7 +83,7 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
   }
   lastIndexOf(element: T, fromIndex?: number): Promise<number> {
     return this.then(prray => {
-      fromIndex = fromIndex === undefined ? prray.length - 1 : fromIndex  // fix odd bug
+      fromIndex = fromIndex === undefined ? prray.length - 1 : fromIndex // fix odd bug
       return prray.lastIndexOf(element, fromIndex)
     })
   }
@@ -118,23 +132,29 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
     return prraypromise(this.then(prray => prray.reverse()))
   }
   reduce(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): Promise<T>
-  reduce<U>(callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U, initialValue?: U): Promise<U>
-  reduce(callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any, initialValue?: any): Promise<any> {
+  reduce<U>(
+    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U,
+    initialValue?: U,
+  ): Promise<U>
+  reduce(
+    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any,
+    initialValue?: any,
+  ): Promise<any> {
     // Why? If pass parameter initialValue as undefined, the initial value will be undefined instead array[0] actually :(
-    return this.then(prray => 
-      arguments.length >= 2
-        ? prray.reduce(callback, initialValue)
-        : prray.reduce(callback)
-    )
+    return this.then(prray => (arguments.length >= 2 ? prray.reduce(callback, initialValue) : prray.reduce(callback)))
   }
   reduceRight(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): Promise<T>
-  reduceRight<U>(callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U, initialValue?: U): Promise<U>
-  reduceRight(callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any, initialValue?: any): Promise<any> {
+  reduceRight<U>(
+    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U,
+    initialValue?: U,
+  ): Promise<U>
+  reduceRight(
+    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any,
+    initialValue?: any,
+  ): Promise<any> {
     // Why? If pass parameter initialValue as undefined, the initial value will be undefined instead array[0] actually :(
-    return this.then(prray => 
-      arguments.length >= 2
-        ? prray.reduceRight(callback, initialValue)
-        : prray.reduceRight(callback)
+    return this.then(prray =>
+      arguments.length >= 2 ? prray.reduceRight(callback, initialValue) : prray.reduceRight(callback),
     )
   }
   shift(): Promise<T> {
@@ -145,11 +165,9 @@ class PrrayPromise<T> extends Promise<Prray<T>> {
   }
   splice(start: number, deleteCount?: number, ...items: T[]): PrrayPromise<T> {
     // Why? If pass parameter deleteCount as undefined directly, the delete count will be zero actually :(
-    return prraypromise(this.then(prray => 
-      arguments.length >= 2
-        ? prray.splice(start, deleteCount, ...items)
-        : prray.splice(start)
-    ))
+    return prraypromise(
+      this.then(prray => (arguments.length >= 2 ? prray.splice(start, deleteCount, ...items) : prray.splice(start))),
+    )
   }
   toArray(): Promise<T[]> {
     return this.then(prray => prray.toArray())

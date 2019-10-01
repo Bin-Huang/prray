@@ -1,7 +1,7 @@
 import test from 'ava'
 import { Prray } from '../src/prray'
 
-test('prray from', async (t) => {
+test('prray from', async t => {
   const p1 = Prray.from('foo')
   t.true(p1 instanceof Prray)
   t.is(p1[0], 'f')
@@ -22,9 +22,8 @@ test('prray from', async (t) => {
   t.is(p3[2], 6)
   t.is(p3.length, 3)
 
-
   function f() {
-    return Array.from(arguments);
+    return Array.from(arguments)
   }
   const p4 = Prray.from((f as any)(1, 2, 3))
   t.true(p4 instanceof Prray)

@@ -3,37 +3,37 @@ import * as sinon from 'sinon'
 import { prray } from '../src/prray'
 import { toPrrayPromise, delay } from './test-utils'
 
-test('prray forEachAsync', async (t) => {
+test('prray forEachAsync', async t => {
   const result1: number[] = []
-  await prray([1,2,3]).forEachAsync(async (v) => {
+  await prray([1, 2, 3]).forEachAsync(async v => {
     await delay(100)
     result1.push(v + 1)
   })
-  t.deepEqual(result1, [2,3,4])
+  t.deepEqual(result1, [2, 3, 4])
 
   const result2: number[] = []
-  await prray([1,2,3]).forEachAsync((v) => {
+  await prray([1, 2, 3]).forEachAsync(v => {
     result2.push(v + 1)
   })
-  t.deepEqual(result2, [2,3,4])
+  t.deepEqual(result2, [2, 3, 4])
 })
 
-test('prraypromise forEachAsync', async (t) => {
+test('prraypromise forEachAsync', async t => {
   const result1: number[] = []
-  await toPrrayPromise([1,2,3]).forEachAsync(async (v) => {
+  await toPrrayPromise([1, 2, 3]).forEachAsync(async v => {
     await delay(100)
     result1.push(v + 1)
   })
-  t.deepEqual(result1, [2,3,4])
+  t.deepEqual(result1, [2, 3, 4])
 
   const result2: number[] = []
-  await toPrrayPromise([1,2,3]).forEachAsync((v) => {
+  await toPrrayPromise([1, 2, 3]).forEachAsync(v => {
     result2.push(v + 1)
   })
-  t.deepEqual(result2, [2,3,4])
+  t.deepEqual(result2, [2, 3, 4])
 })
 
-test('prray forEachAsync compatibility', async (t) => {
+test('prray forEachAsync compatibility', async t => {
   const func = sinon.fake()
   const prr = prray(['a', 'b', 'c'])
   await prr.forEachAsync(func)
@@ -54,7 +54,7 @@ test('prray forEachAsync compatibility', async (t) => {
   t.is(func.args[2][2], prr)
 })
 
-test('prraypromise forEachAsync compatibility', async (t) => {
+test('prraypromise forEachAsync compatibility', async t => {
   const func = sinon.fake()
   const p = toPrrayPromise(['a', 'b', 'c'])
   await p.forEachAsync(func)

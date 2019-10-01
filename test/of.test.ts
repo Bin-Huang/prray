@@ -1,7 +1,7 @@
 import test from 'ava'
 import { Prray } from '../src/prray'
 
-test('prray of', async (t) => {
+test('prray of', async t => {
   const p1 = Prray.of(1)
   t.true(p1 instanceof Prray)
   t.is(p1[0], 1)
