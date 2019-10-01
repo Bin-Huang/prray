@@ -1,12 +1,13 @@
 // TODO: talk about tests, under development
 // TODO: original array ?-> normal array
 
-Prray -- "Promisified" Array, aims to replace original Array in some cases for convenience.
+Prray -- "Promisified" Array, comes with async methods, aims to replace original Array in some cases for convenience.
 
 - comes with async methods, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
 - supports method chaining with async callbacks
 - compatible with original array
 - well-tested (coverage 93.17%)
+- zero-dependency
 
 ```javascript
 import { prray } from 'prray'

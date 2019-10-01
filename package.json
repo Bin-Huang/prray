@@ -1,7 +1,7 @@
 {
   "name": "prray",
   "version": "0.5.0",
-  "description": "promise-version array, support `mapAsync`, `filterAsync` and `reduceAsync`",
+  "description": "'Promisified' Array, comes with async methods. It is compatible with original array",
   "main": "./dist/src/index",
   "typings": "./dist/src/index.d.ts",
   "scripts": {
@@ -19,15 +19,8 @@
   ],
   "author": "Ben Huang",
   "license": "ISC",
-  "dependencies": {
-    "delay": "^3.0.0",
-    "p-every": "^1.0.2",
-    "p-filter": "^1.0.0",
-    "p-map": "^1.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/delay": "^2.0.1",
-    "@types/p-map": "^1.1.0",
     "ava": "^2.4.0",
     "nyc": "^14.1.1",
     "sinon": "^7.4.2"
