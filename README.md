@@ -89,7 +89,7 @@ prr instanceof Prray // true
 arr instanceof Prray // false
 ```
 
-There are a lots of [unit tests]((https://github.com/Bin-Huang/prray/tree/master/test)) for prray to compatible with normal array.
+There are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to compatible with normal array.
 
 ## Usage
 
