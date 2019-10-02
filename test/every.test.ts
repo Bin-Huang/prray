@@ -13,7 +13,7 @@ test('prraypromise every', async t => {
   t.is(await toPrrayPromise([1, 2, 3]).every(isEven), false)
 })
 
-test('prray every compatibility', async t => {
+test('prray every compatibility 1', async t => {
   const func = sinon.fake(() => true)
   const prr = prray(['a', 'b', 'c'])
   prr.every(func)
@@ -34,7 +34,15 @@ test('prray every compatibility', async t => {
   t.is(func.args[2][2], prr)
 })
 
-test('prraypromise every compatibility', async t => {
+test('prray every compatibility 2', async t => {
+  const func = sinon.fake(() => false)
+  const prr = prray(['a', 'b', 'c'])
+  prr.every(func)
+
+  t.is(func.callCount, 1)
+})
+
+test('prraypromise every compatibility 1', async t => {
   const func = sinon.fake(() => true)
   const prr = prray(['a', 'b', 'c'])
   const pp = toPrrayPromise(prr)
@@ -54,4 +62,13 @@ test('prraypromise every compatibility', async t => {
   t.is(func.args[2][0], 'c')
   t.is(func.args[2][1], 2)
   t.is(func.args[2][2], prr)
+})
+
+test('prraypromise every compatibility 2', async t => {
+  const func = sinon.fake(() => false)
+  const prr = prray(['a', 'b', 'c'])
+  const pp = toPrrayPromise(prr)
+  await pp.every(func)
+
+  t.is(func.callCount, 1)
 })

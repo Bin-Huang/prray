@@ -217,15 +217,15 @@ export function every<T>(prr: Prray<T>, func: (currentValue: T, index: number, p
   return true
 }
 
-export async function some<T>(
-  arr: Prray<T>,
-  func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
+export async function someAsync<T>(
+  prr: Prray<T>,
+  func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
 ): Promise<boolean> {
   let result = false
   await loop(
-    arr,
+    prr,
     async (value, ix, _, breakLoop) => {
-      if (await func(value, ix, arr)) {
+      if (await func(value, ix, prr)) {
         result = true
         breakLoop()
       }
@@ -233,6 +233,15 @@ export async function some<T>(
     {},
   )
   return result
+}
+
+export function some<T>(prr: Prray<T>, func: (currentValue: T, index: number, prray: Prray<T>) => boolean): boolean {
+  for (let ix = 0; ix < prr.length; ix++) {
+    if (func(prr[ix], ix, prr)) {
+      return true
+    }
+  }
+  return false
 }
 
 export async function sort<T>(arr: Prray<T>, func?: (a: T, b: T) => Promise<number> | number): Promise<T[]> {

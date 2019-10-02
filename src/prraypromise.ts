@@ -91,6 +91,10 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return this.then(prray => prray.someAsync(func))
   }
 
+  some(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): Promise<boolean> {
+    return this.then(prray => prray.some(func))
+  }
+
   forEachAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<any> | any): Promise<undefined> {
     return this.then(prray => prray.forEachAsync(func))
   }
@@ -101,10 +105,6 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
 
   slice(start?: number, end?: number): PrrayPromise<T> {
     return prraypromise(this.then(prray => prray.slice(start, end)))
-  }
-
-  some(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): Promise<boolean> {
-    return this.then(prray => prray.some(func))
   }
 
   includes(element: T, fromIndex?: number): Promise<boolean> {
