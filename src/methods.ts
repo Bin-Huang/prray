@@ -246,11 +246,19 @@ export async function sort<T>(arr: Prray<T>, func?: (a: T, b: T) => Promise<numb
   return arr
 }
 
-export async function forEach<T>(
-  arr: Prray<T>,
-  func: (currentValue: T, index: number, array: Prray<T>) => Promise<any> | any,
-) {
-  return loop(arr, async (value, ix) => func(value, ix, arr), {})
+export async function forEachAsync<T>(
+  prr: Prray<T>,
+  func: (currentValue: T, index: number, prray: Prray<T>) => Promise<any> | any,
+): Promise<undefined> {
+  await loop(prr, async (value, ix) => func(value, ix, prr), {})
+  return
+}
+
+export function forEach<T>(prr: Prray<T>, func: (currentValue: T, index: number, prray: Prray<T>) => any): undefined {
+  for (let ix = 0; ix < prr.length; ix++) {
+    func(prr[ix], ix, prr)
+  }
+  return
 }
 
 export function slice<T>(arr: Prray<T>, start = 0, end = Infinity): T[] {

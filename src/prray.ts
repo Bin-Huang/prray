@@ -131,7 +131,11 @@ export class Prray<T> extends Array<T> {
     return methods.some(this, func)
   }
 
-  forEachAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<any> | any) {
+  forEachAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<any> | any): Promise<undefined> {
+    return methods.forEachAsync(this, func)
+  }
+
+  forEach(func: (currentValue: T, index: number, prray: Prray<T>) => any): undefined {
     return methods.forEach(this, func)
   }
 

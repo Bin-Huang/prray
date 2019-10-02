@@ -87,8 +87,12 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return this.then(prray => prray.someAsync(func))
   }
 
-  forEachAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<any> | any) {
+  forEachAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<any> | any): Promise<undefined> {
     return this.then(prray => prray.forEachAsync(func))
+  }
+
+  forEach(func: (currentValue: T, index: number, prray: Prray<T>) => any): Promise<undefined> {
+    return this.then(prray => prray.forEach(func))
   }
 
   slice(start?: number, end?: number): PrrayPromise<T> {
@@ -158,10 +162,6 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
 
   toLocaleString(): Promise<string> {
     return this.then(prray => prray.toLocaleString())
-  }
-
-  forEach(callback: (currentValue: T, index: number, prray: Prray<T>) => any): Promise<void> {
-    return this.then(prray => prray.forEach(callback))
   }
 
   pop(): Promise<T | undefined> {
