@@ -72,7 +72,7 @@ export async function reduceRight<T>(
   return pre
 }
 
-export async function findIndex<T>(
+export async function findIndexAsync<T>(
   arr: Prray<T>,
   func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
 ): Promise<number> {
@@ -88,6 +88,19 @@ export async function findIndex<T>(
     {},
   )
   return result
+}
+
+export function findIndex<T>(
+  prr: Prray<T>,
+  func: (currentValue: T, index: number, array: Prray<T>) => boolean,
+): number {
+  const length = prr.length
+  for (let ix = 0; ix < length; ix++) {
+    if (func(prr[ix], ix, prr)) {
+      return ix
+    }
+  }
+  return -1
 }
 
 export async function findAsync<T>(

@@ -89,6 +89,10 @@ export class Prray<T> extends Array<T> {
   findIndexAsync(
     func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
   ): Promise<number> {
+    return methods.findIndexAsync(this, func)
+  }
+
+  findIndex(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): number {
     return methods.findIndex(this, func)
   }
 
