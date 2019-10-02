@@ -49,6 +49,10 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return this.then(prray => prray.findAsync(func))
   }
 
+  find(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): Promise<T | undefined> {
+    return this.then(prray => prray.find(func))
+  }
+
   findIndexAsync(
     func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
   ): Promise<number> {
@@ -77,10 +81,6 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
 
   filter(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): PrrayPromise<T> {
     return prraypromise(this.then(prray => prray.filter(func)))
-  }
-
-  find(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): Promise<T> {
-    return this.then(prray => prray.find(func))
   }
 
   findIndex(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): Promise<number> {

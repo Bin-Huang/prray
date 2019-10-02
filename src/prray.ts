@@ -79,6 +79,10 @@ export class Prray<T> extends Array<T> {
   findAsync(
     func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
   ): Promise<T | undefined> {
+    return methods.findAsync(this, func)
+  }
+
+  find(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): T | undefined {
     return methods.find(this, func)
   }
 

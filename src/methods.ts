@@ -90,7 +90,7 @@ export async function findIndex<T>(
   return result
 }
 
-export async function find<T>(
+export async function findAsync<T>(
   arr: Prray<T>,
   func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
 ): Promise<T | undefined> {
@@ -106,6 +106,19 @@ export async function find<T>(
     {},
   )
   return result
+}
+
+export function find<T>(
+  prr: Prray<T>,
+  func: (currentValue: T, index: number, array: Prray<T>) => boolean,
+): T | undefined {
+  const length = prr.length
+  for (let ix = 0; ix < length; ix++) {
+    if (func(prr[ix], ix, prr)) {
+      return prr[ix]
+    }
+  }
+  return undefined
 }
 
 export async function every<T>(
