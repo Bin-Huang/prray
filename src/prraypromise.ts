@@ -168,17 +168,12 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return prraypromise(this.then(prray => prray.reverse()))
   }
 
-  reduce(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): Promise<T>
-  reduce<U>(
-    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U,
-    initialValue?: U,
-  ): Promise<U>
-  reduce(
-    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any,
-    initialValue?: any,
-  ): Promise<any> {
+  reduce(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): T
+  reduce(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T, initialValue: T): T
+  reduce<U>(func: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U, initialValue: U): U
+  reduce(func: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any, initialValue?: any): any {
     // Why? If pass parameter initialValue as undefined, the initial value will be undefined instead array[0] actually :(
-    return this.then(prray => (arguments.length >= 2 ? prray.reduce(callback, initialValue) : prray.reduce(callback)))
+    return this.then(prray => (arguments.length >= 2 ? prray.reduce(func, initialValue) : prray.reduce(func)))
   }
 
   reduceRight(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): Promise<T>

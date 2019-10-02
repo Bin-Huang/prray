@@ -62,7 +62,14 @@ export class Prray<T> extends Array<T> {
     callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>,
     initialValue?: any,
   ): Promise<any> {
-    return methods.reduce(this, callback, initialValue)
+    return methods.reduceAsync(this, callback, initialValue)
+  }
+
+  reduce(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): T
+  reduce(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T, initialValue: T): T
+  reduce<U>(func: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U, initialValue: U): U
+  reduce(func: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any, initialValue?: any): any {
+    return methods.reduce(this, func, initialValue)
   }
 
   reduceRightAsync(
