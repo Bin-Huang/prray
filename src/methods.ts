@@ -190,15 +190,15 @@ export function find<T>(
   return undefined
 }
 
-export async function every<T>(
-  arr: Prray<T>,
-  func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
+export async function everyAsync<T>(
+  prr: Prray<T>,
+  func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
 ): Promise<boolean> {
   let result = true
   await loop(
-    arr,
+    prr,
     async (value, ix, _, breakLoop) => {
-      if (!(await func(value, ix, arr))) {
+      if (!(await func(value, ix, prr))) {
         result = false
         breakLoop()
       }
@@ -206,6 +206,15 @@ export async function every<T>(
     {},
   )
   return result
+}
+
+export function every<T>(prr: Prray<T>, func: (currentValue: T, index: number, prray: Prray<T>) => boolean): boolean {
+  for (let ix = 0; ix < prr.length; ix++) {
+    if (!func(prr[ix], ix, prr)) {
+      return false
+    }
+  }
+  return true
 }
 
 export async function some<T>(

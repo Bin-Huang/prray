@@ -124,6 +124,10 @@ export class Prray<T> extends Array<T> {
   }
 
   everyAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean): Promise<boolean> {
+    return methods.everyAsync(this, func)
+  }
+
+  every(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): boolean {
     return methods.every(this, func)
   }
 
