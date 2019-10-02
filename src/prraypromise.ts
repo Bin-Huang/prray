@@ -21,16 +21,24 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return prraypromise(this.then(prray => prray.filter(func)))
   }
 
-  reduceAsync(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>): Promise<T>
-  reduceAsync<U>(
-    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>,
-    initialValue?: U,
-  ): Promise<U>
+  reduceAsync(func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>): Promise<T>
   reduceAsync(
-    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>,
+    func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>,
+    initialValue: T,
+  ): Promise<T>
+  reduceAsync<U>(
+    func: (accumulator: U, currentValue: T, index: number, prray: Prray<T>) => U | Promise<U>,
+    initialValue: U,
+  ): Promise<U>
+  reduceAsync<U>(
+    func: (accumulator: Prray<U>, currentValue: T, index: number, prray: Prray<T>) => U | Promise<U>,
+    initialValue: Prray<U>,
+  ): PrrayPromise<U>
+  reduceAsync(
+    func: (accumulator: any, currentValue: T, index: number, prray: Prray<T>) => any | Promise<any>,
     initialValue?: any,
   ): Promise<any> {
-    return this.then(prray => prray.reduceAsync(callback, initialValue))
+    return this.then(prray => prray.reduceAsync(func, initialValue))
   }
 
   reduceRightAsync(

@@ -38,28 +38,33 @@ export function filter<T>(prr: Prray<T>, func: (currentValue: T, index: number, 
 }
 
 export async function reduceAsync<T>(
-  arr: Prray<T>,
-  func: (preValue: T, currentValue: T, index: number, array: Prray<T>) => Promise<T> | T,
-): Promise<T[]>
-export async function reduceAsync<T, U>(
-  arr: Prray<T>,
-  func: (preValue: U, currentValue: T, index: number, array: Prray<T>) => Promise<U> | U,
-  initialValue?: U,
-): Promise<U[]>
+  prr: Prray<T>,
+  func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>,
+): Promise<T>
 export async function reduceAsync<T>(
-  arr: Prray<T>,
-  func: (preValue: any, currentValue: T, index: number, array: Prray<T>) => Promise<any> | any,
+  prr: Prray<T>,
+  func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>,
+  initialValue: T,
+): Promise<T>
+export async function reduceAsync<T, U>(
+  prr: Prray<T>,
+  func: (accumulator: U, currentValue: T, index: number, prray: Prray<T>) => U | Promise<U>,
+  initialValue: U,
+): Promise<U>
+export async function reduceAsync<T>(
+  prr: Prray<T>,
+  func: (accumulator: any, currentValue: T, index: number, prray: Prray<T>) => any | Promise<any>,
   initialValue?: any,
-): Promise<any[]> {
+): Promise<any> {
   let pre = initialValue
   let ix = 0
   if (initialValue === undefined) {
-    pre = arr[0]
+    pre = prr[0]
     ix = 1
   }
-  for (ix; ix < arr.length; ix++) {
-    const current = arr[ix]
-    pre = await func(pre, current, ix, arr)
+  for (ix; ix < prr.length; ix++) {
+    const current = prr[ix]
+    pre = await func(pre, current, ix, prr)
   }
   return pre
 }

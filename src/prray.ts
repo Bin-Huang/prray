@@ -53,22 +53,34 @@ export class Prray<T> extends Array<T> {
     return _ensurePrray(methods.filter(this, func))
   }
 
-  reduceAsync(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>): Promise<T>
-  reduceAsync<U>(
-    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>,
-    initialValue?: U,
-  ): Promise<U>
+  reduceAsync(func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>): Promise<T>
   reduceAsync(
-    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>,
+    func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>,
+    initialValue: T,
+  ): Promise<T>
+  reduceAsync<U>(
+    func: (accumulator: U, currentValue: T, index: number, prray: Prray<T>) => U | Promise<U>,
+    initialValue: U,
+  ): Promise<U>
+  reduceAsync<U>(
+    func: (accumulator: Prray<U>, currentValue: T, index: number, prray: Prray<T>) => U | Promise<U>,
+    initialValue: Prray<U>,
+  ): PrrayPromise<U>
+  reduceAsync(
+    func: (accumulator: any, currentValue: T, index: number, prray: Prray<T>) => any | Promise<any>,
     initialValue?: any,
   ): Promise<any> {
-    return methods.reduceAsync(this, callback, initialValue)
+    const promise = methods.reduceAsync(this, func, initialValue)
+    if (initialValue instanceof Prray) {
+      return prraypromise(promise)
+    }
+    return promise
   }
 
-  reduce(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): T
-  reduce(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T, initialValue: T): T
-  reduce<U>(func: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U, initialValue: U): U
-  reduce(func: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any, initialValue?: any): any {
+  reduce(func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T): T
+  reduce(func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T, initialValue: T): T
+  reduce<U>(func: (accumulator: U, currentValue: T, index: number, prray: Prray<T>) => U, initialValue: U): U
+  reduce(func: (accumulator: any, currentValue: T, index: number, prray: Prray<T>) => any, initialValue?: any): any {
     return methods.reduce(this, func, initialValue)
   }
 

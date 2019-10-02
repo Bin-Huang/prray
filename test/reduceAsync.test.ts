@@ -3,14 +3,14 @@ import { prray } from '../src/prray'
 import { PrrayPromise } from '../src/prraypromise'
 import { toPrrayPromise, delay } from './test-utils'
 
-const func1 = (pre, c) => pre + c
-const funcAsync1 = (pre, c) => delay(100).then(() => pre + c)
+const func1 = (pre: number, c: number) => pre + c
+const funcAsync1 = (pre: number, c: number) => delay(100).then(() => pre + c)
 
-const func2 = (pre, c) => {
+const func2 = (pre: number[], c: number) => {
   pre.push(c + 1)
   return pre
 }
-const funcAsync2 = async (pre, c) => {
+const funcAsync2 = async (pre: number[], c: number) => {
   await delay(100)
   pre.push(c + 1)
   return pre
