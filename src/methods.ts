@@ -1,11 +1,19 @@
 import { Prray } from './prray'
 
-export async function map<T, U>(
+export async function mapAsync<T, U>(
   arr: Prray<T>,
   func: (currentValue: T, index: number, array: Prray<T>) => Promise<U> | U,
 ): Promise<U[]> {
   const result: U[] = []
   await loop<T>(arr, async (value, ix) => (result[ix] = await func(value, ix, arr)), {})
+  return result
+}
+
+export function map<T, U>(prr: Prray<T>, func: (currentValue: T, index: number, array: Prray<T>) => U): U[] {
+  const result: U[] = []
+  for (let ix = 0; ix < prr.length; ix++) {
+    result.push(func(prr[ix], ix, prr))
+  }
   return result
 }
 

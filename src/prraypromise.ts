@@ -9,6 +9,10 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return prraypromise(this.then(prray => prray.mapAsync(func)))
   }
 
+  map<U>(func: (currentValue: T, index: number, prray: Prray<T>) => U): PrrayPromise<U> {
+    return prraypromise(this.then(prray => prray.map(func)))
+  }
+
   filterAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean): PrrayPromise<T> {
     return prraypromise(this.then(prray => prray.filterAsync(func)))
   }
@@ -77,10 +81,6 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
 
   slice(start?: number, end?: number): PrrayPromise<T> {
     return prraypromise(this.then(prray => prray.slice(start, end)))
-  }
-
-  map<U>(func: (currentValue: T, index: number, prray: Prray<T>) => U): PrrayPromise<U> {
-    return prraypromise(this.then(prray => prray.map(func)))
   }
 
   filter(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): PrrayPromise<T> {

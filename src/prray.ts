@@ -36,8 +36,12 @@ export class Prray<T> extends Array<T> {
   }
 
   mapAsync<U>(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<U> | U): PrrayPromise<U> {
-    const promise = methods.map(this, func)
+    const promise = methods.mapAsync(this, func)
     return prraypromise(promise.then(arr => Prray.from(arr)))
+  }
+
+  map<U>(func: (currentValue: T, index: number, prray: Prray<T>) => U): Prray<U> {
+    return _ensurePrray(methods.map(this, func))
   }
 
   filterAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean): PrrayPromise<T> {
@@ -111,10 +115,6 @@ export class Prray<T> extends Array<T> {
   slice(start?: number, end?: number): Prray<T> {
     const result: T[] = super.slice(start, end)
     return _ensurePrray(result)
-  }
-
-  map<U>(func: (currentValue: T, index: number, prray: Prray<T>) => U): Prray<U> {
-    return _ensurePrray(super.map(func))
   }
 
   filter(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): Prray<T> {
