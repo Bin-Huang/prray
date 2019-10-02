@@ -45,8 +45,12 @@ export class Prray<T> extends Array<T> {
   }
 
   filterAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean): PrrayPromise<T> {
-    const promise = methods.filter(this, func)
+    const promise = methods.filterAsync(this, func)
     return prraypromise(promise.then(arr => Prray.from(arr)))
+  }
+
+  filter(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): Prray<T> {
+    return _ensurePrray(methods.filter(this, func))
   }
 
   reduceAsync(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>): Promise<T>
@@ -115,10 +119,6 @@ export class Prray<T> extends Array<T> {
   slice(start?: number, end?: number): Prray<T> {
     const result: T[] = super.slice(start, end)
     return _ensurePrray(result)
-  }
-
-  filter(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): Prray<T> {
-    return _ensurePrray(super.filter(func))
   }
 
   concat(...items: ConcatArray<T>[]): Prray<T>

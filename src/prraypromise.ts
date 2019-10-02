@@ -17,6 +17,10 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return prraypromise(this.then(prray => prray.filterAsync(func)))
   }
 
+  filter(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): PrrayPromise<T> {
+    return prraypromise(this.then(prray => prray.filter(func)))
+  }
+
   reduceAsync(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>): Promise<T>
   reduceAsync<U>(
     callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>,
@@ -81,10 +85,6 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
 
   slice(start?: number, end?: number): PrrayPromise<T> {
     return prraypromise(this.then(prray => prray.slice(start, end)))
-  }
-
-  filter(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): PrrayPromise<T> {
-    return prraypromise(this.then(prray => prray.filter(func)))
   }
 
   every(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): Promise<boolean> {

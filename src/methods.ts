@@ -17,12 +17,23 @@ export function map<T, U>(prr: Prray<T>, func: (currentValue: T, index: number, 
   return result
 }
 
-export async function filter<T>(
+export async function filterAsync<T>(
   arr: Prray<T>,
   func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
 ): Promise<T[]> {
   const result: T[] = []
   await loop(arr, async (value, ix) => ((await func(value, ix, arr)) ? result.push(value) : null), {})
+  return result
+}
+
+export function filter<T>(prr: Prray<T>, func: (currentValue: T, index: number, array: Prray<T>) => boolean): T[] {
+  const result: T[] = []
+  for (let ix = 0; ix < prr.length; ix++) {
+    const value = prr[ix]
+    if (func(value, ix, prr)) {
+      result.push(value)
+    }
+  }
   return result
 }
 
