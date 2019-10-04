@@ -193,7 +193,7 @@ const prr = Prray.of(1, 2, 3, 4)
 
 #### Prray.isPrray(obj)
 
-The Prray.isArray() method determines whether the passed value is a Prray.
+The Prray.isArray() method determines whether the passed value is a Prray instance.
 
 ```javascript
 import { Prray } from 'prray'
