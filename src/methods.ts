@@ -101,29 +101,34 @@ export function reduce<T>(
   return pre
 }
 
-export async function reduceRight<T>(
-  arr: Prray<T>,
-  func: (preValue: T, currentValue: T, index: number, array: Prray<T>) => Promise<T> | T,
-): Promise<T[]>
-export async function reduceRight<T, U>(
-  arr: Prray<T>,
-  func: (preValue: U, currentValue: T, index: number, array: Prray<T>) => Promise<U> | U,
-  initialValue?: U,
-): Promise<U[]>
-export async function reduceRight<T>(
-  arr: Prray<T>,
-  func: (preValue: any, currentValue: T, index: number, array: Prray<T>) => Promise<any> | any,
+export async function reduceRightAsync<T>(
+  prr: Prray<T>,
+  func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>,
+): Promise<T>
+export async function reduceRightAsync<T>(
+  prr: Prray<T>,
+  func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>,
+  initialValue: T,
+): Promise<T>
+export async function reduceRightAsync<T, U>(
+  prr: Prray<T>,
+  func: (accumulator: U, currentValue: T, index: number, prray: Prray<T>) => U | Promise<U>,
+  initialValue: U,
+): Promise<U>
+export async function reduceRightAsync<T>(
+  prr: Prray<T>,
+  func: (accumulator: any, currentValue: T, index: number, prray: Prray<T>) => any | Promise<any>,
   initialValue?: any,
-): Promise<any[]> {
+): Promise<any> {
   let pre = initialValue
-  let ix = arr.length - 1
+  let ix = prr.length - 1
   if (initialValue === undefined) {
-    pre = arr[arr.length - 1]
-    ix = arr.length - 2
+    pre = prr[prr.length - 1]
+    ix = prr.length - 2
   }
   for (ix; ix >= 0; ix--) {
-    const current = arr[ix]
-    pre = await func(pre, current, ix, arr)
+    const current = prr[ix]
+    pre = await func(pre, current, ix, prr)
   }
   return pre
 }

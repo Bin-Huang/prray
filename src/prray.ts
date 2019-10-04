@@ -62,18 +62,11 @@ export class Prray<T> extends Array<T> {
     func: (accumulator: U, currentValue: T, index: number, prray: Prray<T>) => U | Promise<U>,
     initialValue: U,
   ): Promise<U>
-  reduceAsync<U>(
-    func: (accumulator: Prray<U>, currentValue: T, index: number, prray: Prray<T>) => U | Promise<U>,
-    initialValue: Prray<U>,
-  ): PrrayPromise<U>
   reduceAsync(
     func: (accumulator: any, currentValue: T, index: number, prray: Prray<T>) => any | Promise<any>,
     initialValue?: any,
   ): Promise<any> {
     const promise = methods.reduceAsync(this, func, initialValue)
-    if (initialValue instanceof Prray) {
-      return prraypromise(promise)
-    }
     return promise
   }
 
@@ -85,17 +78,22 @@ export class Prray<T> extends Array<T> {
   }
 
   reduceRightAsync(
-    callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => Promise<T>,
+    func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>,
+  ): Promise<T>
+  reduceRightAsync(
+    func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>,
+    initialValue: T,
   ): Promise<T>
   reduceRightAsync<U>(
-    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => Promise<U>,
-    initialValue?: U,
+    func: (accumulator: U, currentValue: T, index: number, prray: Prray<T>) => U | Promise<U>,
+    initialValue: U,
   ): Promise<U>
   reduceRightAsync(
-    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => Promise<any>,
+    func: (accumulator: any, currentValue: T, index: number, prray: Prray<T>) => any | Promise<any>,
     initialValue?: any,
   ): Promise<any> {
-    return methods.reduceRight(this, callback, initialValue)
+    const promise = methods.reduceRightAsync(this, func, initialValue)
+    return promise
   }
 
   sortAsync(func?: (a: T, b: T) => Promise<number> | number): PrrayPromise<T> {

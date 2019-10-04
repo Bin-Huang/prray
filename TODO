@@ -10,6 +10,10 @@
 [] back
 [] benchmark
 
+## pudding
+
+[] methods `reduce*` returns a prraypromise or prray when initialValue is a prray.
+
 ## Features
 
 ### Async controls
