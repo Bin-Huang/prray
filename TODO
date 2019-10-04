@@ -13,6 +13,7 @@
 ## pudding
 
 [] methods `reduce*` returns a prraypromise or prray when initialValue is a prray.
+[] methods `reduce*` compatibility
 
 ## Features
 

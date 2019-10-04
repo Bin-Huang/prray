@@ -133,6 +133,45 @@ export async function reduceRightAsync<T>(
   return pre
 }
 
+export function reduceRight<T>(
+  prr: Prray<T>,
+  func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T,
+): T
+export function reduceRight<T>(
+  prr: Prray<T>,
+  func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T,
+  initialValue: T,
+): T
+export function reduceRight<T, U>(
+  prr: Prray<T>,
+  func: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U,
+  initialValue: U,
+): U
+export function reduceRight<T>(
+  prr: Prray<T>,
+  func: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any,
+  initialValue?: any,
+): any {
+  if (prr.length === 0) {
+    if (initialValue === undefined) {
+      throw TypeError('Reduce of empty array with no initial value')
+    } else {
+      return initialValue
+    }
+  }
+  let pre = initialValue
+  let ix = prr.length - 1
+  if (initialValue === undefined) {
+    pre = prr[prr.length - 1]
+    ix = prr.length - 2
+  }
+  for (ix; ix >= 0; ix--) {
+    const current = prr[ix]
+    pre = func(pre, current, ix, prr)
+  }
+  return pre
+}
+
 export async function findIndexAsync<T>(
   arr: Prray<T>,
   func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,

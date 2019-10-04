@@ -38,6 +38,14 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return promise
   }
 
+  reduce(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): T
+  reduce(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T, initialValue: T): T
+  reduce<U>(func: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U, initialValue: U): U
+  reduce(func: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any, initialValue?: any): any {
+    // Why? If pass parameter initialValue as undefined, the initial value will be undefined instead array[0] actually :(
+    return this.then(prray => (arguments.length >= 2 ? prray.reduce(func, initialValue) : prray.reduce(func)))
+  }
+
   reduceRightAsync(
     func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T | Promise<T>,
   ): Promise<T>
@@ -54,6 +62,17 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     initialValue?: any,
   ): Promise<any> {
     return this.then(prray => prray.reduceRightAsync(func, initialValue))
+  }
+
+  reduceRight(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): T
+  reduceRight(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T, initialValue: T): T
+  reduceRight<U>(func: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U, initialValue: U): U
+  reduceRight(
+    func: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any,
+    initialValue?: any,
+  ): any {
+    // Why? If pass parameter initialValue as undefined, the initial value will be undefined instead array[0] actually :(
+    return this.then(prray => (arguments.length >= 2 ? prray.reduceRight(func, initialValue) : prray.reduceRight(func)))
   }
 
   sortAsync(func?: (a: T, b: T) => Promise<number> | number): PrrayPromise<T> {
@@ -175,29 +194,6 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
 
   reverse(): PrrayPromise<T> {
     return prraypromise(this.then(prray => prray.reverse()))
-  }
-
-  reduce(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): T
-  reduce(func: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T, initialValue: T): T
-  reduce<U>(func: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U, initialValue: U): U
-  reduce(func: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any, initialValue?: any): any {
-    // Why? If pass parameter initialValue as undefined, the initial value will be undefined instead array[0] actually :(
-    return this.then(prray => (arguments.length >= 2 ? prray.reduce(func, initialValue) : prray.reduce(func)))
-  }
-
-  reduceRight(callback: (accumulator: T, currentValue: T, index: number, array: Prray<T>) => T): Promise<T>
-  reduceRight<U>(
-    callback: (accumulator: U, currentValue: T, index: number, array: Prray<T>) => U,
-    initialValue?: U,
-  ): Promise<U>
-  reduceRight(
-    callback: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any,
-    initialValue?: any,
-  ): Promise<any> {
-    // Why? If pass parameter initialValue as undefined, the initial value will be undefined instead array[0] actually :(
-    return this.then(prray =>
-      arguments.length >= 2 ? prray.reduceRight(callback, initialValue) : prray.reduceRight(callback),
-    )
   }
 
   shift(): Promise<T | undefined> {

@@ -96,6 +96,16 @@ export class Prray<T> extends Array<T> {
     return promise
   }
 
+  reduceRight(func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T): T
+  reduceRight(func: (accumulator: T, currentValue: T, index: number, prray: Prray<T>) => T, initialValue: T): T
+  reduceRight<U>(func: (accumulator: U, currentValue: T, index: number, prray: Prray<T>) => U, initialValue: U): U
+  reduceRight(
+    func: (accumulator: any, currentValue: T, index: number, prray: Prray<T>) => any,
+    initialValue?: any,
+  ): any {
+    return methods.reduceRight(this, func, initialValue)
+  }
+
   sortAsync(func?: (a: T, b: T) => Promise<number> | number): PrrayPromise<T> {
     const promise = methods.sort(this, func)
     return prraypromise(promise.then(arr => Prray.from(arr)))
