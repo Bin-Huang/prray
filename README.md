@@ -10,7 +10,6 @@ Prray -- "Promisified" Array, comes with async method supports(such as mapAsync)
 
 ```javascript
 import { prray } from 'prray'
-
 ;(async () => {
   // Convert normal array to "prray"
   const prr = prray(['www.google.com', 'npmjs.org'])
@@ -165,7 +164,7 @@ const p2 = new Prray(1)
 const p3 = new Prray('a', 'b')
 ```
 
-**Instead `new Prray()`, use methods `prray`, `Prray.from` or `Prray.from` if you want to create a new prray instance**. Because the class Prray is so compatible with class Array,
+**Instead `new Prray()`, use methods `prray`, `Prray.from` or `Prray.of` if you want to create a new prray instance**. Because the class Prray is so compatible with class Array,
 some "weird" behavior that exists in `new Array()` can also occur: when you `new Array(1)`, you get `[ <1 empty item> ]` instead `[ 1 ]`.
 
 #### Prray.from(arrayLike)
