@@ -2,7 +2,7 @@ import test from 'ava'
 import { prray } from '../src/prray'
 import { toPrrayPromise, genRandArr } from './test-utils'
 
-const func = (a, b) => a - b
+const func = (a: number, b: number) => a - b
 
 const getTests = () => {
   return [
