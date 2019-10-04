@@ -172,7 +172,7 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return prraypromise(this.then(prray => prray.concat(...items)))
   }
 
-  copyWithin(target: number, start?: number, end?: number) {
+  copyWithin(target: number, start: number, end?: number) {
     return prraypromise(this.then(prray => prray.copyWithin(target, start, end)))
   }
 
