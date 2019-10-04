@@ -13,16 +13,15 @@ export class Prray<T> extends Array<T> {
     return obj instanceof Prray
   }
 
-  static from<T, U>(arrayLike: Iterable<T> | ArrayLike<T>): Prray<T>
+  static from<T>(arrayLike: Iterable<T> | ArrayLike<T>): Prray<T>
   static from<T, U>(arrayLike: Iterable<T> | ArrayLike<T>, mapFunc: (v: T, ix: number) => U, thisArg?: any): Prray<U>
   static from<T, U>(
     arrayLike: Iterable<T> | ArrayLike<T>,
     mapFunc?: (v: T, ix: number) => U,
     thisArg?: any,
   ): Prray<any> {
-    const arr =
-      arrayLike instanceof Array && mapFunc === undefined ? arrayLike : super.from(arrayLike, mapFunc, thisArg)
-    const prr = new Prray<T>()
+    const arr = mapFunc === undefined ? super.from(arrayLike) : super.from(arrayLike, mapFunc, thisArg)
+    const prr = new Prray()
     for (let i = arr.length - 1; i >= 0; i--) {
       prr[i] = arr[i]
     }
@@ -170,9 +169,12 @@ export class Prray<T> extends Array<T> {
     return super.reverse() as Prray<T>
   }
 
+  splice(start: number): Prray<T>
+  splice(start: number, deleteCount: number): Prray<T>
+  splice(start: number, deleteCount: number, ...items: T[]): Prray<T>
   splice(start: number, deleteCount?: number, ...items: T[]): Prray<T> {
     // Why? If pass parameter deleteCount as undefined directly, the delete count will be zero actually :(
-    const result = arguments.length >= 2 ? super.splice(start, deleteCount, ...items) : super.splice(start)
+    const result = deleteCount === undefined ? super.splice(start) : super.splice(start, deleteCount, ...items)
     return _ensurePrray(result)
   }
 

@@ -204,11 +204,15 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return this.then(prray => prray.unshift(...items))
   }
 
+  splice(start: number): PrrayPromise<T>
+  splice(start: number, deleteCount: number): PrrayPromise<T>
+  splice(start: number, deleteCount: number, ...items: T[]): PrrayPromise<T>
   splice(start: number, deleteCount?: number, ...items: T[]): PrrayPromise<T> {
     // Why? If pass parameter deleteCount as undefined directly, the delete count will be zero actually :(
-    return prraypromise(
-      this.then(prray => (arguments.length >= 2 ? prray.splice(start, deleteCount, ...items) : prray.splice(start))),
+    const promise = this.then(prray =>
+      deleteCount === undefined ? prray.splice(start) : prray.splice(start, deleteCount, ...items),
     )
+    return prraypromise(promise)
   }
 
   toArray(): Promise<T[]> {
