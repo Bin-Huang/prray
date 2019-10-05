@@ -1,4 +1,12 @@
-Prray -- "Promisified" Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.
+[![Travis](https://img.shields.io/travis/Bin-Huang/prray)](https://travis-ci.com/Bin-Huang/prray)
+[![Package version](https://img.shields.io/npm/v/prray)](https://www.npmjs.com/package/prray)
+[![Coverage Status](https://coveralls.io/repos/github/Bin-Huang/prray/badge.svg?branch=master)](https://coveralls.io/github/Bin-Huang/prray?branch=master)
+[![Install size](https://packagephobia.now.sh/badge?p=prray)](https://packagephobia.now.sh/result?p=prray)
+![License](https://img.shields.io/npm/l/prray)
+
+<!-- [![Download](https://img.shields.io/npm/dm/prray)](https://www.npmjs.com/package/prray) -->
+
+Prray - "Promisified" Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.
 
 - comes with async method supports, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
 - supports **real async method chaining**
