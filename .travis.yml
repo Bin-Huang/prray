@@ -2,12 +2,10 @@ language: node_js
 
 node_js:
   - 10
-  - 9
-  - 8
-  - 7
 
 install:
   - npm ci
+  - npm install codecov -g
 
 script:
   - npm test
