@@ -8,4 +8,4 @@ install:
   - npm install coveralls --save-dev
 
 script:
-  - npm test && nyc npm test && nyc report --reporter=text-lcov | coveralls
+  - npm test && nyc report --reporter=text-lcov | coveralls
