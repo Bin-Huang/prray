@@ -5,8 +5,7 @@ node_js:
 
 install:
   - npm ci
-  - npm install codecov -g
+  - npm install coveralls --save-dev
 
 script:
-  - npm test
-  - mkdir coverage && nyc report --reporter=json > coverage/coverage.json && codecov -f coverage/*.json
+  - npm test && nyc report --reporter=text-lcov | coveralls
