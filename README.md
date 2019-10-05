@@ -1,4 +1,5 @@
-![](https://img.shields.io/npm/v/prray)
+[![Package version](https://img.shields.io/npm/v/prray)](https://www.npmjs.com/package/prray)
+[![Coverage Status](https://coveralls.io/repos/github/Bin-Huang/prray/badge.svg?branch=tweak-ci)](https://coveralls.io/github/Bin-Huang/prray?branch=tweak-ci)
 
 Prray -- "Promisified" Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.
 
