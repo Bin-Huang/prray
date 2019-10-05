@@ -1,3 +1,5 @@
+![](https://img.shields.io/npm/v/prray)
+
 Prray -- "Promisified" Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.
 
 - comes with async method supports, such as `mapAsync`, `filterAsync`, `everyAsync` .etc

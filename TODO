@@ -1,11 +1,12 @@
 ## Project polish
 
 [x] Add types for all of methods
-[] Add real-world tests
-[] Set ts mode to strict
+[x] Add real-world tests
+[x] Set ts mode to strict
 
 ## Document polish
 
+[] shieIds
 [] contribute (issues, pr, fork)
 [] back
 [] benchmark

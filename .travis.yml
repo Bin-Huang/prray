@@ -1,0 +1,14 @@
+language: node_js
+
+node_js:
+  - 10
+  - 9
+  - 8
+  - 7
+
+install:
+  - npm ci
+
+script:
+  - npm test
+  - codecov -f coverage/*.json
