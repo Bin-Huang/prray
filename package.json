@@ -25,7 +25,7 @@
     "concurrency"
   ],
   "author": "Ben Huang",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "ava": "^2.4.0",
