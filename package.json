@@ -1,6 +1,6 @@
 {
   "name": "prray",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "'Promisified' Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.",
   "main": "./dist/src/index",
   "typings": "./dist/src/index.d.ts",
