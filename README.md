@@ -9,7 +9,7 @@
 Prray - "Promisified" Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.
 
 - comes with async method supports, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
-- supports **real async method chaining**
+- supports **real async method chaining** 🚀🚀
 - **compatible** with normal array
 - [well-tested](https://github.com/Bin-Huang/prray/tree/master/test) (coverage 93.17%)
 - zero-dependency
@@ -18,14 +18,15 @@ Prray - "Promisified" Array, comes with async method supports(such as mapAsync).
 
 ```javascript
 import { prray } from 'prray'
-;(async () => {
-  // Convert normal array to "prray"
+
+(async () => {
+
+  // Create a new "prray" from normal array
   const prr = prray(['www.google.com', 'npmjs.org'])
 
-  // Now you can do something like this
   const responses = await prr.mapAsync(fetch)
 
-  // Async method chaining
+  // Async method chaining 🚀
   const htmls = await prr.mapAsync(fetch).mapAsync(r => r.text())
 
   // Method chaining with async and common methods
@@ -36,6 +37,7 @@ import { prray } from 'prray'
     .reverse()
     .splice(1, 2)
     .reduceAsync(asyncFunc2)
+
 })()
 ```
 
@@ -61,15 +63,28 @@ import { prray, Prray } from 'prray'
 const arr = [1,2,3]
 const prr = prray(arr)
 
-prr[0]  // 1
-prr.length  // 4
 
-[...prr]  // [1,2,3]
+prr[0]  // 1
+prr[prr.length - 1]  // 3
+prr.length  // 3
+
 
 prr instanceof Array // true
 Array.isArray(prr) // true
 
+
 JSON.stringify(prr)  // "[1, 2, 3]"
+
+
+for (const v of prr) {
+  console.log(v)
+}
+// 1
+// 2
+// 3
+
+
+[...prr]  // [1,2,3]
 
 const iterator = prr[Symbol.iterator]()
 iterator.next().value  // 1
@@ -77,11 +92,11 @@ iterator.next().value  // 2
 iterator.next().value  // 3
 iterator.next().done  // true
 
-// Type compatibility in typescript
+
 function func(arr: number[]) {
   return arr
 }
-func(new Prray(1,2,3))  // Type Prray is compatible with type Array
+func(new Prray(1,2,3))  // Type Prray is compatible with type Array in typescript
 ```
 
 There are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to compatible with normal array.
@@ -109,6 +124,7 @@ arr instanceof Prray // false
   - [Prray.of(...args)](#prrayofargs)
   - [Prray.isPrray(obj)](#prrayisprrayobj)
 - Prray instance methods
+  - [Prray.prototype.toArray()](#prrayprototypetoarray)
   - [Prray.prototype.mapAsync(func)](#prrayprototypemapasyncfunc)
   - [Prray.prototype.map(func)](#prrayprototypemapfunc)
   - [Prray.prototype.filterAsync(func)](#prrayprototypefilterasyncfunc)
@@ -148,7 +164,6 @@ arr instanceof Prray // false
   - [Prray.prototype.splice(start, deleteCount, ...items)](#prrayprototypesplicestart-deletecount-items)
   - [Prray.prototype.toString()](#prrayprototypetostring)
   - [Prray.prototype.toLocaleString()](#prrayprototypetolocalestring)
-  - [Prray.prototype.toArray()](#prrayprototypetoarray)
 
 #### prray(array)
 
@@ -158,6 +173,7 @@ The prray() method creates and returns a new Prray instance with every element i
 import { prray } from 'prray'
 
 const prr = prray([1, 2, 3])
+console.log(prr[0]) // 1
 ```
 
 #### new Prray()
@@ -170,14 +186,15 @@ import { Prray } from 'prray'
 const p1 = new Prray()
 const p2 = new Prray(1)
 const p3 = new Prray('a', 'b')
+
+console.log(p3[0]) // 'a'
 ```
 
-**Instead `new Prray()`, use methods `prray`, `Prray.from` or `Prray.of` if you want to create a new prray instance**. Because the class Prray is so compatible with class Array,
-some "weird" behavior that exists in `new Array()` can also occur: when you `new Array(1)`, you get `[ <1 empty item> ]` instead `[ 1 ]`.
+> **Instead `new Prray()`, use methods `prray`, `Prray.from` or `Prray.of` if you want to create a new prray instance**. Because the class Prray is so compatible with class Array, some "weird" behaviors that exists in `new Array()` can also occurs: when you calling `new Array(1)`, you get `[ <1 empty item> ]` instead of expected `[ 1 ]`.
 
 #### Prray.from(arrayLike)
 
-_Compatible with [`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from) but returns a prray._
+_Compatible with [`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from) but returns a Prray instance._
 
 The Prray.from() method creates a new, shallow-copied Prray instance from an array-like or iterable object.
 
@@ -189,7 +206,7 @@ const prr = Prray.from([1, 2, 3, 4])
 
 #### Prray.of(...args)
 
-_Compatible with [`Array.of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of) but returns a prray._
+_Compatible with [`Array.of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of) but returns a Prray instance._
 
 The Prray.of() method creates a new Prray instance from a variable number of arguments, regardless of number or type of the arguments.
 
@@ -210,9 +227,19 @@ Prray.isPrray([1, 2, 3]) // false
 Prray.isPrray(new Prray(1, 2, 3)) // true
 ```
 
+#### Prray.prototype.toArray()
+
+The toArray() method returns a new normal array with every element in the prray.
+
+```javascript
+const prr = new Prray(1, 2, 3)
+
+prr.toArray() // [1,2,3]
+```
+
 #### Prray.prototype.mapAsync(func)
 
-_Think of it as async version of method `map`_
+_Think of it as an async version of method `map`_
 
 The mapAsync() method returns a promise resolved with a new prray with the resolved results of calling a provided async function on every element in the calling prray.
 
@@ -221,58 +248,72 @@ The provided async function is called on every element concurrently.
 - `func(currentValue, index, prray)`
 
 ```javascript
-const urls = prray([
-  /* urls */
-])
+const urls = prray([/* urls */])
 
 const jsons = await urls.mapAsync(fetch).mapAsync(res => res.json())
 ```
 
 #### Prray.prototype.map(func)
 
-_Compatible with [Array.prototype.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)_
+_Compatible with [Array.prototype.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)_ but returns a Prray instance.
 
 The map() method creates a new prray with the results of calling a provided function on every element in the calling prray.
 
 #### Prray.prototype.filterAsync(func)
 
-_Think of it as async version of method `filter`_
+_Think of it as an async version of method `filter`_
 
 The filterAsync() method returns a promise resolved with a new prray with all elements that pass the test implemented by the provided async function.
 
 The provided async function is called on every element concurrently.
 
 ```javascript
-const files = prray([
-  /* filenames */
-])
+const files = prray([/* filenames */])
 
-await files.filterAsync(isFileExisted).mapAsync(removeFile)
+await files.filterAsync(isExisted).mapAsync(removeFile)
 ```
 
 #### Prray.prototype.filter(func)
 
-_Compatible with [Array.prototype.filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)_
+_Compatible with [Array.prototype.filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)_ but returns a Prray instance.
 
 The filter() method creates a new prray with all elements that pass the test implemented by the provided function.
 
 #### Prray.prototype.reduceAsync(func, initialValue)
 
-_Think of it as async version of method `reduce`_
+_Think of it as an async version of method `reduce`_
 
-The reduceAsync() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
+The reduceAsync() method executes a async reducer function (that you provide) on each element of the prray, resulting in a single output value resolved by a promise.
+
+```javascript
+const productIds = prray([/* ids */])
+
+const total = await productIds.reduceAsync(async (total, id) => {
+  const price = await getPrice(id)
+  return total + price
+}, 0)
+```
 
 #### Prray.prototype.reduce(func, initialValue)
 
-_Compatible with [Array.prototype.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)_
+_Compatible with [Array.prototype.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)_.
 
 The reduce() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
 
 #### Prray.prototype.reduceRightAsync(func, initialValue)
 
-_Think of it as async version of method `reduceRight`_
+_Think of it as an async version of method `reduceRight`_
 
-The reduceRightAsync() method applies a function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
+The reduceRightAsync() method applies an async function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
+
+```javascript
+const productIds = prray([/* ids */])
+
+const total = await productIds.reduceRightAsync(async (total, id) => {
+  const price = await getPrice(id)
+  return total + price
+}, 0)
+```
 
 #### Prray.prototype.reduceRight(func, initialValue)
 
@@ -282,16 +323,13 @@ The reduceRight() method applies a function against an accumulator and each valu
 
 #### Prray.prototype.findAsync(func)
 
-_Think of it as async version of method `find`_
+_Think of it as an async version of method `find`_
 
-The findAsync() method returns a promise resolved with the value of the first element in the provided prray that satisfies the provided async testing function.
-
-The provided function can be an async function that returns a promise resolved with Boolean value.
+The findAsync() method returns a promise resolved with the first element in the prray that satisfies the provided async testing function.
 
 ```javascript
-const workers = prray([
-  /* workers */
-])
+const workers = prray([/* workers */])
+
 const unhealthy = await workers.findAsync(checkHealth)
 ```
 
@@ -299,15 +337,13 @@ const unhealthy = await workers.findAsync(checkHealth)
 
 _Compatible with [Array.prototype.find](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)_
 
-The find() method returns the value of the first element in the provided prray that satisfies the provided testing function.
+The find() method returns the value of the first element in the prray that satisfies the provided testing function.
 
 #### Prray.prototype.findIndexAsync(func)
 
-_Think of it as async version of method `findIndex`_
+_Think of it as an async version of method `findIndex`_
 
 The findIndexAsync() method returns a promise resolved with the index of the first element in the prray that satisfies the provided async testing function. Otherwise, it returns promise resolved with -1, indicating that no element passed the test.
-
-The provided function can be an async function that returns a promise resolved with Boolean value.
 
 ```javascript
 const workers = prray([
@@ -325,24 +361,19 @@ The findIndex() method returns the index of the first element in the prray that 
 
 #### Prray.prototype.everyAsync(func)
 
-_Think of it as async version of method `every`_
+_Think of it as an async version of method `every`_
 
 The everyAsync() method tests whether all elements in the prray pass the test implemented by the provided async function. It returns a promise resolved with a Boolean value.
 
 The provided async function is called on every element concurrently.
 
 ```javascript
-function checkFileAsync(filename) {
-  return new Promise((resolve, reject) => {
-    fs.access(filename, fs.F_OK, err => (err ? resolve(false) : resolve(true)))
-  })
+const filenames = prray([/* filenames */])
+
+const isAllFileExisted = await filenames.everyAsync(isExisted)
+if (isAllFileExisted) {
+  // do some things
 }
-
-const filenames = prray([
-  /* filenames */
-])
-
-const isAllFileExisted = await filenames.everyAsync(checkFileAsync)
 ```
 
 #### Prray.prototype.every(func)
@@ -353,24 +384,19 @@ The every() method tests whether all elements in the prray pass the test impleme
 
 #### Prray.prototype.someAsync(func)
 
-_Think of it as async version of method `some`_
+_Think of it as an async version of method `some`_
 
 The some() method tests whether at least one element in the prray passes the test implemented by the provided async function. It returns a promise resolved with Boolean value.
 
 The provided async function is called on every element concurrently.
 
 ```javascript
-function checkFileAsync(filename) {
-  return new Promise((resolve, reject) => {
-    fs.access(filename, fs.F_OK, err => (err ? resolve(false) : resolve(true)))
-  })
+const filenames = prray([/* filenames */])
+
+const hasExistedFile = await filenames.someAsync(isExisted)
+if (hasExistedFile) {
+  // do some things
 }
-
-const filenames = prray([
-  /* filenames */
-])
-
-const containExistedFile = await filenames.someAsync(checkFileAsync)
 ```
 
 #### Prray.prototype.some(func)
@@ -381,26 +407,34 @@ The some() method tests whether at least one element in the prray passes the tes
 
 #### Prray.prototype.sortAsync(func)
 
-_Think of it as async version of method `sort`_
+_Think of it as an async version of method `sort`_
 
-The sortAsync() method sorts the elements of a prray in place and returns the sorted prray. The provided function can be an async function that returns promise resolved with a number.
+The sortAsync() method sorts the elements of a prray in place and returns a promise resolved with the sorted prray. The provided function can be an async function that returns a promise resolved with a number.
+
+```javascript
+const students = prray([/* ids */])
+
+const rank = await students.sortAsync((a, b) => {
+  const scoreA = await getScore(a)
+  const scoreB = await getScore(b)
+  return scoreA - scoreB
+})
+```
 
 #### Prray.prototype.sort(func)
 
 _Compatible with [Array.prototype.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)_
 
-The sort() method sorts the elements of a prray in place and returns the sorted prray. The default sort order is built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values.
+The sort() method sorts the elements of a prray in place and returns the sorted prray.
 
 #### Prray.prototype.forEachAsync(func)
 
-_Think of it as async version of method `forEach`_
+_Think of it as an async version of method `forEach`_
 
-The forEachAsync() method executes a provided function once for each prray element asynchronously and returns a promise resolved after all iterations resolved.
+The forEachAsync() method executes a provided async function once for each prray element concurrently and returns a promise resolved after all iteration promises resolved.
 
 ```javascript
-const emails = prray([
-  /* emails */
-])
+const emails = prray([/* emails */])
 await emails.forEachAsync(sendAsync)
 ```
 
@@ -412,7 +446,7 @@ The forEach() method executes a provided function once for each prray element.
 
 #### Prray.prototype.slice(start, end)
 
-_Compatible with [Array.prototype.slice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)_
+_Compatible with [Array.prototype.slice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)_ but returns a Prray instance
 
 The slice() method returns a shallow copy of a portion of a prray into a new prray object selected from begin to end (end not included) where begin and end represent the index of items in that prray. The original prray will not be modified.
 
@@ -466,7 +500,7 @@ The fill() method fills (modifies) all the elements of a prray from a start inde
 
 #### Prray.prototype.concat(arr)
 
-_Compatible with [Array.prototype.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)_
+_Compatible with [Array.prototype.concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)_ but returns a Prray instance
 
 The concat() method is used to merge two or more prrays and arrays. This method does not change the existing prrays, but instead returns a new prray.
 
@@ -508,7 +542,7 @@ The unshift() method adds one or more elements to the beginning of a prray and r
 
 #### Prray.prototype.splice(start, deleteCount, ...items)
 
-_Compatible with [Array.prototype.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)_
+_Compatible with [Array.prototype.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)_ but returns a Prray instance.
 
 The splice() method changes the contents of a prray by removing or replacing existing elements and/or adding new elements in place.
 
@@ -523,16 +557,6 @@ The toString() method returns a string representing the specified prray and its 
 _Compatible with [Array.prototype.toLocaleString](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toLocaleString)_
 
 The toLocaleString() method returns a string representing the elements of the prray. The elements are converted to Strings using their toLocaleString methods and these Strings are separated by a locale-specific String (such as a comma “,”).
-
-#### Prray.prototype.toArray()
-
-The toArray() method creates and returns a new normal array with every element in the prray.
-
-```javascript
-const prr = new Prray(1, 2, 3)
-
-prr.toArray() // [1,2,3]
-```
 
 <!-- ## Different from [Bluebird](https://github.com/petkaantonov/bluebird)
 
@@ -560,3 +584,7 @@ await Bluebird.map(responses, saveAsync)
 If you want a good promise implementation, this is bluebird.
 
 If you want to handle asynchronous batch operations on data(array), prray is an option for you. -->
+
+## License
+
+MIT
