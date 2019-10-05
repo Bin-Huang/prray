@@ -9,4 +9,4 @@ install:
 
 script:
   - npm test
-  - codecov -f coverage/*.json
+  - nyc report --reporter=json > coverage/coverage.json && codecov -f coverage/*.json
