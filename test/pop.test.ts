@@ -12,6 +12,8 @@ test('prray pop', async t => {
   t.is(p.pop(), 'b')
   t.is(p.pop(), 'a')
   t.is(p.pop(), undefined)
+
+  t.deepEqual(p, prray([])) // mutable
 })
 
 test('prraypromise pop', async t => {
@@ -22,4 +24,6 @@ test('prraypromise pop', async t => {
   t.is(await pp.pop(), 'b')
   t.is(await pp.pop(), 'a')
   t.is(await pp.pop(), undefined)
+
+  t.deepEqual(await pp, prray([])) // mutable
 })

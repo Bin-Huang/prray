@@ -9,7 +9,7 @@ test('prray reverse', async t => {
   const prr = prray(arr)
 
   t.deepEqual(prr.reverse(), prray([4, 3, 2, 1]))
-  t.deepEqual(prr, prray([4, 3, 2, 1]))
+  t.deepEqual(prr, prray([4, 3, 2, 1])) // mutable
 })
 
 test('prraypromise reverse', async t => {
@@ -17,6 +17,6 @@ test('prraypromise reverse', async t => {
   const pp = toPrrayPromise(prr)
 
   t.deepEqual(await pp.reverse(), prray([4, 3, 2, 1]))
-  t.deepEqual(prr, prray([4, 3, 2, 1]))
+  t.deepEqual(prr, prray([4, 3, 2, 1])) // mutable
   t.true(pp.reverse() instanceof PrrayPromise)
 })

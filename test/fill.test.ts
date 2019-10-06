@@ -20,6 +20,11 @@ test('prray fill', async t => {
   t.deepEqual(prr, prray([{ hi: 'hi' }, { hi: 'hi' }, { hi: 'hi' }]))
 })
 
+test('prray fill: mutable', async t => {
+  const prr = prray([1, 2, 3])
+  t.is(prr.fill(4), prr)
+})
+
 test('prraypromise fill', async t => {
   t.deepEqual(await toPrrayPromise([1, 2, 3]).fill(4), prray([4, 4, 4]))
   t.deepEqual(await toPrrayPromise([1, 2, 3]).fill(4, 1), prray([1, 4, 4]))
@@ -36,4 +41,9 @@ test('prraypromise fill', async t => {
   t.deepEqual(prr, prray([{}, {}, {}]))
   ;(prr[0] as any).hi = 'hi'
   t.deepEqual(prr, prray([{ hi: 'hi' }, { hi: 'hi' }, { hi: 'hi' }]))
+})
+
+test('prraypromise fill: mutable', async t => {
+  const prr = prray([1, 2, 3])
+  t.is(await toPrrayPromise(prr).fill(4), prr)
 })

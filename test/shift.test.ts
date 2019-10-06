@@ -13,7 +13,7 @@ test('prray shift', async t => {
   t.is(p.shift(), 'd')
   t.is(p.shift(), undefined)
 
-  t.deepEqual(p, prray([]))
+  t.deepEqual(p, prray([])) // mutable
 })
 
 test('prraypromise shift', async t => {
@@ -26,5 +26,5 @@ test('prraypromise shift', async t => {
   t.is(await pp.shift(), 'd')
   t.is(await pp.shift(), undefined)
 
-  t.deepEqual(prr, prray([]))
+  t.deepEqual(prr, prray([])) // mutable
 })
