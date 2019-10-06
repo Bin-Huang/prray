@@ -1,15 +1,7 @@
-## Project polish
+## Compatibility
 
-[x] Add types for all of methods
-[x] Add real-world tests
-[x] Set ts mode to strict
-
-## Document polish
-
-[x] badges
-[] contribute (issues, pr, fork)
-[] back
-[] benchmark
+[] nodejs version
+[] brower
 
 ## pudding
 
@@ -32,6 +24,14 @@
 ### Useful methods???
 
 [] compact
+
+------------------------------------------------------------
+
+## Project polish
+
+[x] Add types for all of methods
+[x] Add real-world tests
+[x] Set ts mode to strict
 
 
 ## Implement methods

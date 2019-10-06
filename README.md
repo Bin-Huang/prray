@@ -11,10 +11,10 @@ Prray - "Promisified" Array, comes with async method supports(such as mapAsync).
 - comes with async method supports, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
 - supports **real async method chaining** 🚀🚀
 - **compatible** with normal array
-- [well-tested](https://github.com/Bin-Huang/prray/tree/master/test) (coverage 93.17%)
+- [well-tested](https://github.com/Bin-Huang/prray/tree/master/test)
 - zero-dependency
 
-> Prray aims to replace normal Array in some cases for convenience 😄😜.
+> Prray aims to replace normal Array in some cases for convenience 😄😜
 
 ```javascript
 import { prray } from 'prray'
@@ -40,6 +40,21 @@ import { prray } from 'prray'
 
 })()
 ```
+
+- [How it work?](#how-it-work)
+- [Install](#install)
+- [Compatibility with normal Array](#compatibility-with-normal-array)
+- [Distinguish between prray and normal array](#distinguish-between-prray-and-normal-array)
+- [Methods](#methods)
+  - [Package methods](#package-methods)
+  - [Static methods of Class Prray](#static-methods-of-class-prray)
+  - [Specific methods of Prray instance](#specific-methods-of-prray-instance)
+  - [Other methods of Prray instance (compatible with Array)](#other-methods-of-prray-instance-compatible-with-array)
+- [License](#license)
+
+## How it work?
+
+Class Prray inherits the original class Array and adds or overrides methods based on it. It works without any prototype pollution and global pollution.
 
 ## Install
 
@@ -99,7 +114,7 @@ function func(arr: number[]) {
 func(new Prray(1,2,3))  // Type Prray is compatible with type Array in typescript
 ```
 
-There are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to compatible with normal array.
+There are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to test compatibility with normal array.
 
 ## Distinguish between prray and normal array
 
@@ -114,56 +129,12 @@ prr instanceof Prray // true
 arr instanceof Prray // false
 ```
 
-## Usage
+## Methods
 
-- Package exports
+### Package methods
+
   - [prray(array)](#prrayarray)
   - [new Prray()](#new-prray)
-- Prray static methods
-  - [Prray.from(arrayLike)](#prrayfromarraylike)
-  - [Prray.of(...args)](#prrayofargs)
-  - [Prray.isPrray(obj)](#prrayisprrayobj)
-- Prray instance methods
-  - [Prray.prototype.toArray()](#prrayprototypetoarray)
-  - [Prray.prototype.mapAsync(func)](#prrayprototypemapasyncfunc)
-  - [Prray.prototype.map(func)](#prrayprototypemapfunc)
-  - [Prray.prototype.filterAsync(func)](#prrayprototypefilterasyncfunc)
-  - [Prray.prototype.filter(func)](#prrayprototypefilterfunc)
-  - [Prray.prototype.reduceAsync(func, initialValue)](#prrayprototypereduceasyncfunc-initialvalue)
-  - [Prray.prototype.reduce(func, initialValue)](#prrayprototypereducefunc-initialvalue)
-  - [Prray.prototype.reduceRightAsync(func, initialValue)](#prrayprototypereducerightasyncfunc-initialvalue)
-  - [Prray.prototype.reduceRight(func, initialValue)](#prrayprototypereducerightfunc-initialvalue)
-  - [Prray.prototype.findAsync(func)](#prrayprototypefindasyncfunc)
-  - [Prray.prototype.find(func)](#prrayprototypefindfunc)
-  - [Prray.prototype.findIndexAsync(func)](#prrayprototypefindindexasyncfunc)
-  - [Prray.prototype.findIndex(func)](#prrayprototypefindindexfunc)
-  - [Prray.prototype.everyAsync(func)](#prrayprototypeeveryasyncfunc)
-  - [Prray.prototype.every(func)](#prrayprototypeeveryfunc)
-  - [Prray.prototype.someAsync(func)](#prrayprototypesomeasyncfunc)
-  - [Prray.prototype.some(func)](#prrayprototypesomefunc)
-  - [Prray.prototype.sortAsync(func)](#prrayprototypesortasyncfunc)
-  - [Prray.prototype.sort(func)](#prrayprototypesortfunc)
-  - [Prray.prototype.forEachAsync(func)](#prrayprototypeforeachasyncfunc)
-  - [Prray.prototype.forEach(func)](#prrayprototypeforeachfunc)
-  - [Prray.prototype.slice(start, end)](#prrayprototypeslicestart-end)
-  - [Prray.prototype.includes(value)](#prrayprototypeincludesvalue)
-  - [Prray.prototype.indexOf(value)](#prrayprototypeindexofvalue)
-  - [Prray.prototype.lastIndexOf(value)](#prrayprototypelastindexofvalue)
-  - [Prray.prototype.join(separator)](#prrayprototypejoinseparator)
-  - [Prray.prototype.keys()](#prrayprototypekeys)
-  - [Prray.prototype.values()](#prrayprototypevalues)
-  - [Prray.prototype.entries()](#prrayprototypeentries)
-  - [Prray.prototype.fill(value, start, end)](#prrayprototypefillvalue-start-end)
-  - [Prray.prototype.concat(arr)](#prrayprototypeconcatarr)
-  - [Prray.prototype.copyWithin(target, star, end)](#prrayprototypecopywithintarget-star-end)
-  - [Prray.prototype.pop()](#prrayprototypepop)
-  - [Prray.prototype.push(...elements)](#prrayprototypepushelements)
-  - [Prray.prototype.reverse()](#prrayprototypereverse)
-  - [Prray.prototype.shift()](#prrayprototypeshift)
-  - [Prray.prototype.unshift(...elements)](#prrayprototypeunshiftelements)
-  - [Prray.prototype.splice(start, deleteCount, ...items)](#prrayprototypesplicestart-deletecount-items)
-  - [Prray.prototype.toString()](#prrayprototypetostring)
-  - [Prray.prototype.toLocaleString()](#prrayprototypetolocalestring)
 
 #### prray(array)
 
@@ -191,6 +162,12 @@ console.log(p3[0]) // 'a'
 ```
 
 > **Instead `new Prray()`, use methods `prray`, `Prray.from` or `Prray.of` if you want to create a new prray instance**. Because the class Prray is so compatible with class Array, some "weird" behaviors that exists in `new Array()` can also occurs: when you calling `new Array(1)`, you get `[ <1 empty item> ]` instead of expected `[ 1 ]`.
+
+### Static methods of Class Prray
+
+  - [Prray.from(arrayLike)](#prrayfromarraylike)
+  - [Prray.of(...args)](#prrayofargs)
+  - [Prray.isPrray(obj)](#prrayisprrayobj)
 
 #### Prray.from(arrayLike)
 
@@ -227,6 +204,20 @@ Prray.isPrray([1, 2, 3]) // false
 Prray.isPrray(new Prray(1, 2, 3)) // true
 ```
 
+### Specific methods of Prray instance
+
+  - [Prray.prototype.toArray()](#prrayprototypetoarray)
+  - [Prray.prototype.mapAsync(func)](#prrayprototypemapasyncfunc)
+  - [Prray.prototype.filterAsync(func)](#prrayprototypefilterasyncfunc)
+  - [Prray.prototype.reduceAsync(func, initialValue)](#prrayprototypereduceasyncfunc-initialvalue)
+  - [Prray.prototype.reduceRightAsync(func, initialValue)](#prrayprototypereducerightasyncfunc-initialvalue)
+  - [Prray.prototype.findAsync(func)](#prrayprototypefindasyncfunc)
+  - [Prray.prototype.findIndexAsync(func)](#prrayprototypefindindexasyncfunc)
+  - [Prray.prototype.everyAsync(func)](#prrayprototypeeveryasyncfunc)
+  - [Prray.prototype.someAsync(func)](#prrayprototypesomeasyncfunc)
+  - [Prray.prototype.sortAsync(func)](#prrayprototypesortasyncfunc)
+  - [Prray.prototype.forEachAsync(func)](#prrayprototypeforeachasyncfunc)
+
 #### Prray.prototype.toArray()
 
 The toArray() method returns a new normal array with every element in the prray.
@@ -253,12 +244,6 @@ const urls = prray([/* urls */])
 const jsons = await urls.mapAsync(fetch).mapAsync(res => res.json())
 ```
 
-#### Prray.prototype.map(func)
-
-_Compatible with [Array.prototype.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)_ but returns a Prray instance.
-
-The map() method creates a new prray with the results of calling a provided function on every element in the calling prray.
-
 #### Prray.prototype.filterAsync(func)
 
 _Think of it as an async version of method `filter`_
@@ -272,12 +257,6 @@ const files = prray([/* filenames */])
 
 await files.filterAsync(isExisted).mapAsync(removeFile)
 ```
-
-#### Prray.prototype.filter(func)
-
-_Compatible with [Array.prototype.filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)_ but returns a Prray instance.
-
-The filter() method creates a new prray with all elements that pass the test implemented by the provided function.
 
 #### Prray.prototype.reduceAsync(func, initialValue)
 
@@ -294,12 +273,6 @@ const total = await productIds.reduceAsync(async (total, id) => {
 }, 0)
 ```
 
-#### Prray.prototype.reduce(func, initialValue)
-
-_Compatible with [Array.prototype.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)_.
-
-The reduce() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
-
 #### Prray.prototype.reduceRightAsync(func, initialValue)
 
 _Think of it as an async version of method `reduceRight`_
@@ -315,12 +288,6 @@ const total = await productIds.reduceRightAsync(async (total, id) => {
 }, 0)
 ```
 
-#### Prray.prototype.reduceRight(func, initialValue)
-
-_Compatible with [Array.prototype.reduceRight](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight)_
-
-The reduceRight() method applies a function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
-
 #### Prray.prototype.findAsync(func)
 
 _Think of it as an async version of method `find`_
@@ -333,12 +300,6 @@ const workers = prray([/* workers */])
 const unhealthy = await workers.findAsync(checkHealth)
 ```
 
-#### Prray.prototype.find(func)
-
-_Compatible with [Array.prototype.find](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)_
-
-The find() method returns the value of the first element in the prray that satisfies the provided testing function.
-
 #### Prray.prototype.findIndexAsync(func)
 
 _Think of it as an async version of method `findIndex`_
@@ -346,18 +307,10 @@ _Think of it as an async version of method `findIndex`_
 The findIndexAsync() method returns a promise resolved with the index of the first element in the prray that satisfies the provided async testing function. Otherwise, it returns promise resolved with -1, indicating that no element passed the test.
 
 ```javascript
-const workers = prray([
-  /* workers */
-])
+const workers = prray([/* workers */])
 const ix = await workers.findIndexAsync(checkHealth)
 const unhealthy = workers[ix]
 ```
-
-#### Prray.prototype.findIndex(func)
-
-_Compatible with [Array.prototype.findIndex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex)_
-
-The findIndex() method returns the index of the first element in the prray that satisfies the provided testing function. Otherwise, it returns -1, indicating that no element passed the test.
 
 #### Prray.prototype.everyAsync(func)
 
@@ -376,12 +329,6 @@ if (isAllFileExisted) {
 }
 ```
 
-#### Prray.prototype.every(func)
-
-_Compatible with [Array.prototype.every](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)_
-
-The every() method tests whether all elements in the prray pass the test implemented by the provided function. It returns a Boolean value.
-
 #### Prray.prototype.someAsync(func)
 
 _Think of it as an async version of method `some`_
@@ -399,12 +346,6 @@ if (hasExistedFile) {
 }
 ```
 
-#### Prray.prototype.some(func)
-
-_Compatible with [Array.prototype.some](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)_
-
-The some() method tests whether at least one element in the prray passes the test implemented by the provided function. It returns a Boolean value.
-
 #### Prray.prototype.sortAsync(func)
 
 _Think of it as an async version of method `sort`_
@@ -421,12 +362,6 @@ const rank = await students.sortAsync((a, b) => {
 })
 ```
 
-#### Prray.prototype.sort(func)
-
-_Compatible with [Array.prototype.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)_
-
-The sort() method sorts the elements of a prray in place and returns the sorted prray.
-
 #### Prray.prototype.forEachAsync(func)
 
 _Think of it as an async version of method `forEach`_
@@ -437,6 +372,92 @@ The forEachAsync() method executes a provided async function once for each prray
 const emails = prray([/* emails */])
 await emails.forEachAsync(sendAsync)
 ```
+
+### Other methods of Prray instance (compatible with Array)
+
+  - [Prray.prototype.map(func)](#prrayprototypemapfunc)
+  - [Prray.prototype.filter(func)](#prrayprototypefilterfunc)
+  - [Prray.prototype.reduce(func, initialValue)](#prrayprototypereducefunc-initialvalue)
+  - [Prray.prototype.reduceRight(func, initialValue)](#prrayprototypereducerightfunc-initialvalue)
+  - [Prray.prototype.find(func)](#prrayprototypefindfunc)
+  - [Prray.prototype.findIndex(func)](#prrayprototypefindindexfunc)
+  - [Prray.prototype.every(func)](#prrayprototypeeveryfunc)
+  - [Prray.prototype.some(func)](#prrayprototypesomefunc)
+  - [Prray.prototype.sort(func)](#prrayprototypesortfunc)
+  - [Prray.prototype.forEach(func)](#prrayprototypeforeachfunc)
+  - [Prray.prototype.slice(start, end)](#prrayprototypeslicestart-end)
+  - [Prray.prototype.includes(value)](#prrayprototypeincludesvalue)
+  - [Prray.prototype.indexOf(value)](#prrayprototypeindexofvalue)
+  - [Prray.prototype.lastIndexOf(value)](#prrayprototypelastindexofvalue)
+  - [Prray.prototype.join(separator)](#prrayprototypejoinseparator)
+  - [Prray.prototype.keys()](#prrayprototypekeys)
+  - [Prray.prototype.values()](#prrayprototypevalues)
+  - [Prray.prototype.entries()](#prrayprototypeentries)
+  - [Prray.prototype.fill(value, start, end)](#prrayprototypefillvalue-start-end)
+  - [Prray.prototype.concat(arr)](#prrayprototypeconcatarr)
+  - [Prray.prototype.copyWithin(target, star, end)](#prrayprototypecopywithintarget-star-end)
+  - [Prray.prototype.pop()](#prrayprototypepop)
+  - [Prray.prototype.push(...elements)](#prrayprototypepushelements)
+  - [Prray.prototype.reverse()](#prrayprototypereverse)
+  - [Prray.prototype.shift()](#prrayprototypeshift)
+  - [Prray.prototype.unshift(...elements)](#prrayprototypeunshiftelements)
+  - [Prray.prototype.splice(start, deleteCount, ...items)](#prrayprototypesplicestart-deletecount-items)
+  - [Prray.prototype.toString()](#prrayprototypetostring)
+  - [Prray.prototype.toLocaleString()](#prrayprototypetolocalestring)
+
+#### Prray.prototype.map(func)
+
+_Compatible with [Array.prototype.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)_ but returns a Prray instance.
+
+The map() method creates a new prray with the results of calling a provided function on every element in the calling prray.
+
+#### Prray.prototype.filter(func)
+
+_Compatible with [Array.prototype.filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)_ but returns a Prray instance.
+
+The filter() method creates a new prray with all elements that pass the test implemented by the provided function.
+
+#### Prray.prototype.reduce(func, initialValue)
+
+_Compatible with [Array.prototype.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)_.
+
+The reduce() method executes a reducer function (that you provide) on each element of the prray, resulting in a single output value.
+
+#### Prray.prototype.reduceRight(func, initialValue)
+
+_Compatible with [Array.prototype.reduceRight](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight)_
+
+The reduceRight() method applies a function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
+
+#### Prray.prototype.find(func)
+
+_Compatible with [Array.prototype.find](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)_
+
+The find() method returns the value of the first element in the prray that satisfies the provided testing function.
+
+#### Prray.prototype.findIndex(func)
+
+_Compatible with [Array.prototype.findIndex](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex)_
+
+The findIndex() method returns the index of the first element in the prray that satisfies the provided testing function. Otherwise, it returns -1, indicating that no element passed the test.
+
+#### Prray.prototype.every(func)
+
+_Compatible with [Array.prototype.every](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)_
+
+The every() method tests whether all elements in the prray pass the test implemented by the provided function. It returns a Boolean value.
+
+#### Prray.prototype.some(func)
+
+_Compatible with [Array.prototype.some](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)_
+
+The some() method tests whether at least one element in the prray passes the test implemented by the provided function. It returns a Boolean value.
+
+#### Prray.prototype.sort(func)
+
+_Compatible with [Array.prototype.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)_
+
+The sort() method sorts the elements of a prray in place and returns the sorted prray.
 
 #### Prray.prototype.forEach(func)
 
