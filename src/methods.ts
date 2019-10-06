@@ -239,6 +239,7 @@ export function find<T>(
 export async function everyAsync<T>(
   prr: Prray<T>,
   func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
+  opts = { concurrency: Infinity },
 ): Promise<boolean> {
   let result = true
   await loop(
@@ -249,7 +250,7 @@ export async function everyAsync<T>(
         breakLoop()
       }
     },
-    {},
+    opts,
   )
   return result
 }

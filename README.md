@@ -325,13 +325,17 @@ const ix = await workers.findIndexAsync(checkHealth)
 const unhealthy = workers[ix]
 ```
 
-#### Prray.prototype.everyAsync(func)
+#### Prray.prototype.everyAsync(func, { concurrency })
 
 _Think of it as an async version of method `every`_
 
 The everyAsync() method tests whether all elements in the prray pass the test implemented by the provided async function. It returns a promise resolved with a Boolean value.
 
 The provided async function is called on every element concurrently.
+
+- `func(currentValue, index, prray)`
+- options
+  - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
 const filenames = prray([

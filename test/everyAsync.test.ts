@@ -17,6 +17,8 @@ test('prray everyAsync', async t => {
 
   t.is(await p1.everyAsync(isGte3), true)
   t.is(await p2.everyAsync(isGte3), false)
+
+  t.is(await p1.everyAsync(isGte3Async, { concurrency: 1 }), true)
 })
 
 test('prraypromise everyAsync', async t => {
@@ -28,4 +30,6 @@ test('prraypromise everyAsync', async t => {
 
   t.is(await pp1.everyAsync(isGte3), true)
   t.is(await pp2.everyAsync(isGte3), false)
+
+  t.is(await pp1.everyAsync(isGte3Async, { concurrency: 1 }), true)
 })
