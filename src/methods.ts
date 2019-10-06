@@ -288,9 +288,9 @@ export function some<T>(prr: Prray<T>, func: (currentValue: T, index: number, pr
   return false
 }
 
-export async function sort<T>(arr: Prray<T>, func?: (a: T, b: T) => Promise<number> | number): Promise<T[]> {
+export async function sortAsync<T>(arr: Prray<T>, func?: (a: T, b: T) => Promise<number> | number): Promise<Prray<T>> {
   if (!func) {
-    return [...arr].sort()
+    return arr.sort()
   }
   if (arr.length < 2) {
     return arr

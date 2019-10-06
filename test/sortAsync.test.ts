@@ -33,14 +33,13 @@ test('prray sortAsync', async t => {
     t.deepEqual(await p.sortAsync(func), expect)
     t.deepEqual(await p.sortAsync(), expect)
 
-    // FIXME:
-    // t.is(await p.sortAsync(), p)  // mutable
+    t.is(await p.sortAsync(), p) // mutable
+    t.is(await p.sortAsync(funcAsync), p) // mutable
   }
 })
 
 test('prraypromise sortAsync', async t => {
   for (const arr of getTests()) {
-    const p = prray(arr)
     const pp = toPrrayPromise(arr)
     const expect = prray(arr.sort(func))
 
@@ -52,7 +51,7 @@ test('prraypromise sortAsync', async t => {
     t.deepEqual(await pp.sortAsync(func), expect)
     t.deepEqual(await pp.sortAsync(), expect)
 
-    // FIXME:
-    // t.deepEqual(await pp.sortAsync(), p)  //  mutable
+    t.is(await pp, await pp.sortAsync()) //  mutable
+    t.is(await pp, await pp.sortAsync(funcAsync)) //  mutable
   }
 })

@@ -106,8 +106,8 @@ export class Prray<T> extends Array<T> {
   }
 
   sortAsync(func?: (a: T, b: T) => Promise<number> | number): PrrayPromise<T> {
-    const promise = methods.sort(this, func)
-    return prraypromise(promise.then(arr => Prray.from(arr)))
+    const promise = methods.sortAsync(this, func)
+    return prraypromise(promise)
   }
 
   findAsync(
