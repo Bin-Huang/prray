@@ -16,8 +16,11 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     return prraypromise(this.then(prray => prray.map(func)))
   }
 
-  filterAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean): PrrayPromise<T> {
-    return prraypromise(this.then(prray => prray.filterAsync(func)))
+  filterAsync(
+    func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
+    opts?: { concurrency: number },
+  ): PrrayPromise<T> {
+    return prraypromise(this.then(prray => prray.filterAsync(func, opts)))
   }
 
   filter(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): PrrayPromise<T> {

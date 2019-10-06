@@ -18,7 +18,6 @@ Prray - "Promisified" Array, comes with async method supports(such as mapAsync).
 
 ```javascript
 import { prray } from 'prray'
-
 ;(async () => {
   // Create a new "prray" from normal array
   const prr = prray(['www.google.com', 'npmjs.org'])
@@ -242,7 +241,7 @@ const jsons = await urls.mapAsync(fetch).mapAsync(res => res.json())
 await jsons.mapAsync(insertToDB, { concurrency: 2 })
 ```
 
-#### Prray.prototype.filterAsync(func)
+#### Prray.prototype.filterAsync(func, { concurrency })
 
 _Think of it as an async version of method `filter`_
 
@@ -250,12 +249,18 @@ The filterAsync() method returns a promise resolved with a new prray with all el
 
 The provided async function is called on every element concurrently.
 
+- `func(currentValue, index, prray)`
+- options
+  - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
+
 ```javascript
 const files = prray([
   /* filenames */
 ])
 
 await files.filterAsync(isExisted).mapAsync(removeFile)
+
+await files.filterAsync(isExisted, { concurrency: 2 })
 ```
 
 #### Prray.prototype.reduceAsync(func, initialValue)

@@ -21,9 +21,10 @@ export function map<T, U>(prr: Prray<T>, func: (currentValue: T, index: number, 
 export async function filterAsync<T>(
   arr: Prray<T>,
   func: (currentValue: T, index: number, array: Prray<T>) => Promise<boolean> | boolean,
+  opts = { concurrency: Infinity },
 ): Promise<T[]> {
   const result: T[] = []
-  await loop(arr, async (value, ix) => ((await func(value, ix, arr)) ? result.push(value) : null), {})
+  await loop(arr, async (value, ix) => ((await func(value, ix, arr)) ? result.push(value) : null), opts)
   return result
 }
 

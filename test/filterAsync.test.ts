@@ -11,6 +11,8 @@ test('prray filterAsync', async t => {
 
   t.deepEqual(await p.filterAsync(isEvenAsync), prray([2, 4]))
   t.deepEqual(await p.filterAsync(isEven), prray([2, 4]))
+
+  t.deepEqual(await p.filterAsync(isEvenAsync, { concurrency: 1 }), prray([2, 4]))
 })
 
 test('prraypromise filterAsync', async t => {
@@ -21,4 +23,6 @@ test('prraypromise filterAsync', async t => {
 
   t.deepEqual(await pp.filterAsync(isEvenAsync), prray([2, 4]))
   t.deepEqual(await pp.filterAsync(isEven), prray([2, 4]))
+
+  t.deepEqual(await pp.filterAsync(isEvenAsync, { concurrency: 1 }), prray([2, 4]))
 })
