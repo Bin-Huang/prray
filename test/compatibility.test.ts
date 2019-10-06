@@ -38,7 +38,7 @@ test('Compatibility with array: spread operator', async t => {
 test('Compatibility with array: for-index loop', async t => {
   const arr = ['a', 'b', 'c', 'd']
   const prr = new Prray('a', 'b', 'c', 'd')
-  for (let ix = 0; ix < arr.length; ix ++) {
+  for (let ix = 0; ix < arr.length; ix++) {
     t.is(prr[ix], arr[ix])
   }
 })
@@ -48,7 +48,7 @@ test('Compatibility with array: for-of loop', async t => {
   const prr = new Prray('a', 'b', 'c', 'd')
   let ix = 0
   for (const v of prr) {
-    t.is(v, arr[ix ++])
+    t.is(v, arr[ix++])
   }
 })
 
