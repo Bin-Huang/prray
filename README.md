@@ -8,7 +8,7 @@
 
 Prray - "Promisified" Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.
 
-- comes with async method supports, such as `mapAsync`, `filterAsync`, `everyAsync` .etc
+- comes with async method supports, such as `mapAsync`, `filterAsync`, `everyAsync`, etc.
 - supports **real async method chaining** 🚀🚀
 - **compatible** with normal array
 - [well-tested](https://github.com/Bin-Huang/prray/tree/master/test)
