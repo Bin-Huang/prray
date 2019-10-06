@@ -16,6 +16,14 @@ test('prray forEachAsync', async t => {
     result2.push(v + 1)
   })
   t.deepEqual(result2, [2, 3, 4])
+
+  await prray([1, 2, 3]).forEachAsync(
+    async v => {
+      await delay(100)
+      result1.push(v + 1)
+    },
+    { concurrency: 1 },
+  )
 })
 
 test('prraypromise forEachAsync', async t => {
@@ -73,4 +81,6 @@ test('prraypromise forEachAsync compatibility', async t => {
   t.is(func.args[2][0], 'c')
   t.is(func.args[2][1], 2)
   t.deepEqual(func.args[2][2], prray(['a', 'b', 'c']))
+
+  await p.forEachAsync(func, { concurrency: 2 })
 })

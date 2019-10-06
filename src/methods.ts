@@ -315,8 +315,9 @@ export async function sortAsync<T>(arr: Prray<T>, func?: (a: T, b: T) => Promise
 export async function forEachAsync<T>(
   prr: Prray<T>,
   func: (currentValue: T, index: number, prray: Prray<T>) => Promise<any> | any,
+  opts = { concurrency: Infinity },
 ): Promise<undefined> {
-  await loop(prr, async (value, ix) => func(value, ix, prr), {})
+  await loop(prr, async (value, ix) => func(value, ix, prr), opts)
   return
 }
 

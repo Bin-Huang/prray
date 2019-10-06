@@ -387,17 +387,24 @@ const rank = await students.sortAsync((a, b) => {
 })
 ```
 
-#### Prray.prototype.forEachAsync(func)
+#### Prray.prototype.forEachAsync(func, { concurrency })
 
 _Think of it as an async version of method `forEach`_
 
 The forEachAsync() method executes a provided async function once for each prray element concurrently and returns a promise resolved after all iteration promises resolved.
+
+- `func(currentValue, index, prray)`
+- options
+  - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
 const emails = prray([
   /* emails */
 ])
 await emails.forEachAsync(sendAsync)
+
+// or
+await emails.forEachAsync(sendAsync, { concurrency: 20 })
 ```
 
 ### Other methods of Prray instance (compatible with Array)
