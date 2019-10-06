@@ -34,8 +34,11 @@ export class Prray<T> extends Array<T> {
     super(...args)
   }
 
-  mapAsync<U>(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<U> | U): PrrayPromise<U> {
-    const promise = methods.mapAsync(this, func)
+  mapAsync<U>(
+    func: (currentValue: T, index: number, prray: Prray<T>) => Promise<U> | U,
+    opts?: { concurrency: number },
+  ): PrrayPromise<U> {
+    const promise = methods.mapAsync(this, func, opts)
     return prraypromise(promise.then(arr => Prray.from(arr)))
   }
 

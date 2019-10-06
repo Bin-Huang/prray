@@ -19,8 +19,7 @@ Prray - "Promisified" Array, comes with async method supports(such as mapAsync).
 ```javascript
 import { prray } from 'prray'
 
-(async () => {
-
+;(async () => {
   // Create a new "prray" from normal array
   const prr = prray(['www.google.com', 'npmjs.org'])
 
@@ -37,7 +36,6 @@ import { prray } from 'prray'
     .reverse()
     .splice(1, 2)
     .reduceAsync(asyncFunc2)
-
 })()
 ```
 
@@ -75,21 +73,17 @@ yarn add prray
 ```javascript
 import { prray, Prray } from 'prray'
 
-const arr = [1,2,3]
+const arr = [1, 2, 3]
 const prr = prray(arr)
 
-
-prr[0]  // 1
-prr[prr.length - 1]  // 3
-prr.length  // 3
-
+prr[0] // 1
+prr[prr.length - 1] // 3
+prr.length // 3
 
 prr instanceof Array // true
 Array.isArray(prr) // true
 
-
-JSON.stringify(prr)  // "[1, 2, 3]"
-
+JSON.stringify(prr) // "[1, 2, 3]"
 
 for (const v of prr) {
   console.log(v)
@@ -98,20 +92,18 @@ for (const v of prr) {
 // 2
 // 3
 
-
-[...prr]  // [1,2,3]
+;[...prr] // [1,2,3]
 
 const iterator = prr[Symbol.iterator]()
-iterator.next().value  // 1
-iterator.next().value  // 2
-iterator.next().value  // 3
-iterator.next().done  // true
-
+iterator.next().value // 1
+iterator.next().value // 2
+iterator.next().value // 3
+iterator.next().done // true
 
 function func(arr: number[]) {
   return arr
 }
-func(new Prray(1,2,3))  // Type Prray is compatible with type Array in typescript
+func(new Prray(1, 2, 3)) // Type Prray is compatible with type Array in typescript
 ```
 
 There are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to test compatibility with normal array.
@@ -133,8 +125,8 @@ arr instanceof Prray // false
 
 ### Package methods
 
-  - [prray(array)](#prrayarray)
-  - [new Prray()](#new-prray)
+- [prray(array)](#prrayarray)
+- [new Prray()](#new-prray)
 
 #### prray(array)
 
@@ -165,9 +157,9 @@ console.log(p3[0]) // 'a'
 
 ### Static methods of Class Prray
 
-  - [Prray.from(arrayLike)](#prrayfromarraylike)
-  - [Prray.of(...args)](#prrayofargs)
-  - [Prray.isPrray(obj)](#prrayisprrayobj)
+- [Prray.from(arrayLike)](#prrayfromarraylike)
+- [Prray.of(...args)](#prrayofargs)
+- [Prray.isPrray(obj)](#prrayisprrayobj)
 
 #### Prray.from(arrayLike)
 
@@ -206,17 +198,17 @@ Prray.isPrray(new Prray(1, 2, 3)) // true
 
 ### Specific methods of Prray instance
 
-  - [Prray.prototype.toArray()](#prrayprototypetoarray)
-  - [Prray.prototype.mapAsync(func)](#prrayprototypemapasyncfunc)
-  - [Prray.prototype.filterAsync(func)](#prrayprototypefilterasyncfunc)
-  - [Prray.prototype.reduceAsync(func, initialValue)](#prrayprototypereduceasyncfunc-initialvalue)
-  - [Prray.prototype.reduceRightAsync(func, initialValue)](#prrayprototypereducerightasyncfunc-initialvalue)
-  - [Prray.prototype.findAsync(func)](#prrayprototypefindasyncfunc)
-  - [Prray.prototype.findIndexAsync(func)](#prrayprototypefindindexasyncfunc)
-  - [Prray.prototype.everyAsync(func)](#prrayprototypeeveryasyncfunc)
-  - [Prray.prototype.someAsync(func)](#prrayprototypesomeasyncfunc)
-  - [Prray.prototype.sortAsync(func)](#prrayprototypesortasyncfunc)
-  - [Prray.prototype.forEachAsync(func)](#prrayprototypeforeachasyncfunc)
+- [Prray.prototype.toArray()](#prrayprototypetoarray)
+- [Prray.prototype.mapAsync(func)](#prrayprototypemapasyncfunc)
+- [Prray.prototype.filterAsync(func)](#prrayprototypefilterasyncfunc)
+- [Prray.prototype.reduceAsync(func, initialValue)](#prrayprototypereduceasyncfunc-initialvalue)
+- [Prray.prototype.reduceRightAsync(func, initialValue)](#prrayprototypereducerightasyncfunc-initialvalue)
+- [Prray.prototype.findAsync(func)](#prrayprototypefindasyncfunc)
+- [Prray.prototype.findIndexAsync(func)](#prrayprototypefindindexasyncfunc)
+- [Prray.prototype.everyAsync(func)](#prrayprototypeeveryasyncfunc)
+- [Prray.prototype.someAsync(func)](#prrayprototypesomeasyncfunc)
+- [Prray.prototype.sortAsync(func)](#prrayprototypesortasyncfunc)
+- [Prray.prototype.forEachAsync(func)](#prrayprototypeforeachasyncfunc)
 
 #### Prray.prototype.toArray()
 
@@ -228,7 +220,7 @@ const prr = new Prray(1, 2, 3)
 prr.toArray() // [1,2,3]
 ```
 
-#### Prray.prototype.mapAsync(func)
+#### Prray.prototype.mapAsync(func, { concurrency })
 
 _Think of it as an async version of method `map`_
 
@@ -237,11 +229,17 @@ The mapAsync() method returns a promise resolved with a new prray with the resol
 The provided async function is called on every element concurrently.
 
 - `func(currentValue, index, prray)`
+- options
+  - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const urls = prray([/* urls */])
+const urls = prray([
+  /* urls */
+])
 
 const jsons = await urls.mapAsync(fetch).mapAsync(res => res.json())
+
+await jsons.mapAsync(insertToDB, { concurrency: 2 })
 ```
 
 #### Prray.prototype.filterAsync(func)
@@ -253,7 +251,9 @@ The filterAsync() method returns a promise resolved with a new prray with all el
 The provided async function is called on every element concurrently.
 
 ```javascript
-const files = prray([/* filenames */])
+const files = prray([
+  /* filenames */
+])
 
 await files.filterAsync(isExisted).mapAsync(removeFile)
 ```
@@ -265,7 +265,9 @@ _Think of it as an async version of method `reduce`_
 The reduceAsync() method executes a async reducer function (that you provide) on each element of the prray, resulting in a single output value resolved by a promise.
 
 ```javascript
-const productIds = prray([/* ids */])
+const productIds = prray([
+  /* ids */
+])
 
 const total = await productIds.reduceAsync(async (total, id) => {
   const price = await getPrice(id)
@@ -280,7 +282,9 @@ _Think of it as an async version of method `reduceRight`_
 The reduceRightAsync() method applies an async function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
 
 ```javascript
-const productIds = prray([/* ids */])
+const productIds = prray([
+  /* ids */
+])
 
 const total = await productIds.reduceRightAsync(async (total, id) => {
   const price = await getPrice(id)
@@ -295,7 +299,9 @@ _Think of it as an async version of method `find`_
 The findAsync() method returns a promise resolved with the first element in the prray that satisfies the provided async testing function.
 
 ```javascript
-const workers = prray([/* workers */])
+const workers = prray([
+  /* workers */
+])
 
 const unhealthy = await workers.findAsync(checkHealth)
 ```
@@ -307,7 +313,9 @@ _Think of it as an async version of method `findIndex`_
 The findIndexAsync() method returns a promise resolved with the index of the first element in the prray that satisfies the provided async testing function. Otherwise, it returns promise resolved with -1, indicating that no element passed the test.
 
 ```javascript
-const workers = prray([/* workers */])
+const workers = prray([
+  /* workers */
+])
 const ix = await workers.findIndexAsync(checkHealth)
 const unhealthy = workers[ix]
 ```
@@ -321,7 +329,9 @@ The everyAsync() method tests whether all elements in the prray pass the test im
 The provided async function is called on every element concurrently.
 
 ```javascript
-const filenames = prray([/* filenames */])
+const filenames = prray([
+  /* filenames */
+])
 
 const isAllFileExisted = await filenames.everyAsync(isExisted)
 if (isAllFileExisted) {
@@ -338,7 +348,9 @@ The some() method tests whether at least one element in the prray passes the tes
 The provided async function is called on every element concurrently.
 
 ```javascript
-const filenames = prray([/* filenames */])
+const filenames = prray([
+  /* filenames */
+])
 
 const hasExistedFile = await filenames.someAsync(isExisted)
 if (hasExistedFile) {
@@ -369,41 +381,43 @@ _Think of it as an async version of method `forEach`_
 The forEachAsync() method executes a provided async function once for each prray element concurrently and returns a promise resolved after all iteration promises resolved.
 
 ```javascript
-const emails = prray([/* emails */])
+const emails = prray([
+  /* emails */
+])
 await emails.forEachAsync(sendAsync)
 ```
 
 ### Other methods of Prray instance (compatible with Array)
 
-  - [Prray.prototype.map(func)](#prrayprototypemapfunc)
-  - [Prray.prototype.filter(func)](#prrayprototypefilterfunc)
-  - [Prray.prototype.reduce(func, initialValue)](#prrayprototypereducefunc-initialvalue)
-  - [Prray.prototype.reduceRight(func, initialValue)](#prrayprototypereducerightfunc-initialvalue)
-  - [Prray.prototype.find(func)](#prrayprototypefindfunc)
-  - [Prray.prototype.findIndex(func)](#prrayprototypefindindexfunc)
-  - [Prray.prototype.every(func)](#prrayprototypeeveryfunc)
-  - [Prray.prototype.some(func)](#prrayprototypesomefunc)
-  - [Prray.prototype.sort(func)](#prrayprototypesortfunc)
-  - [Prray.prototype.forEach(func)](#prrayprototypeforeachfunc)
-  - [Prray.prototype.slice(start, end)](#prrayprototypeslicestart-end)
-  - [Prray.prototype.includes(value)](#prrayprototypeincludesvalue)
-  - [Prray.prototype.indexOf(value)](#prrayprototypeindexofvalue)
-  - [Prray.prototype.lastIndexOf(value)](#prrayprototypelastindexofvalue)
-  - [Prray.prototype.join(separator)](#prrayprototypejoinseparator)
-  - [Prray.prototype.keys()](#prrayprototypekeys)
-  - [Prray.prototype.values()](#prrayprototypevalues)
-  - [Prray.prototype.entries()](#prrayprototypeentries)
-  - [Prray.prototype.fill(value, start, end)](#prrayprototypefillvalue-start-end)
-  - [Prray.prototype.concat(arr)](#prrayprototypeconcatarr)
-  - [Prray.prototype.copyWithin(target, star, end)](#prrayprototypecopywithintarget-star-end)
-  - [Prray.prototype.pop()](#prrayprototypepop)
-  - [Prray.prototype.push(...elements)](#prrayprototypepushelements)
-  - [Prray.prototype.reverse()](#prrayprototypereverse)
-  - [Prray.prototype.shift()](#prrayprototypeshift)
-  - [Prray.prototype.unshift(...elements)](#prrayprototypeunshiftelements)
-  - [Prray.prototype.splice(start, deleteCount, ...items)](#prrayprototypesplicestart-deletecount-items)
-  - [Prray.prototype.toString()](#prrayprototypetostring)
-  - [Prray.prototype.toLocaleString()](#prrayprototypetolocalestring)
+- [Prray.prototype.map(func)](#prrayprototypemapfunc)
+- [Prray.prototype.filter(func)](#prrayprototypefilterfunc)
+- [Prray.prototype.reduce(func, initialValue)](#prrayprototypereducefunc-initialvalue)
+- [Prray.prototype.reduceRight(func, initialValue)](#prrayprototypereducerightfunc-initialvalue)
+- [Prray.prototype.find(func)](#prrayprototypefindfunc)
+- [Prray.prototype.findIndex(func)](#prrayprototypefindindexfunc)
+- [Prray.prototype.every(func)](#prrayprototypeeveryfunc)
+- [Prray.prototype.some(func)](#prrayprototypesomefunc)
+- [Prray.prototype.sort(func)](#prrayprototypesortfunc)
+- [Prray.prototype.forEach(func)](#prrayprototypeforeachfunc)
+- [Prray.prototype.slice(start, end)](#prrayprototypeslicestart-end)
+- [Prray.prototype.includes(value)](#prrayprototypeincludesvalue)
+- [Prray.prototype.indexOf(value)](#prrayprototypeindexofvalue)
+- [Prray.prototype.lastIndexOf(value)](#prrayprototypelastindexofvalue)
+- [Prray.prototype.join(separator)](#prrayprototypejoinseparator)
+- [Prray.prototype.keys()](#prrayprototypekeys)
+- [Prray.prototype.values()](#prrayprototypevalues)
+- [Prray.prototype.entries()](#prrayprototypeentries)
+- [Prray.prototype.fill(value, start, end)](#prrayprototypefillvalue-start-end)
+- [Prray.prototype.concat(arr)](#prrayprototypeconcatarr)
+- [Prray.prototype.copyWithin(target, star, end)](#prrayprototypecopywithintarget-star-end)
+- [Prray.prototype.pop()](#prrayprototypepop)
+- [Prray.prototype.push(...elements)](#prrayprototypepushelements)
+- [Prray.prototype.reverse()](#prrayprototypereverse)
+- [Prray.prototype.shift()](#prrayprototypeshift)
+- [Prray.prototype.unshift(...elements)](#prrayprototypeunshiftelements)
+- [Prray.prototype.splice(start, deleteCount, ...items)](#prrayprototypesplicestart-deletecount-items)
+- [Prray.prototype.toString()](#prrayprototypetostring)
+- [Prray.prototype.toLocaleString()](#prrayprototypetolocalestring)
 
 #### Prray.prototype.map(func)
 

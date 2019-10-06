@@ -3,9 +3,10 @@ import { Prray } from './prray'
 export async function mapAsync<T, U>(
   arr: Prray<T>,
   func: (currentValue: T, index: number, array: Prray<T>) => Promise<U> | U,
+  opts = { concurrency: Infinity },
 ): Promise<U[]> {
   const result: U[] = []
-  await loop<T>(arr, async (value, ix) => (result[ix] = await func(value, ix, arr)), {})
+  await loop<T>(arr, async (value, ix) => (result[ix] = await func(value, ix, arr)), opts)
   return result
 }
 

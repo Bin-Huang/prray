@@ -5,8 +5,11 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
     super(executor)
   }
 
-  mapAsync<U>(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<U> | U): PrrayPromise<U> {
-    return prraypromise(this.then(prray => prray.mapAsync(func)))
+  mapAsync<U>(
+    func: (currentValue: T, index: number, prray: Prray<T>) => Promise<U> | U,
+    opts?: { concurrency: number },
+  ): PrrayPromise<U> {
+    return prraypromise(this.then(prray => prray.mapAsync(func, opts)))
   }
 
   map<U>(func: (currentValue: T, index: number, prray: Prray<T>) => U): PrrayPromise<U> {
