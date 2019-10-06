@@ -198,16 +198,16 @@ Prray.isPrray(new Prray(1, 2, 3)) // true
 ### Specific methods of Prray instance
 
 - [Prray.prototype.toArray()](#prrayprototypetoarray)
-- [Prray.prototype.mapAsync(func)](#prrayprototypemapasyncfunc)
-- [Prray.prototype.filterAsync(func)](#prrayprototypefilterasyncfunc)
+- [Prray.prototype.mapAsync(func, { concurrency })](#prrayprototypemapasyncfunc--concurrency)
+- [Prray.prototype.filterAsync(func, { concurrency })](#prrayprototypefilterasyncfunc--concurrency)
 - [Prray.prototype.reduceAsync(func, initialValue)](#prrayprototypereduceasyncfunc-initialvalue)
 - [Prray.prototype.reduceRightAsync(func, initialValue)](#prrayprototypereducerightasyncfunc-initialvalue)
 - [Prray.prototype.findAsync(func)](#prrayprototypefindasyncfunc)
 - [Prray.prototype.findIndexAsync(func)](#prrayprototypefindindexasyncfunc)
-- [Prray.prototype.everyAsync(func)](#prrayprototypeeveryasyncfunc)
-- [Prray.prototype.someAsync(func)](#prrayprototypesomeasyncfunc)
+- [Prray.prototype.everyAsync(func, { concurrency })](#prrayprototypeeveryasyncfunc--concurrency)
+- [Prray.prototype.someAsync(func, { concurrency })](#prrayprototypesomeasyncfunc--concurrency)
 - [Prray.prototype.sortAsync(func)](#prrayprototypesortasyncfunc)
-- [Prray.prototype.forEachAsync(func)](#prrayprototypeforeachasyncfunc)
+- [Prray.prototype.forEachAsync(func, { concurrency })](#prrayprototypeforeachasyncfunc--concurrency)
 
 #### Prray.prototype.toArray()
 
