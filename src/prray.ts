@@ -147,8 +147,11 @@ export class Prray<T> extends Array<T> {
     return methods.every(this, func)
   }
 
-  someAsync(func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean): Promise<boolean> {
-    return methods.someAsync(this, func)
+  someAsync(
+    func: (currentValue: T, index: number, prray: Prray<T>) => Promise<boolean> | boolean,
+    opts?: { concurrency: number },
+  ): Promise<boolean> {
+    return methods.someAsync(this, func, opts)
   }
 
   some(func: (currentValue: T, index: number, prray: Prray<T>) => boolean): boolean {

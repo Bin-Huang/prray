@@ -348,13 +348,17 @@ if (isAllFileExisted) {
 }
 ```
 
-#### Prray.prototype.someAsync(func)
+#### Prray.prototype.someAsync(func, { concurrency })
 
 _Think of it as an async version of method `some`_
 
 The some() method tests whether at least one element in the prray passes the test implemented by the provided async function. It returns a promise resolved with Boolean value.
 
 The provided async function is called on every element concurrently.
+
+- `func(currentValue, index, prray)`
+- options
+  - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
 const filenames = prray([
