@@ -10,7 +10,7 @@ test('prray concat', async t => {
   t.deepEqual(prray([[1]]).concat(4 as any, [5, [6]] as any), prray([[1], 4, 5, [6]]))
 
   const prr = prray([1, 2])
-  t.not(prr.concat([3, 4]), prr)
+  t.not(prr.concat([3, 4]), prr) // Immutable
 })
 
 test('prraypromise concat', async t => {
@@ -21,5 +21,5 @@ test('prraypromise concat', async t => {
   t.deepEqual(await toPrrayPromise([[1]]).concat(4 as any, [5, [6]] as any), prray([[1], 4, 5, [6]]))
 
   const prr = prray([1, 2])
-  t.not(await toPrrayPromise(prr).concat([3, 4]), prr)
+  t.not(await toPrrayPromise(prr).concat([3, 4]), prr) // Immutable
 })

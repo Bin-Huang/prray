@@ -1,7 +1,6 @@
 import { prraypromise, PrrayPromise } from './prraypromise'
 import * as methods from './methods'
 
-// TODO: Mutable and Immutable
 // TODO: thisArg
 
 export class Prray<T> extends Array<T> {

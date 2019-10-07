@@ -30,6 +30,8 @@ test('prray slice', async t => {
   t.deepEqual(p.slice(1, -3), prray(arr.slice(1, -3)))
   t.deepEqual(p.slice(-1000, 3), prray(arr.slice(-1000, 3)))
   t.deepEqual(p.slice(-3, 1000), prray(arr.slice(-3, 1000)))
+
+  t.not(p.slice(-3, 1000), p) // Immutable
 })
 
 test('prraypromise slice', async t => {
@@ -55,4 +57,6 @@ test('prraypromise slice', async t => {
   t.deepEqual(await pp.slice(1, -3), prray(arr.slice(1, -3)))
   t.deepEqual(await pp.slice(-1000, 3), prray(arr.slice(-1000, 3)))
   t.deepEqual(await pp.slice(-3, 1000), prray(arr.slice(-3, 1000)))
+
+  t.not(await pp.slice(-3, 1000), await pp) // Immutable
 })
