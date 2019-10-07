@@ -47,6 +47,7 @@ import { prray } from 'prray'
   - [Static methods of Class Prray](#static-methods-of-class-prray)
   - [Specific methods of Prray instance](#specific-methods-of-prray-instance)
   - [Other methods of Prray instance (compatible with Array)](#other-methods-of-prray-instance-compatible-with-array)
+- [Why not `bluebird`](#why-not-bluebird)
 - [License](#license)
 
 ## How it work?
@@ -198,16 +199,16 @@ Prray.isPrray(new Prray(1, 2, 3)) // true
 ### Specific methods of Prray instance
 
 - [Prray.prototype.toArray()](#prrayprototypetoarray)
-- [Prray.prototype.mapAsync(func, { concurrency })](#prrayprototypemapasyncfunc--concurrency)
-- [Prray.prototype.filterAsync(func, { concurrency })](#prrayprototypefilterasyncfunc--concurrency)
+- [Prray.prototype.mapAsync(func, options)](#prrayprototypemapasyncfunc-options)
+- [Prray.prototype.filterAsync(func, options)](#prrayprototypefilterasyncfunc-options)
 - [Prray.prototype.reduceAsync(func, initialValue)](#prrayprototypereduceasyncfunc-initialvalue)
 - [Prray.prototype.reduceRightAsync(func, initialValue)](#prrayprototypereducerightasyncfunc-initialvalue)
 - [Prray.prototype.findAsync(func)](#prrayprototypefindasyncfunc)
 - [Prray.prototype.findIndexAsync(func)](#prrayprototypefindindexasyncfunc)
-- [Prray.prototype.everyAsync(func, { concurrency })](#prrayprototypeeveryasyncfunc--concurrency)
-- [Prray.prototype.someAsync(func, { concurrency })](#prrayprototypesomeasyncfunc--concurrency)
+- [Prray.prototype.everyAsync(func, options)](#prrayprototypeeveryasyncfunc-options)
+- [Prray.prototype.someAsync(func, options)](#prrayprototypesomeasyncfunc-options)
 - [Prray.prototype.sortAsync(func)](#prrayprototypesortasyncfunc)
-- [Prray.prototype.forEachAsync(func, { concurrency })](#prrayprototypeforeachasyncfunc--concurrency)
+- [Prray.prototype.forEachAsync(func, options)](#prrayprototypeforeachasyncfunc-options)
 
 #### Prray.prototype.toArray()
 
@@ -219,7 +220,7 @@ const prr = new Prray(1, 2, 3)
 prr.toArray() // [1,2,3]
 ```
 
-#### Prray.prototype.mapAsync(func, { concurrency })
+#### Prray.prototype.mapAsync(func, options)
 
 _Think of it as an async version of method `map`_
 
@@ -241,7 +242,7 @@ const jsons = await urls.mapAsync(fetch).mapAsync(res => res.json())
 await jsons.mapAsync(insertToDB, { concurrency: 2 })
 ```
 
-#### Prray.prototype.filterAsync(func, { concurrency })
+#### Prray.prototype.filterAsync(func, options)
 
 _Think of it as an async version of method `filter`_
 
@@ -325,7 +326,7 @@ const ix = await workers.findIndexAsync(checkHealth)
 const unhealthy = workers[ix]
 ```
 
-#### Prray.prototype.everyAsync(func, { concurrency })
+#### Prray.prototype.everyAsync(func, options)
 
 _Think of it as an async version of method `every`_
 
@@ -348,7 +349,7 @@ if (isAllFileExisted) {
 }
 ```
 
-#### Prray.prototype.someAsync(func, { concurrency })
+#### Prray.prototype.someAsync(func, options)
 
 _Think of it as an async version of method `some`_
 
@@ -387,7 +388,7 @@ const rank = await students.sortAsync((a, b) => {
 })
 ```
 
-#### Prray.prototype.forEachAsync(func, { concurrency })
+#### Prray.prototype.forEachAsync(func, options)
 
 _Think of it as an async version of method `forEach`_
 
