@@ -613,32 +613,14 @@ _Compatible with [Array.prototype.toLocaleString](https://developer.mozilla.org/
 
 The toLocaleString() method returns a string representing the elements of the prray. The elements are converted to Strings using their toLocaleString methods and these Strings are separated by a locale-specific String (such as a comma “,”).
 
-<!-- ## Different from [Bluebird](https://github.com/petkaantonov/bluebird)
+## Why not `bluebird`
 
-**First**, prray does not provide another implementation of promise, which is essentially different from Bluebird.
+Bluebird and prray have different concerns, so it may not be suitable for comparison. If you must compare, can also try:
 
-**Secondly**, prray aims to provide a better way to handle asynchronous batch operations on data(array). In this aspect, maybe you work well with Bluebird's methods such as `all` and `map`, but prray gives you another option more appropriate in some cases.
-
-```javascript
-const urls = [ /* some urls */ ]
-
-// use prray
-await p(urls).mapAsync(fetch)
-  .filterAsync(isExisted)
-  .mapAsync(saveAsync)
-
-// use bluebird
-await Bluebird.mapAsync(await Bluebird.filter(await Bluebird.map(urls, fetch), isExisted), saveAsync)
-
-// use bluebird and prettier
-let responses = await Bluebird.map(urls, fetch)
-responses = await Bluebird.filter(responses, isExisted)
-await Bluebird.map(responses, saveAsync)
-```
-
-If you want a good promise implementation, this is bluebird.
-
-If you want to handle asynchronous batch operations on data(array), prray is an option for you. -->
+1. Prray focuses on arrays, Bluebird focuses on promises
+2. Bluebird has some methods such as `map`, but prray has more: `findAsync`, `everyAsync`, etc
+3. Prray supports async method chaining, but for bluebird, you have to: `Bluebird.map(await Bluebird.map(arr,func1), func2)`
+4. Prray is based on native promise implementation, and bluebird provides a good third-party promise implementation
 
 ## License
 
