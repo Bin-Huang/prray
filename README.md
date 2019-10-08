@@ -9,7 +9,8 @@
 Prray - "Promisified" Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.
 
 - comes with async method supports, such as `mapAsync`, `filterAsync`, `everyAsync`, etc.
-- supports **real async method chaining** 🚀🚀
+- supports **real async method chaining**
+- supports concurrency limit
 - **compatible** with normal array
 - [well-tested](https://github.com/Bin-Huang/prray/tree/master/test)
 - zero-dependency
@@ -22,7 +23,8 @@ import { prray } from 'prray'
   // Create a new "prray" from normal array
   const prr = prray(['www.google.com', 'npmjs.org'])
 
-  const responses = await prr.mapAsync(fetch)
+  // Mapping async function with concurrency limit
+  const responses = await prr.mapAsync(fetch, { concurrency: 10 })
 
   // Async method chaining 🚀
   const htmls = await prr.mapAsync(fetch).mapAsync(r => r.text())
