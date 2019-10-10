@@ -6,12 +6,12 @@
 
 <!-- [![Download](https://img.shields.io/npm/dm/prray)](https://www.npmjs.com/package/prray) -->
 
-Prray - "Promisified" Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.
+Prray -- "Promisified" Array, compatible with normal array, but comes with async method supports.
 
-- comes with async method supports, such as `mapAsync`, `filterAsync`, `everyAsync`, etc.
+- compatible with normal array
+- comes with async method supports, such as mapAsync
 - supports **real async method chaining**
 - supports concurrency limit
-- **compatible** with normal array
 - [well-tested](https://github.com/Bin-Huang/prray/tree/master/test)
 - zero-dependency
 
@@ -40,9 +40,9 @@ import { prray } from 'prray'
 })()
 ```
 
-- [How it work?](#how-it-work)
 - [Install](#install)
 - [Compatibility with normal Array](#compatibility-with-normal-array)
+- [How it work?](#how-it-work)
 - [Distinguish between prray and normal array](#distinguish-between-prray-and-normal-array)
 - [Methods](#methods)
   - [Package methods](#package-methods)
@@ -51,10 +51,6 @@ import { prray } from 'prray'
   - [Other methods of Prray instance (compatible with Array)](#other-methods-of-prray-instance-compatible-with-array)
 - [Why not `bluebird`](#why-not-bluebird)
 - [License](#license)
-
-## How it work?
-
-Class Prray inherits the original class Array and adds or overrides methods based on it. It works without any prototype pollution and global pollution.
 
 ## Install
 
@@ -109,6 +105,10 @@ func(new Prray(1, 2, 3)) // Type Prray is compatible with type Array in typescri
 ```
 
 There are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to test compatibility with normal array.
+
+## How it work?
+
+Class Prray inherits the original class Array and adds or overrides methods based on it. It works without any prototype pollution and global pollution.
 
 ## Distinguish between prray and normal array
 
