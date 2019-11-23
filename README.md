@@ -19,25 +19,33 @@ Prray -- "Promisified" Array, compatible with normal array, but comes with async
 
 ```javascript
 import { prray } from 'prray'
-;(async () => {
-  // Create a new "prray" from normal array
-  const prr = prray(['www.google.com', 'npmjs.org'])
+const prr = prray(['www.google.com', 'npmjs.org'])
 
-  // Mapping async function with concurrency limit
-  const responses = await prr.mapAsync(fetch, { concurrency: 10 })
+const responses = await prr.mapAsync(fetch)
+```
 
-  // Async method chaining 🚀
-  const htmls = await prr.mapAsync(fetch).mapAsync(r => r.text())
+Async method chaining 🚀
 
-  // Method chaining with async and common methods
-  await prr
-    .map(commonFunc)
-    .sortAsync(asyncFunc)
-    .concat(['github.com', 'wikipedia.org'])
-    .reverse()
-    .splice(1, 2)
-    .reduceAsync(asyncFunc2)
-})()
+```javascript
+const htmls = await prr.mapAsync(fetch).mapAsync(r => r.text())
+```
+
+Method chaining with async and common methods
+
+```javascript
+await prr
+  .map(commonFunc)
+  .sortAsync(asyncFunc)
+  .concat(['github.com', 'wikipedia.org'])
+  .reverse()
+  .splice(1, 2)
+  .reduceAsync(asyncFunc2)
+```
+
+Concurrency limit:
+
+```javascript
+const responses = await prr.mapAsync(fetch, { concurrency: 10 })
 ```
 
 - [Install](#install)
@@ -67,6 +75,8 @@ yarn add prray
 ```
 
 ## Compatibility with normal Array
+
+Prray is compatible with normal array. That means you can safely replace normal Array with Prray. And there are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to test compatibility with normal array.
 
 ```javascript
 import { prray, Prray } from 'prray'
@@ -103,8 +113,6 @@ function func(arr: number[]) {
 }
 func(new Prray(1, 2, 3)) // Type Prray is compatible with type Array in typescript
 ```
-
-There are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to test compatibility with normal array.
 
 ## How it work?
 

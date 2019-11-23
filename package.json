@@ -1,6 +1,6 @@
 {
   "name": "prray",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "'Promisified' Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.",
   "main": "./dist/src/index",
   "typings": "./dist/src/index.d.ts",
@@ -20,9 +20,12 @@
   "homepage": "https://github.com/Bin-Huang/prray",
   "keywords": [
     "promise",
+    "promisified",
     "array",
+    "async",
     "p",
-    "concurrency"
+    "concurrency",
+    "bluebird"
   ],
   "author": "Ben Huang",
   "license": "MIT",
