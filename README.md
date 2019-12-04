@@ -22,17 +22,13 @@ import Prray from 'prray'
 const prr = Prray.from(['www.google.com', 'npmjs.org'])
 
 const responses = await prr.mapAsync(fetch)
-```
 
-Async method chaining 🚀
+// Async method chaining 🚀
 
-```javascript
 const htmls = await prr.mapAsync(fetch).mapAsync(r => r.text())
-```
 
-Method chaining with async and common methods
+// Method chaining with async and common methods
 
-```javascript
 await prr
   .map(commonFunc)
   .sortAsync(asyncFunc)
@@ -40,11 +36,9 @@ await prr
   .reverse()
   .splice(1, 2)
   .reduceAsync(asyncFunc2)
-```
 
-Concurrency limit:
+// Concurrency limit:
 
-```javascript
 const responses = await prr.mapAsync(fetch, { concurrency: 10 })
 ```
 
