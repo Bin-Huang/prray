@@ -79,7 +79,7 @@ yarn add prray
 Prray is compatible with normal array. That means you can safely replace normal Array with Prray. And there are [a lots of unit tests](https://github.com/Bin-Huang/prray/tree/master/test) for prray to test compatibility with normal array.
 
 ```javascript
-import { prray, Prray } from 'prray'
+import Prray from 'prray'
 
 const arr = [1, 2, 3]
 const prr = Prray.from(arr)
