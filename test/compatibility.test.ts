@@ -1,5 +1,5 @@
 import test from 'ava'
-import { Prray } from '../src/prray'
+import Prray from '../src/prray'
 
 test('Compatibility with array: indexing', async t => {
   const arr = [1, 2, 3, 4]

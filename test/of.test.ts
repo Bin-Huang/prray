@@ -1,5 +1,5 @@
 import test from 'ava'
-import { Prray } from '../src/prray'
+import Prray from '../src/prray'
 
 test('prray of', async t => {
   const p1 = Prray.of(1)

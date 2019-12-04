@@ -1,5 +1,5 @@
 import test from 'ava'
-import { Prray } from '../src/prray'
+import Prray from '../src/prray'
 
 test('prray from', async t => {
   const p1 = Prray.from('foo')

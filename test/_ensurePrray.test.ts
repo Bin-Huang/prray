@@ -1,5 +1,5 @@
 import test from 'ava'
-import { _ensurePrray, Prray } from '../src/prray'
+import Prray, { _ensurePrray } from '../src/prray'
 
 test('_ensurePrray', async t => {
   const arr = new Array()

@@ -1,9 +1,9 @@
 import test from 'ava'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 import { toPrrayPromise, isGte3, isGte3Async } from './test-utils'
 
-const p1 = prray([3, 4])
-const p2 = prray([1, 2, 3])
+const p1 = Prray.from([3, 4])
+const p2 = Prray.from([1, 2, 3])
 
 const pp1 = toPrrayPromise([3, 4])
 const pp2 = toPrrayPromise([1, 2, 3])

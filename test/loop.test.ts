@@ -1,11 +1,11 @@
 import test from 'ava'
 import * as sinon from 'sinon'
 import { delay, genRandArr, timer, isClose } from './test-utils'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 import { loop } from '../src/methods'
 
 test('loop with concurrency 100', async t => {
-  const prr = prray(genRandArr(1000))
+  const prr = Prray.from(genRandArr(1000))
   const record = timer()
   let running = 0
   await loop(
@@ -22,21 +22,21 @@ test('loop with concurrency 100', async t => {
 })
 
 test('loop with concurrency infinity', async t => {
-  const prr = prray(genRandArr(1000))
+  const prr = Prray.from(genRandArr(1000))
   const record = timer()
   await loop(prr, () => delay(100), {})
   t.true(isClose(record(), 100))
 })
 
 test('loop with concurrency 1', async t => {
-  const prr = prray(genRandArr(100))
+  const prr = Prray.from(genRandArr(100))
   const record = timer()
   await loop(prr, () => delay(10), { concurrency: 1 })
   t.true(isClose(record(), 10 * 100, { threshold: 200 }))
 })
 
 test('loop with break', async t => {
-  const prr = prray([false, false, false, false, false, false, false, false]) // length 8
+  const prr = Prray.from([false, false, false, false, false, false, false, false]) // length 8
   const record = timer()
   await loop(
     prr,
@@ -51,11 +51,11 @@ test('loop with break', async t => {
     { concurrency: 2 },
   )
   t.true(isClose(record(), 300))
-  t.deepEqual(prr, prray([true, true, true, true, true, true, false, false]))
+  t.deepEqual(prr, Prray.from([true, true, true, true, true, true, false, false]))
 })
 
 test('loop with unhandled error', async t => {
-  const arr = prray([false, false, false, false, false, false, false, false]) // length 8
+  const arr = Prray.from([false, false, false, false, false, false, false, false]) // length 8
   let isThrown = false
   const record = timer()
   try {
@@ -74,24 +74,24 @@ test('loop with unhandled error', async t => {
     isThrown = true
   }
   t.true(isClose(record(), 300))
-  t.deepEqual(arr, prray([true, true, true, true, true, true, false, false]))
+  t.deepEqual(arr, Prray.from([true, true, true, true, true, true, false, false]))
   t.true(isThrown)
 })
 
 test('loop with empty array', async t => {
   const record = timer()
-  await loop(prray([]), () => delay(100), { concurrency: 10 })
+  await loop(Prray.from([]), () => delay(100), { concurrency: 10 })
   t.true(isClose(record(), 0))
 })
 
 test('loop with empty array, concurrency Infinity', async t => {
   const record = timer()
-  await loop(prray([]), () => delay(100), {})
+  await loop(Prray.from([]), () => delay(100), {})
   t.true(isClose(record(), 0))
 })
 
 test('loop detail', async t => {
-  const prr = prray(['a', 'b', 'c', 'd', 'e', 'f'])
+  const prr = Prray.from(['a', 'b', 'c', 'd', 'e', 'f'])
   const func = sinon.fake()
   await loop(prr, func, { concurrency: 2 })
 

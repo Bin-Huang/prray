@@ -18,8 +18,8 @@ Prray -- "Promisified" Array, compatible with normal array, but comes with async
 > Prray aims to replace normal Array in some cases for convenience 😄😜
 
 ```javascript
-import { prray } from 'prray'
-const prr = prray(['www.google.com', 'npmjs.org'])
+import Prray from 'prray'
+const prr = Prray.from(['www.google.com', 'npmjs.org'])
 
 const responses = await prr.mapAsync(fetch)
 ```
@@ -82,7 +82,7 @@ Prray is compatible with normal array. That means you can safely replace normal 
 import { prray, Prray } from 'prray'
 
 const arr = [1, 2, 3]
-const prr = prray(arr)
+const prr = Prray.from(arr)
 
 prr[0] // 1
 prr[prr.length - 1] // 3
@@ -135,17 +135,17 @@ arr instanceof Prray // false
 
 ### Package methods
 
-- [prray(array)](#prrayarray)
+- [Prray.from(array)](#prrayarray)
 - [new Prray()](#new-prray)
 
-#### prray(array)
+#### Prray.from(array)
 
-The prray() method creates and returns a new Prray instance with every element in the array.
+The Prray.from() method creates and returns a new Prray instance with every element in the array.
 
 ```javascript
-import { prray } from 'prray'
+import Prray from 'prray'
 
-const prr = prray([1, 2, 3])
+const prr = Prray.from([1, 2, 3])
 console.log(prr[0]) // 1
 ```
 
@@ -154,7 +154,7 @@ console.log(prr[0]) // 1
 The class `Prray`. You can think of it as class `Array`.
 
 ```javascript
-import { Prray } from 'prray'
+import Prray from 'prray'
 
 const p1 = new Prray()
 const p2 = new Prray(1)
@@ -178,7 +178,7 @@ _Compatible with [`Array.from`](https://developer.mozilla.org/en-US/docs/Web/Jav
 The Prray.from() method creates a new, shallow-copied Prray instance from an array-like or iterable object.
 
 ```javascript
-import { Prray } from 'prray'
+import Prray from 'prray'
 
 const prr = Prray.from([1, 2, 3, 4])
 ```
@@ -190,7 +190,7 @@ _Compatible with [`Array.of`](https://developer.mozilla.org/en-US/docs/Web/JavaS
 The Prray.of() method creates a new Prray instance from a variable number of arguments, regardless of number or type of the arguments.
 
 ```javascript
-import { Prray } from 'prray'
+import Prray from 'prray'
 
 const prr = Prray.of(1, 2, 3, 4)
 ```
@@ -200,7 +200,7 @@ const prr = Prray.of(1, 2, 3, 4)
 The Prray.isArray() method determines whether the passed value is a Prray instance.
 
 ```javascript
-import { Prray } from 'prray'
+import Prray from 'prray'
 
 Prray.isPrray([1, 2, 3]) // false
 Prray.isPrray(new Prray(1, 2, 3)) // true
@@ -243,7 +243,7 @@ The provided async function is called on every element concurrently.
   - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const urls = prray([
+const urls = Prray.from([
   /* urls */
 ])
 
@@ -265,7 +265,7 @@ The provided async function is called on every element concurrently.
   - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const files = prray([
+const files = Prray.from([
   /* filenames */
 ])
 
@@ -281,7 +281,7 @@ _Think of it as an async version of method `reduce`_
 The reduceAsync() method executes a async reducer function (that you provide) on each element of the prray, resulting in a single output value resolved by a promise.
 
 ```javascript
-const productIds = prray([
+const productIds = Prray.from([
   /* ids */
 ])
 
@@ -298,7 +298,7 @@ _Think of it as an async version of method `reduceRight`_
 The reduceRightAsync() method applies an async function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
 
 ```javascript
-const productIds = prray([
+const productIds = Prray.from([
   /* ids */
 ])
 
@@ -315,7 +315,7 @@ _Think of it as an async version of method `find`_
 The findAsync() method returns a promise resolved with the first element in the prray that satisfies the provided async testing function.
 
 ```javascript
-const workers = prray([
+const workers = Prray.from([
   /* workers */
 ])
 
@@ -329,7 +329,7 @@ _Think of it as an async version of method `findIndex`_
 The findIndexAsync() method returns a promise resolved with the index of the first element in the prray that satisfies the provided async testing function. Otherwise, it returns promise resolved with -1, indicating that no element passed the test.
 
 ```javascript
-const workers = prray([
+const workers = Prray.from([
   /* workers */
 ])
 const ix = await workers.findIndexAsync(checkHealth)
@@ -349,7 +349,7 @@ The provided async function is called on every element concurrently.
   - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const filenames = prray([
+const filenames = Prray.from([
   /* filenames */
 ])
 
@@ -372,7 +372,7 @@ The provided async function is called on every element concurrently.
   - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const filenames = prray([
+const filenames = Prray.from([
   /* filenames */
 ])
 
@@ -389,7 +389,7 @@ _Think of it as an async version of method `sort`_
 The sortAsync() method sorts the elements of a prray in place and returns a promise resolved with the sorted prray. The provided function can be an async function that returns a promise resolved with a number.
 
 ```javascript
-const students = prray([/* ids */])
+const students = Prray.from([/* ids */])
 
 const rank = await students.sortAsync((a, b) => {
   const scoreA = await getScore(a)
@@ -409,7 +409,7 @@ The forEachAsync() method executes a provided async function once for each prray
   - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const emails = prray([
+const emails = Prray.from([
   /* emails */
 ])
 await emails.forEachAsync(sendAsync)

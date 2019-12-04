@@ -1,9 +1,9 @@
 import test from 'ava'
-import { prray } from '../src/index'
+import Prray from '../src/index'
 import { delay } from './test-utils'
 
 test('Real world test 1', async t => {
-  const p = await prray([1, 2, 3])
+  const p = await Prray.from([1, 2, 3])
     .map(v => v + 1)
     .mapAsync(v => delay(100).then(() => v + 2))
     .concat([4, 5, 6])
@@ -18,7 +18,7 @@ test('Real world test 1', async t => {
 })
 
 test('Real world test 2', async t => {
-  const p = await prray(['e', 'a', 'f', 'd'])
+  const p = await Prray.from(['e', 'a', 'f', 'd'])
     .mapAsync(v => v + v)
     .sortAsync()
     .join('---')

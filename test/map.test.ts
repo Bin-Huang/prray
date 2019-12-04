@@ -1,19 +1,19 @@
 import test from 'ava'
 import * as sinon from 'sinon'
-import { prray, Prray } from '../src/prray'
+import Prray from '../src/prray'
 import { PrrayPromise } from '../src/prraypromise'
 import { toPrrayPromise, addOneAsync, addOne } from './test-utils'
 
 test('prray map', async t => {
-  const p = prray([1, 2, 3])
+  const p = Prray.from([1, 2, 3])
   const result = p.map(addOne)
 
   t.true(result instanceof Prray)
-  t.deepEqual(result, prray([2, 3, 4]))
+  t.deepEqual(result, Prray.from([2, 3, 4]))
 })
 
 test('prray map with async callback', async t => {
-  const p = prray([1, 2, 3])
+  const p = Prray.from([1, 2, 3])
   const result = p.map(addOneAsync)
 
   t.true(result instanceof Prray)
@@ -26,7 +26,7 @@ test('prraypromise map', async t => {
   const result = pp.map(addOne)
 
   t.true(result instanceof PrrayPromise)
-  t.deepEqual(await result, prray([2, 3, 4]))
+  t.deepEqual(await result, Prray.from([2, 3, 4]))
 })
 
 test('prraypromise map with async callback', async t => {
@@ -39,7 +39,7 @@ test('prraypromise map with async callback', async t => {
 })
 
 test('prray map detail', async t => {
-  const prr = prray(['a', 'b', 'c'])
+  const prr = Prray.from(['a', 'b', 'c'])
   const func = sinon.fake()
 
   prr.map(func)
@@ -59,7 +59,7 @@ test('prray map detail', async t => {
 })
 
 test('prraypromise map detail', async t => {
-  const prr = prray(['a', 'b', 'c'])
+  const prr = Prray.from(['a', 'b', 'c'])
   const prom = toPrrayPromise(prr)
   const func = sinon.fake()
 

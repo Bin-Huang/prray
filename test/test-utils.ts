@@ -1,5 +1,5 @@
 import { prraypromise, PrrayPromise } from '../src/prraypromise'
-import { prray, Prray } from '../src/prray'
+import Prray from '../src/prray'
 
 export const isGte3Async = (v: number) => delay(100).then(() => v >= 3)
 export const isGte3 = (v: number) => v >= 3
@@ -42,7 +42,7 @@ export function toPrrayPromise<T>(arr: T[]): PrrayPromise<T> {
   if (arr instanceof Prray) {
     return prraypromise(Promise.resolve(arr as Prray<T>))
   }
-  return prraypromise(Promise.resolve(prray(arr)))
+  return prraypromise(Promise.resolve(Prray.from(arr)))
 }
 
 export function isClose(n1: number, n2: number, opt = { threshold: 100 }): boolean {

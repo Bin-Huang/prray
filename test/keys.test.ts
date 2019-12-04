@@ -1,9 +1,9 @@
 import test from 'ava'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 import { toPrrayPromise } from './test-utils'
 
 const arr = ['a', 'b', 'c', 'd']
-const p = prray(arr)
+const p = Prray.from(arr)
 const pp = toPrrayPromise(arr)
 
 test('prray keys', async t => {

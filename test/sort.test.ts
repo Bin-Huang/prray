@@ -1,5 +1,5 @@
 import test from 'ava'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 import { toPrrayPromise, genRandArr } from './test-utils'
 
 const func = (a: number, b: number) => a - b
@@ -20,8 +20,8 @@ const getTests = () => {
 
 test('prray sort', async t => {
   for (const arr of getTests()) {
-    const p = prray(arr)
-    const expect = prray(arr.sort(func))
+    const p = Prray.from(arr)
+    const expect = Prray.from(arr.sort(func))
 
     t.deepEqual(p.sort(func), expect)
     t.deepEqual(p.sort(), expect)
@@ -33,7 +33,7 @@ test('prray sort', async t => {
 test('prraypromise sort', async t => {
   for (const arr of getTests()) {
     const pp = toPrrayPromise(arr)
-    const expect = prray(arr.sort(func))
+    const expect = Prray.from(arr.sort(func))
 
     t.deepEqual(await pp.sort(func), expect)
     t.deepEqual(await pp.sort(), expect)

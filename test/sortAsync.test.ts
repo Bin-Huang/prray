@@ -1,5 +1,5 @@
 import test from 'ava'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 import { PrrayPromise } from '../src/prraypromise'
 import { toPrrayPromise, delay, genRandArr } from './test-utils'
 
@@ -22,8 +22,8 @@ const getTests = () => {
 
 test('prray sortAsync', async t => {
   for (const arr of getTests()) {
-    const p = prray(arr)
-    const expect = prray(arr.sort(func))
+    const p = Prray.from(arr)
+    const expect = Prray.from(arr.sort(func))
 
     t.true(p.sortAsync(funcAsync) instanceof PrrayPromise)
     t.true(p.sortAsync(func) instanceof PrrayPromise)
@@ -41,7 +41,7 @@ test('prray sortAsync', async t => {
 test('prraypromise sortAsync', async t => {
   for (const arr of getTests()) {
     const pp = toPrrayPromise(arr)
-    const expect = prray(arr.sort(func))
+    const expect = Prray.from(arr.sort(func))
 
     t.true(pp.sortAsync(funcAsync) instanceof PrrayPromise)
     t.true(pp.sortAsync(func) instanceof PrrayPromise)

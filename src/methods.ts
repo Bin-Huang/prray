@@ -1,4 +1,4 @@
-import { Prray } from './prray'
+import Prray from './prray'
 
 export async function mapAsync<T, U>(
   arr: Prray<T>,
