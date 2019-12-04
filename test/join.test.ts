@@ -1,8 +1,8 @@
 import test from 'ava'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 import { toPrrayPromise } from './test-utils'
 
-const p = prray([1, 2, 3, 4])
+const p = Prray.from([1, 2, 3, 4])
 const pp = toPrrayPromise([1, 2, 3, 4])
 
 test('prray join', async t => {

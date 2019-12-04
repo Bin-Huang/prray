@@ -1,8 +1,8 @@
 import test from 'ava'
 import { toPrrayPromise } from './test-utils'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 
-const p = prray(['a', 'b', 'c', 'd'])
+const p = Prray.from(['a', 'b', 'c', 'd'])
 const pp = toPrrayPromise(['a', 'b', 'c', 'd'])
 
 test('prray lastIndexOf', async t => {

@@ -1,6 +1,6 @@
 import test from 'ava'
 import 'source-map-support/register'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 import { toPrrayPromise, delay } from './test-utils'
 
 const asyncFunc1 = (pre: number, c: number) => delay(100).then(() => pre + c)
@@ -17,14 +17,14 @@ const func2 = (pre: number[], c: number) => {
 }
 
 test('prray reduceAsync 1', async t => {
-  const p = prray([1, 2, 3])
+  const p = Prray.from([1, 2, 3])
   t.true(p.reduceAsync(asyncFunc1) instanceof Promise)
   t.deepEqual(await p.reduceAsync(asyncFunc1), [1, 2, 3].reduce(func1))
   t.deepEqual(await p.reduceAsync(asyncFunc1, 10), [1, 2, 3].reduce(func1, 10))
 })
 
 test('prray reduceAsync 2', async t => {
-  const p = prray([1, 2, 3])
+  const p = Prray.from([1, 2, 3])
   t.true(p.reduceAsync(asyncFunc2, []) instanceof Promise)
   t.deepEqual(await p.reduceAsync(asyncFunc2, []), [1, 2, 3].reduce(func2, []))
   t.deepEqual(await p.reduceAsync(asyncFunc2, []), [1, 2, 3].reduce(func2, []))

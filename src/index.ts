@@ -4,6 +4,9 @@
  * 2019-10-01
  */
 
-import { Prray, prray } from './prray'
+import Prray from './prray'
 
-export { prray, Prray }
+export default Prray
+
+module.exports = Prray
+module.exports.default = Prray

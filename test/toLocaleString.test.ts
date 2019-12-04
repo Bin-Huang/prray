@@ -1,10 +1,10 @@
 import test from 'ava'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 import { toPrrayPromise } from './test-utils'
 
 test('prray toLocaleString', async t => {
   const arr = [1, 2, 3]
-  const prr = prray(arr)
+  const prr = Prray.from(arr)
   t.is(prr.toLocaleString(), arr.toLocaleString())
 })
 

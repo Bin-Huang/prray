@@ -1,15 +1,15 @@
 import test from 'ava'
 import { toPrrayPromise } from './test-utils'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 
 test('prray find', async t => {
-  const prr = prray([1, 2, 3, 4])
+  const prr = Prray.from([1, 2, 3, 4])
   t.is(prr.find(x => x === 2), 2)
   t.is(prr.find(x => x === 10), undefined)
 })
 
 test('prray find: order', async t => {
-  const prr = prray([{ a: 1 }, { a: 2 }])
+  const prr = Prray.from([{ a: 1 }, { a: 2 }])
   t.deepEqual(prr.find(x => x.a > 0), { a: 1 })
   t.is(prr.find(x => x.a > 10), undefined)
 })

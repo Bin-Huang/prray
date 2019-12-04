@@ -1,11 +1,11 @@
 import test from 'ava'
 import * as sinon from 'sinon'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 import { toPrrayPromise, isEven } from './test-utils'
 
 test('prray some', async t => {
-  t.is(prray([1, 2, 3]).some(isEven), true)
-  t.is(prray([1, 3, 5]).some(isEven), false)
+  t.is(Prray.from([1, 2, 3]).some(isEven), true)
+  t.is(Prray.from([1, 3, 5]).some(isEven), false)
 })
 
 test('prraypromise some', async t => {
@@ -15,7 +15,7 @@ test('prraypromise some', async t => {
 
 test('prray some compatibility 1', async t => {
   const func = sinon.fake(() => false)
-  const prr = prray(['a', 'b', 'c'])
+  const prr = Prray.from(['a', 'b', 'c'])
   prr.some(func)
 
   t.is(func.called, true)
@@ -36,7 +36,7 @@ test('prray some compatibility 1', async t => {
 
 test('prray some compatibility 2', async t => {
   const func = sinon.fake(() => true)
-  const prr = prray(['a', 'b', 'c'])
+  const prr = Prray.from(['a', 'b', 'c'])
   prr.some(func)
 
   t.is(func.callCount, 1)
@@ -44,7 +44,7 @@ test('prray some compatibility 2', async t => {
 
 test('prraypromise some compatibility 1', async t => {
   const func = sinon.fake(() => false)
-  const prr = prray(['a', 'b', 'c'])
+  const prr = Prray.from(['a', 'b', 'c'])
   const pp = toPrrayPromise(prr)
   await pp.some(func)
 
@@ -66,7 +66,7 @@ test('prraypromise some compatibility 1', async t => {
 
 test('prraypromise some compatibility 2', async t => {
   const func = sinon.fake(() => true)
-  const prr = prray(['a', 'b', 'c'])
+  const prr = Prray.from(['a', 'b', 'c'])
   const pp = toPrrayPromise(prr)
   await pp.some(func)
 

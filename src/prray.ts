@@ -3,7 +3,7 @@ import * as methods from './methods'
 
 // TODO: thisArg
 
-export class Prray<T> extends Array<T> {
+export default class Prray<T> extends Array<T> {
   static of<T>(...args: T[]): Prray<T> {
     return Prray.from(args)
   }
@@ -195,10 +195,6 @@ export class Prray<T> extends Array<T> {
   toArray(): T[] {
     return [...this]
   }
-}
-
-export function prray<T>(arr: T[]): Prray<T> {
-  return Prray.from(arr)
 }
 
 export function _ensurePrray<T>(arr: T[]): Prray<T> {

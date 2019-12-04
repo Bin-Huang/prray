@@ -1,11 +1,11 @@
 import test from 'ava'
-import { prray } from '../src/prray'
+import Prray from '../src/prray'
 import { toPrrayPromise } from './test-utils'
 
 const arr = ['a', 'b', 'c', 'd']
 
 test('prray pop', async t => {
-  const p = prray(arr)
+  const p = Prray.from(arr)
 
   t.is(p.pop(), 'd')
   t.is(p.pop(), 'c')
@@ -13,7 +13,7 @@ test('prray pop', async t => {
   t.is(p.pop(), 'a')
   t.is(p.pop(), undefined)
 
-  t.deepEqual(p, prray([])) // mutable
+  t.deepEqual(p, Prray.from([])) // mutable
 })
 
 test('prraypromise pop', async t => {
@@ -25,5 +25,5 @@ test('prraypromise pop', async t => {
   t.is(await pp.pop(), 'a')
   t.is(await pp.pop(), undefined)
 
-  t.deepEqual(await pp, prray([])) // mutable
+  t.deepEqual(await pp, Prray.from([])) // mutable
 })

@@ -1,4 +1,4 @@
-import { Prray } from './prray'
+import Prray from './prray'
 
 export class PrrayPromise<T> extends Promise<Prray<T>> {
   constructor(executor: (resolve: (prray: Prray<T>) => any, reject: (err: Error) => any) => any) {
