@@ -23,12 +23,12 @@ const prr = Prray.from(['www.google.com', 'npmjs.org'])
 
 const responses = await prr.mapAsync(fetch)
 
-//
+// ------------------------------------------------
 // Async method chaining 🚀
 
 const htmls = await prr.mapAsync(fetch).mapAsync(r => r.text())
 
-//
+// ------------------------------------------------
 // Method chaining with async and common methods
 
 await prr
@@ -39,7 +39,7 @@ await prr
   .splice(1, 2)
   .reduceAsync(asyncFunc2)
 
-//
+// ------------------------------------------------
 // Concurrency limit:
 
 const responses = await prr.mapAsync(fetch, { concurrency: 10 })
