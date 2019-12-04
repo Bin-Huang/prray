@@ -21,6 +21,7 @@ Prray -- "Promisified" Array, compatible with normal array, but comes with async
 import Prray from 'prray'
 const prr = Prray.from(['www.google.com', 'npmjs.org'])
 
+
 const responses = await prr.mapAsync(fetch)
 
 
