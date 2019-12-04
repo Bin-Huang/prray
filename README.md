@@ -133,23 +133,7 @@ arr instanceof Prray // false
 
 ## Methods
 
-### Package methods
-
-- [Prray.from(array)](#prrayarray)
-- [new Prray()](#new-prray)
-
-#### Prray.from(array)
-
-The Prray.from() method creates and returns a new Prray instance with every element in the array.
-
-```javascript
-import Prray from 'prray'
-
-const prr = Prray.from([1, 2, 3])
-console.log(prr[0]) // 1
-```
-
-#### new Prray()
+### Class Prray
 
 The class `Prray`. You can think of it as class `Array`.
 
@@ -157,13 +141,13 @@ The class `Prray`. You can think of it as class `Array`.
 import Prray from 'prray'
 
 const p1 = new Prray()
-const p2 = new Prray(1)
-const p3 = new Prray('a', 'b')
+const p2 = new Prray('a', 'b')
+const p3 = Prray.from([1, 2, 3, 4])
 
-console.log(p3[0]) // 'a'
+console.log(p2[0]) // 'a'
 ```
 
-> **Instead `new Prray()`, use methods `prray`, `Prray.from` or `Prray.of` if you want to create a new prray instance**. Because the class Prray is so compatible with class Array, some "weird" behaviors that exists in `new Array()` can also occurs: when you calling `new Array(1)`, you get `[ <1 empty item> ]` instead of expected `[ 1 ]`.
+**Instead `new Prray()`, use `Prray.from` or `Prray.of` if you want to create a new prray instance**. Because the class Prray is so compatible with class Array, some "weird" behaviors that exists in `new Array()` can also occurs: when you calling `new Array(1)`, you get `[ <1 empty item> ]` instead of expected `[ 1 ]`.
 
 ### Static methods of Class Prray
 
