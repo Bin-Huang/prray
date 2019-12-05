@@ -82,14 +82,18 @@ import Prray from 'prray'
 const arr = [1, 2, 3]
 const prr = Prray.from(arr)
 
+
 prr[0] // 1
 prr[prr.length - 1] // 3
 prr.length // 3
 
+
 prr instanceof Array // true
 Array.isArray(prr) // true
 
+
 JSON.stringify(prr) // "[1, 2, 3]"
+
 
 for (const v of prr) {
   console.log(v)
@@ -98,7 +102,9 @@ for (const v of prr) {
 // 2
 // 3
 
-;[...prr] // [1,2,3]
+
+[ ...prr ] // [1,2,3]
+
 
 const iterator = prr[Symbol.iterator]()
 iterator.next().value // 1
@@ -106,10 +112,12 @@ iterator.next().value // 2
 iterator.next().value // 3
 iterator.next().done // true
 
+
+// In typescript, type Prray is compatible with type Array
 function func(arr: number[]) {
   return arr
 }
-func(new Prray(1, 2, 3)) // Type Prray is compatible with type Array in typescript
+func(new Prray(1, 2, 3))
 ```
 
 ## How it work?
@@ -225,9 +233,7 @@ The provided async function is called on every element concurrently.
   - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const urls = Prray.from([
-  /* urls */
-])
+const urls = Prray.from([ /* urls */ ])
 
 const jsons = await urls.mapAsync(fetch).mapAsync(res => res.json())
 
@@ -247,9 +253,7 @@ The provided async function is called on every element concurrently.
   - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const files = Prray.from([
-  /* filenames */
-])
+const files = Prray.from([ /* filenames */ ])
 
 await files.filterAsync(isExisted).mapAsync(removeFile)
 
@@ -263,9 +267,7 @@ _Think of it as an async version of method `reduce`_
 The reduceAsync() method executes a async reducer function (that you provide) on each element of the prray, resulting in a single output value resolved by a promise.
 
 ```javascript
-const productIds = Prray.from([
-  /* ids */
-])
+const productIds = Prray.from([ /* ids */ ])
 
 const total = await productIds.reduceAsync(async (total, id) => {
   const price = await getPrice(id)
@@ -280,9 +282,7 @@ _Think of it as an async version of method `reduceRight`_
 The reduceRightAsync() method applies an async function against an accumulator and each value of the prray (from right-to-left) to reduce it to a single value.
 
 ```javascript
-const productIds = Prray.from([
-  /* ids */
-])
+const productIds = Prray.from([ /* ids */ ])
 
 const total = await productIds.reduceRightAsync(async (total, id) => {
   const price = await getPrice(id)
@@ -297,9 +297,7 @@ _Think of it as an async version of method `find`_
 The findAsync() method returns a promise resolved with the first element in the prray that satisfies the provided async testing function.
 
 ```javascript
-const workers = Prray.from([
-  /* workers */
-])
+const workers = Prray.from([ /* workers */ ])
 
 const unhealthy = await workers.findAsync(checkHealth)
 ```
@@ -311,9 +309,7 @@ _Think of it as an async version of method `findIndex`_
 The findIndexAsync() method returns a promise resolved with the index of the first element in the prray that satisfies the provided async testing function. Otherwise, it returns promise resolved with -1, indicating that no element passed the test.
 
 ```javascript
-const workers = Prray.from([
-  /* workers */
-])
+const workers = Prray.from([ /* workers */ ])
 const ix = await workers.findIndexAsync(checkHealth)
 const unhealthy = workers[ix]
 ```
@@ -331,9 +327,7 @@ The provided async function is called on every element concurrently.
   - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const filenames = Prray.from([
-  /* filenames */
-])
+const filenames = Prray.from([ /* filenames */ ])
 
 const isAllFileExisted = await filenames.everyAsync(isExisted)
 if (isAllFileExisted) {
@@ -354,9 +348,7 @@ The provided async function is called on every element concurrently.
   - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const filenames = Prray.from([
-  /* filenames */
-])
+const filenames = Prray.from([ /* filenames */ ])
 
 const hasExistedFile = await filenames.someAsync(isExisted)
 if (hasExistedFile) {
@@ -371,7 +363,7 @@ _Think of it as an async version of method `sort`_
 The sortAsync() method sorts the elements of a prray in place and returns a promise resolved with the sorted prray. The provided function can be an async function that returns a promise resolved with a number.
 
 ```javascript
-const students = Prray.from([/* ids */])
+const students = Prray.from([ /* ids */ ])
 
 const rank = await students.sortAsync((a, b) => {
   const scoreA = await getScore(a)
@@ -391,9 +383,7 @@ The forEachAsync() method executes a provided async function once for each prray
   - `concurrency` Number of concurrently pending promises returned by provided function. Default: `Infinity`
 
 ```javascript
-const emails = Prray.from([
-  /* emails */
-])
+const emails = Prray.from([ /* emails */ ])
 await emails.forEachAsync(sendAsync)
 
 // or
