@@ -153,7 +153,7 @@ const p3 = Prray.from([1, 2, 3, 4])
 console.log(p2[0]) // 'a'
 ```
 
-**Instead `new Prray()`, use `Prray.from` or `Prray.of` if you want to create a new prray instance**. Because the class Prray is so compatible with class Array, some "weird" behaviors that exists in `new Array()` can also occurs: when you calling `new Array(1)`, you get `[ <1 empty item> ]` instead of expected `[ 1 ]`.
+> **[NOTE]: Instead `new Prray()`, use `Prray.from` or `Prray.of` if you want to create a new prray instance with items**. Because the class Prray is so compatible with class Array, some "weird" behaviors that exists in `new Array()` can also occurs: when you calling `new Array(1)`, you get `[ <1 empty item> ]` instead of expected `[ 1 ]`.
 
 ### Static methods of Class Prray
 
