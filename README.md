@@ -12,7 +12,7 @@ Prray -- "Promisified" Array, compatible with normal array, but comes with async
 - comes with async method supports, such as mapAsync
 - supports **real async method chaining**
 - supports concurrency limit
-- [well-tested](https://github.com/Bin-Huang/prray/tree/master/test)
+- **[well-tested 🕵](https://github.com/Bin-Huang/prray/tree/master/test)**
 - zero-dependency
 
 > Prray aims to replace normal Array in some cases for convenience 😄😜
