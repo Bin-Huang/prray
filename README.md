@@ -19,20 +19,20 @@ Prray -- "Promisified" Array, compatible with normal array, but comes with async
 
 ```javascript
 import Prray from 'prray'
-const prr = Prray.from(['www.google.com', 'npmjs.org'])
+const urls = Prray.from(['www.google.com', 'npmjs.org'])
 
 
-const responses = await prr.mapAsync(fetch)
+const responses = await urls.mapAsync(fetch)
 
 
 // Async method chaining 🚀:
 
-const htmls = await prr.mapAsync(fetch).mapAsync(r => r.text())
+const htmls = await urls.mapAsync(fetch).mapAsync(r => r.text())
 
 
 // Method chaining with async and common methods:
 
-await prr
+await urls
   .map(commonFunc)
   .sortAsync(asyncFunc)
   .concat(['github.com', 'wikipedia.org'])
@@ -43,7 +43,7 @@ await prr
 
 // Concurrency limit:
 
-const responses = await prr.mapAsync(fetch, { concurrency: 10 })
+const responses = await urls.mapAsync(fetch, { concurrency: 10 })
 ```
 
 - [Install](#install)
