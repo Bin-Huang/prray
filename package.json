@@ -39,5 +39,11 @@
     "sinon": "^7.4.2",
     "@types/sinon": "^7.5.0",
     "typescript": "^3.6.3"
-  }
+  },
+  "files": [
+    "README.md",
+    "package.json",
+    "LICENSE.md",
+    "dist/src"
+  ]
 }
