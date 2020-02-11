@@ -8,10 +8,11 @@
 
 Prray -- "Promisified" Array, compatible with normal array, but comes with async method supports.
 
-- compatible with normal array
+- [compatible with normal array](#compatibility-with-normal-array)
 - comes with async method supports, such as mapAsync
 - supports **real async method chaining**
 - supports concurrency limit
+- it works **WITHOUT any prototype pollution**.([how?](#how-it-work))
 - **[well-tested 🕵](https://github.com/Bin-Huang/prray/tree/master/test)**
 - zero-dependency
 
@@ -123,6 +124,14 @@ func(new Prray(1, 2, 3))
 ## How it work?
 
 Class Prray inherits the original class Array and adds or overrides methods based on it. It works without any prototype pollution and global pollution.
+
+```javascript
+const prr = Prray.from([1, 2, 3])
+console.log(prr.mapAsync) // [Function]
+
+const arr = [1, 2, 3]
+console.log(arr.mapAsync) // [undefined]
+```
 
 ## Distinguish between prray and normal array
 
