@@ -3,7 +3,7 @@ import Prray from '../src/prray'
 import { PrrayPromise } from '../src/prraypromise'
 import { toPrrayPromise, delay, genRandArr } from './test-utils'
 
-const funcAsync = (a: number, b: number) => delay(100).then(() => a - b)
+const funcAsync = (a: number, b: number) => delay(50).then(() => a - b)
 const func = (a: number, b: number) => a - b
 
 const getTests = () => {
