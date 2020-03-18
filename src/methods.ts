@@ -328,35 +328,6 @@ export function forEach<T>(prr: Prray<T>, func: (currentValue: T, index: number,
   return
 }
 
-export function slice<T>(arr: Prray<T>, start = 0, end = Infinity): T[] {
-  if (start === 0 && end === Infinity) {
-    return arr
-  }
-  if (start > arr.length) {
-    start = arr.length
-  }
-  if (start < -arr.length) {
-    start = -arr.length
-  }
-  if (end > arr.length) {
-    end = arr.length
-  }
-  if (end < -arr.length) {
-    end = -arr.length
-  }
-  if (start < 0) {
-    start = arr.length + start
-  }
-  if (end < 0) {
-    end = arr.length + end
-  }
-  const result = []
-  for (let ix = start; ix < end; ix++) {
-    result.push(arr[ix])
-  }
-  return result
-}
-
 export function loop<T>(
   array: Prray<T>,
   func: (value: T, index: number, array: Prray<T>, breakLoop: () => any) => any,
