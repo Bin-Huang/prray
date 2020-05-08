@@ -1,6 +1,6 @@
 {
   "name": "prray",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "'Promisified' Array, comes with async method supports(such as mapAsync). And it is compatible with normal array.",
   "main": "./dist/src/index",
   "typings": "./dist/src/index.d.ts",
@@ -8,7 +8,7 @@
     "test": "rm -rf dist && npm run compile && nyc ava ./dist/test/*.test.js",
     "compile": "tsc",
     "prettier": "prettier --config .prettierrc --write '**/*.ts'",
-    "prepublish": "npm run prettier && npm run test"
+    "prepublish": "npm run prettier && npm run test && npm ci --production"
   },
   "husky": {
     "hooks": {
