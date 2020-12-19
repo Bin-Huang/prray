@@ -6,46 +6,41 @@
 
 <!-- [![Download](https://img.shields.io/npm/dm/prray)](https://www.npmjs.com/package/prray) -->
 
-Prray -- "Promisified" Array, it compatible with the original Array but comes with async versions of native Array methods, such as `mapAsync`, `filterAsync`, `reduceAsync`, `sortAsync`, `findAsync`, `findIndexAsync`, `everyAsync`, `someAsync`, `forEachAsync`...
+Prray -- "Promisified" Array, it compatible with the original Array but comes with async versions of native Array methods, such as mapAsync, filterAsync, everyAsync...
 
 - [compatible with normal array](#compatibility-with-normal-array)
-- comes with async versions of native Array methods, such as `mapAsync`...
+- comes with async versions of native Array methods
 - supports **method chaining** with normal and async methods
 - supports concurrency limit
-- it works **WITHOUT** any prototype pollution([how?](#how-it-work))
-- **[well-tested 🕵](https://github.com/Bin-Huang/prray/tree/master/test)**
-- [zero-dependency](https://github.com/Bin-Huang/prray/blob/master/package.json#L7)
-
-> Prray aims to replace the original Array in some cases for convenience 😜
+- it works without any prototype pollution
+- [zero-dependency](https://github.com/Bin-Huang/prray/blob/master/package.json#L7), it can run on both browser and Node.js
+- [well-tested](https://github.com/Bin-Huang/prray/tree/master/test), well-documented 
 
 ```javascript
 import Prray from 'prray'
 const urls = Prray.from(['www.google.com', 'npmjs.org'])
 
-
+// async version of native method
 const responses = await urls.mapAsync(fetch)
 
-
-// Async method chaining 🚀:
-
+// method chaining for async methods
 const htmls = await urls.mapAsync(fetch).mapAsync(r => r.text())
 
-
-// Method chaining with normal and async methods:
-
+// method chaining with both normal and async methods
 await urls
-  .map(commonFunc)
-  .sortAsync(asyncFunc)
   .concat(['github.com', 'wikipedia.org'])
-  .reverse()
-  .splice(1, 2)
-  .reduceAsync(asyncFunc2)
+  .mapAsync(fetch)
+  .mapAsync(r => r.text())
+  .filter(isValidHtml)
+  .map(extractData)
+  .filterAsync(isNotExistInDB)
+  .forEachAsync(saveToDB)
 
-
-// Concurrency limit:
-
+// concurrency limit
 const responses = await urls.mapAsync(fetch, { concurrency: 10 })
 ```
+
+> Prray aims to replace the original Array in some cases for convenience 😜
 
 - [Install](#install)
 - [Compatibility with normal Array](#compatibility-with-normal-array)
