@@ -6,17 +6,17 @@
 
 <!-- [![Download](https://img.shields.io/npm/dm/prray)](https://www.npmjs.com/package/prray) -->
 
-Prray -- "Promisified" Array, compatible with normal array, but comes with async method supports.
+Prray -- "Promisified" Array, it compatible with the original Array but comes with async versions of native Array methods, such as `mapAsync`, `filterAsync`, `reduceAsync`, `sortAsync`, `findAsync`, `findIndexAsync`, `everyAsync`, `someAsync`, `forEachAsync`...
 
 - [compatible with normal array](#compatibility-with-normal-array)
-- comes with async method supports, such as mapAsync
-- supports **real async method chaining**
+- comes with async versions of native Array methods, such as `mapAsync`...
+- supports **method chaining** with normal and async methods
 - supports concurrency limit
-- it works **WITHOUT any prototype pollution**.([how?](#how-it-work))
+- it works **WITHOUT** any prototype pollution([how?](#how-it-work))
 - **[well-tested 🕵](https://github.com/Bin-Huang/prray/tree/master/test)**
 - zero-dependency
 
-> Prray aims to replace normal Array in some cases for convenience 😄😜
+> Prray aims to replace the original Array in some cases for convenience 😜
 
 ```javascript
 import Prray from 'prray'
@@ -31,7 +31,7 @@ const responses = await urls.mapAsync(fetch)
 const htmls = await urls.mapAsync(fetch).mapAsync(r => r.text())
 
 
-// Method chaining with async and common methods:
+// Method chaining with normal and async methods:
 
 await urls
   .map(commonFunc)
