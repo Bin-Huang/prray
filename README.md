@@ -14,7 +14,7 @@ Prray -- "Promisified" Array, it compatible with the original Array but comes wi
 - supports concurrency limit
 - it works **WITHOUT** any prototype pollution([how?](#how-it-work))
 - **[well-tested 🕵](https://github.com/Bin-Huang/prray/tree/master/test)**
-- zero-dependency
+- [zero-dependency](https://github.com/Bin-Huang/prray/blob/master/package.json#L7)
 
 > Prray aims to replace the original Array in some cases for convenience 😜
 
