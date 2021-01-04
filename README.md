@@ -31,11 +31,8 @@ const htmls = await urls.mapAsync(fetch).mapAsync(r => r.text())
 // method chaining with both normal and async methods
 await urls
   .concat(['github.com', 'wikipedia.org'])
-  .mapAsync(fetch)
-  .mapAsync(r => r.text())
+  .mapAsync(request)
   .filter(isValidHtml)
-  .map(extractData)
-  .filterAsync(isNotExistInDB)
   .forEachAsync(saveToDB)
 
 // concurrency limit
