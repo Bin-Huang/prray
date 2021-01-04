@@ -18,12 +18,14 @@ Prray -- "Promisified" Array, it compatible with the original Array but comes wi
 
 ```javascript
 import Prray from 'prray'
+
+// create
 const urls = Prray.from(['www.google.com', 'npmjs.org'])
 
-// async version of native method
+// async method
 const responses = await urls.mapAsync(fetch)
 
-// method chaining for async methods
+// method chaining
 const htmls = await urls.mapAsync(fetch).mapAsync(r => r.text())
 
 // method chaining with both normal and async methods
