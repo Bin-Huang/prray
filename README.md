@@ -19,23 +19,23 @@ Prray -- "Promisified" Array, it compatible with the original Array but comes wi
 ```javascript
 import Prray from 'prray'
 
-// create
+// 1) create
 const urls = Prray.from(['www.google.com', 'npmjs.org'])
 
-// async method
+
+// 2) async method
 const responses = await urls.mapAsync(fetch)
 
-// method chaining
-const htmls = await urls.mapAsync(fetch).mapAsync(r => r.text())
 
-// method chaining with both normal and async methods
+// 3) method chaining with both normal and async methods
 await urls
   .concat(['github.com', 'wikipedia.org'])
   .mapAsync(request)
   .filter(isValidHtml)
   .forEachAsync(saveToDB)
 
-// concurrency limit
+
+// 4) concurrency limit
 const responses = await urls.mapAsync(fetch, { concurrency: 10 })
 ```
 
