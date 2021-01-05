@@ -233,6 +233,11 @@ export class PrrayPromise<T> extends Promise<Prray<T>> {
   toArray(): Promise<T[]> {
     return this.then(prray => prray.toArray())
   }
+
+  delay(ms: number): PrrayPromise<T> {
+    const promise = this.then(prray => prray.delay(ms))
+    return prraypromise(promise)
+  }
 }
 
 export function prraypromise<T>(promise: Promise<Prray<T>>): PrrayPromise<T> {
