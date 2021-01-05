@@ -163,6 +163,7 @@ console.log(p2[0]) // 'a'
 - [Prray.from(arrayLike)](#prrayfromarraylike)
 - [Prray.of(...args)](#prrayofargs)
 - [Prray.isPrray(obj)](#prrayisprrayobj)
+- [Prray.delay(ms)](#prraydelayms)
 
 #### Prray.from(arrayLike)
 
