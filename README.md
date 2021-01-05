@@ -199,6 +199,16 @@ Prray.isPrray([1, 2, 3]) // false
 Prray.isPrray(new Prray(1, 2, 3)) // true
 ```
 
+#### Prray.delay(ms)
+
+The Prray.delay() method returns a promise (PrrayPromise exactly) that will be resolved after given ms milliseconds.
+
+```javascript
+import Prray from 'prray'
+
+await Prray.delay(1000) // resolve after 1 second
+```
+
 ### Specific methods of Prray instance
 
 - [Prray.prototype.toArray()](#prrayprototypetoarray)

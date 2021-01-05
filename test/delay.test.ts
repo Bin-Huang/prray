@@ -15,20 +15,12 @@ test('prray delay', async t => {
   t.assert(isRoughlyEqual(time + 100, Date.now()))
 
   time = Date.now()
-  await Prray.delay(200)
-  t.assert(isRoughlyEqual(time + 200, Date.now()))
+  await Prray.delay(500)
+  t.assert(isRoughlyEqual(time + 500, Date.now()))
 
   time = Date.now()
-  await Prray.delay(300)
-  t.assert(isRoughlyEqual(time + 300, Date.now()))
-
-  time = Date.now()
-  await Prray.delay(1000)
+  await Prray.delay(1000).concat('a', 'b')
   t.assert(isRoughlyEqual(time + 1000, Date.now()))
-
-  time = Date.now()
-  await Prray.delay(5000)
-  t.assert(isRoughlyEqual(time + 5000, Date.now()))
 })
 
 function isRoughlyEqual(a: number, b: number): boolean {
