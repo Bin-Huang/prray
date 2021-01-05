@@ -207,6 +207,12 @@ The Prray.delay() method returns a promise (PrrayPromise exactly) that will be r
 import Prray from 'prray'
 
 await Prray.delay(1000) // resolve after 1 second
+
+const prr = Prray.from([1,2,3])
+await prr
+    .mapAsync(action1)
+    .delay(500)    // delay 500ms between two iteration ations
+    .forEach(action2)
 ```
 
 ### Specific methods of Prray instance
