@@ -48,3 +48,11 @@ export function toPrrayPromise<T>(arr: T[]): PrrayPromise<T> {
 export function isClose(n1: number, n2: number, opt = { threshold: 100 }): boolean {
   return Math.abs(n1 - n2) < opt.threshold
 }
+
+export function noop(...args: any[]) {
+  return
+}
+
+export async function noopAsync(...args: any[]) {
+  return
+}
