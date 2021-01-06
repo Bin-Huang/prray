@@ -53,6 +53,6 @@ export function noop(...args: any[]) {
   return
 }
 
-export async function noopAsync(...args: any[]) {
-  return
+export function noopAsync(...args: any[]) {
+  return new Promise(resolve => resolve(true))
 }
