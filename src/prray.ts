@@ -27,6 +27,11 @@ export default class Prray<T> extends Array<T> {
     return prr
   }
 
+  static delay<T>(ms: number): PrrayPromise<T> {
+    const prray = new Prray<T>()
+    return new PrrayPromise(resolve => setTimeout(() => resolve(prray), ms))
+  }
+
   constructor(length: number)
   constructor(...args: T[])
   constructor(...args: any[]) {
@@ -194,6 +199,10 @@ export default class Prray<T> extends Array<T> {
 
   toArray(): T[] {
     return [...this]
+  }
+
+  delay(ms: number): PrrayPromise<T> {
+    return new PrrayPromise(resolve => setTimeout(() => resolve(this), ms))
   }
 }
 
