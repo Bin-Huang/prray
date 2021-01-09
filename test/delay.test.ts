@@ -82,7 +82,7 @@ test('delay: real cases', async t => {
     .delay(100)
     .delay(100)
     .delay(100)
-  t.assert(isClose(time + 400, Date.now(), { threshold: 30 }))
+  t.assert(isClose(time + 400, Date.now(), { threshold: 50 }))
 
   // case2: the method chaining of multi-delays should works
   const prray = Prray.from([1, 2, 3])
@@ -92,7 +92,7 @@ test('delay: real cases', async t => {
     .delay(100)
     .delay(100)
     .delay(100)
-  t.assert(isClose(time + 400, Date.now(), { threshold: 30 }))
+  t.assert(isClose(time + 400, Date.now(), { threshold: 50 }))
 
   // case3: the method chaining with other methods should works
   time = Date.now()
@@ -102,5 +102,5 @@ test('delay: real cases', async t => {
     .mapAsync(noopAsync)
     .delay(100)
     .forEach(noop)
-  t.assert(isClose(time + 200, Date.now(), { threshold: 30 }))
+  t.assert(isClose(time + 200, Date.now(), { threshold: 50 }))
 })
