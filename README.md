@@ -24,7 +24,7 @@ const urls = Prray.from(['www.google.com', 'npmjs.org'])
 
 
 // 2) async method
-const responses = await urls.mapAsync(fetch)
+let responses = await urls.mapAsync(fetch)
 
 
 // 3) method chaining with both normal and async methods
@@ -36,7 +36,7 @@ await urls
 
 
 // 4) concurrency limit
-const responses = await urls.mapAsync(fetch, { concurrency: 10 })
+responses = await urls.mapAsync(fetch, { concurrency: 10 })
 ```
 
 > Prray aims to replace the original Array in some cases for convenience 😜
