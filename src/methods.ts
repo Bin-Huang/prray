@@ -58,6 +58,13 @@ export async function reduceAsync<T>(
   func: (accumulator: any, currentValue: T, index: number, prray: Prray<T>) => any | Promise<any>,
   initialValue?: any,
 ): Promise<any> {
+  if (prr.length === 0) {
+    if (initialValue === undefined) {
+      throw TypeError('Reduce of empty array with no initial value')
+    } else {
+      return initialValue
+    }
+  }
   let pre = initialValue
   let ix = 0
   if (initialValue === undefined) {
@@ -90,6 +97,13 @@ export function reduce<T>(
   func: (accumulator: any, currentValue: T, index: number, array: Prray<T>) => any,
   initialValue?: any,
 ): any {
+  if (prr.length === 0) {
+    if (initialValue === undefined) {
+      throw TypeError('Reduce of empty array with no initial value')
+    } else {
+      return initialValue
+    }
+  }
   let pre = initialValue
   let ix = 0
   if (initialValue === undefined) {
@@ -122,6 +136,13 @@ export async function reduceRightAsync<T>(
   func: (accumulator: any, currentValue: T, index: number, prray: Prray<T>) => any | Promise<any>,
   initialValue?: any,
 ): Promise<any> {
+  if (prr.length === 0) {
+    if (initialValue === undefined) {
+      throw TypeError('Reduce of empty array with no initial value')
+    } else {
+      return initialValue
+    }
+  }
   let pre = initialValue
   let ix = prr.length - 1
   if (initialValue === undefined) {

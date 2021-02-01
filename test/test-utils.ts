@@ -49,10 +49,19 @@ export function isClose(n1: number, n2: number, opt = { threshold: 100 }): boole
   return Math.abs(n1 - n2) < opt.threshold
 }
 
-export function noop(...args: any[]) {
+export function noop(...args: any[]): any {
   return
 }
 
 export function noopAsync(...args: any[]) {
   return new Promise(resolve => resolve(true))
+}
+
+export async function getError(func: Function): Promise<Error | null> {
+  try {
+    await func()
+    return null
+  } catch (e) {
+    return e
+  }
 }
