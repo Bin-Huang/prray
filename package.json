@@ -1,6 +1,6 @@
 {
   "name": "prray",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "'Promisified' Array, it compatible with the original Array but comes with async versions of native Array methods, such as `mapAsync`, `filterAsync`, `reduceAsync`, `sortAsync`, `findAsync`, `findIndexAsync`, `everyAsync`, `someAsync`, `forEachAsync`...",
   "main": "./dist/src/index",
   "typings": "./dist/src/index.d.ts",
