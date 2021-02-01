@@ -212,7 +212,7 @@ await Prray.delay(1000) // resolve after 1 second
 const prr = Prray.from([1,2,3])
 await prr
     .mapAsync(action1)
-    .delay(500)    // delay 500ms between two iteration ations
+    .delay(500)    // delay 500ms between two iterations
     .forEach(action2)
 ```
 
