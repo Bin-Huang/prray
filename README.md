@@ -211,6 +211,7 @@ await prr
 ### Specific methods of Prray instance
 
 - [Prray.prototype.toArray()](#prrayprototypetoarray)
+- [Prray.prototype.delay()](#prrayprototypedelayms)
 - [Prray.prototype.mapAsync(func, options)](#prrayprototypemapasyncfunc-options)
 - [Prray.prototype.filterAsync(func, options)](#prrayprototypefilterasyncfunc-options)
 - [Prray.prototype.reduceAsync(func, initialValue)](#prrayprototypereduceasyncfunc-initialvalue)
@@ -230,6 +231,18 @@ The toArray() method returns a new normal array with every element in the prray.
 const prr = new Prray(1, 2, 3)
 
 prr.toArray() // [1,2,3]
+```
+
+#### Prray.prototype.delay(ms)
+
+The delay() method returns a promise (`PrrayPromise` exactly) that will be resolved with current prray instance after given ms milliseconds.
+
+```javascript
+const emails = Prray.from(emailArray)
+await emails
+    .mapAsync(registerReceiver)
+    .delay(1000)
+    .forEachAsync(send)
 ```
 
 #### Prray.prototype.mapAsync(func, options)
