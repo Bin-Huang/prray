@@ -244,7 +244,7 @@ prr.toArray() // [1,2,3]
 
 _Think of it as an async version of method `map`_
 
-The mapAsync() method returns a promise (`PrrayPromise` exactly) that resolved with a new prray with the resolved results of calling a provided async function on every element in the calling prray, or rejects immediately if any of the promises reject.
+The mapAsync() method returns a promise (`PrrayPromise` exactly) that resolved with a new prray with the resolved results of calling a provided async function on every element in the calling prray, or rejected immediately if any of the promises reject.
 
 The provided async function is called on every element concurrently. You may optionally specify a concurrency limit.
 
@@ -264,7 +264,7 @@ await jsons.mapAsync(insertToDB, { concurrency: 2 })
 
 _Think of it as an async version of method `filter`_
 
-The filterAsync() method returns a promise (`PrrayPromise` exactly) that resolved with a new prray with all elements that pass the test implemented by the provided async function, or rejects immediately if any of the promises reject.
+The filterAsync() method returns a promise (`PrrayPromise` exactly) that resolved with a new prray with all elements that pass the test implemented by the provided async function, or rejected immediately if any of the promises reject.
 
 The provided async function is called on every element concurrently. You may optionally specify a concurrency limit.
 
@@ -338,7 +338,7 @@ const unhealthy = workers[ix]
 
 _Think of it as an async version of method `every`_
 
-The everyAsync() method tests whether all elements in the prray pass the test implemented by the provided async function. It returns a promise (`PrrayPromise` exactly) that resolved with a Boolean value, or rejects immediately if any of the promises reject.
+The everyAsync() method tests whether all elements in the prray pass the test implemented by the provided async function. It returns a promise (`PrrayPromise` exactly) that resolved with a Boolean value, or rejected immediately if any of the promises reject.
 
 The provided async function is called on every element concurrently. You may optionally specify a concurrency limit.
 
@@ -359,7 +359,7 @@ if (isAllFileExisted) {
 
 _Think of it as an async version of method `some`_
 
-The some() method tests whether at least one element in the prray passes the test implemented by the provided async function. It returns a promise (`PrrayPromise` exactly) that resolved with Boolean value, or rejects immediately if any of the promises reject.
+The some() method tests whether at least one element in the prray passes the test implemented by the provided async function. It returns a promise (`PrrayPromise` exactly) that resolved with Boolean value, or rejected immediately if any of the promises reject.
 
 The provided async function is called on every element concurrently. You may optionally specify a concurrency limit.
 
@@ -396,7 +396,7 @@ const rank = await students.sortAsync((a, b) => {
 
 _Think of it as an async version of method `forEach`_
 
-The forEachAsync() method executes a provided async function once for each prray element concurrently. It returns a promise (`PrrayPromise` exactly) that resolved after all iteration promises resolved, or rejects immediately if any of the promises reject.
+The forEachAsync() method executes a provided async function once for each prray element concurrently. It returns a promise (`PrrayPromise` exactly) that resolved after all iteration promises resolved, or rejected immediately if any of the promises reject.
 
 The provided async function is called on every element concurrently. You may optionally specify a concurrency limit.
 
