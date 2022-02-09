@@ -361,7 +361,7 @@ export function loop<T>(
     return Promise.all(promises)
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     const length = array.length
     if (length === 0) {
       resolve()
