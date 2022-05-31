@@ -632,6 +632,10 @@ Bluebird and prray have different concerns, so it may not be suitable for compar
 3. Prray supports async method chaining, but for bluebird, you have to: `Bluebird.map(await Bluebird.map(arr,func1), func2)`
 4. Prray is based on native promise implementation, and bluebird provides a good third-party promise implementation
 
+## Sponsoring
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/benn)
+
 ## License
 
 MIT
