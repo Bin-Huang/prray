@@ -4,7 +4,6 @@
   "description": "'Promisified' Array, it compatible with the original Array but comes with async versions of native Array methods, such as `mapAsync`, `filterAsync`, `reduceAsync`, `sortAsync`, `findAsync`, `findIndexAsync`, `everyAsync`, `someAsync`, `forEachAsync`...",
   "main": "./dist/src/index",
   "typings": "./dist/src/index.d.ts",
-  "dependencies": {},
   "scripts": {
     "test": "rm -rf dist && npm run compile && nyc ava ./dist/test/*.test.js",
     "compile": "tsc",
@@ -31,6 +30,7 @@
   "author": "Ben Huang",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^18.0.0",
     "@types/sinon": "^7.5.0",
     "ava": "^3.5.0",
     "husky": "^3.0.7",
